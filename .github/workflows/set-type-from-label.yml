@@ -14,8 +14,9 @@ jobs:
           assignees: renancvitor
       - name: Update Project v2 Type
         uses: nipe0324/update-project-v2-item-field@v2.0.2
+        if: ${{ contains(fromJson('["feature","bug","refactor","tech-debt","docs","research"]'), github.event.label.name) }}
         with:
           project-url: https://github.com/users/renancvitor/projects/2
           github-token: ${{ secrets.GH_TOKEN }}
           field-name: "Type"
-          field-value: ${{ contains(toJson(github.event.issue.labels), 'feature') && 'Feature' || contains(toJson(github.event.issue.labels), 'bug') && 'Bug' || contains(toJson(github.event.issue.labels), 'refactor') && 'Refactor' || contains(toJson(github.event.issue.labels), 'tech-debt') && 'Tech Debt' || contains(toJson(github.event.issue.labels), 'docs') && 'Documentation' || contains(toJson(github.event.issue.labels), 'research') && 'Research' }}
+          field-value: ${{ github.event.label.name == 'feature' && 'Feature' || github.event.label.name == 'bug' && 'Bug' || github.event.label.name == 'refactor' && 'Refactor' || github.event.label.name == 'tech-debt' && 'Tech Debt' || github.event.label.name == 'docs' && 'Documentation' || github.event.label.name == 'research' && 'Research' }}
