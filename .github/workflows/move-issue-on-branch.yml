@@ -1,0 +1,25 @@
+name: Move Issue to In Progress on Branch Create
+on:
+  create:
+
+jobs:
+  start_issue:
+    if: github.event.ref_type == 'branch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract issue number from branch
+        id: extract
+        run: |
+          BRANCH="${{ github.event.ref }}"
+          ISSUE=$(echo "$BRANCH" | grep -oE '[0-9]+' | head -1)
+          echo "number=$ISSUE" >> $GITHUB_OUTPUT
+
+      - name: Move issue to In Progress
+        if: steps.extract.outputs.number != ''
+        uses: nipe0324/update-project-v2-item-field@v2.0.2
+        with:
+          project-url: https://github.com/users/renancvitor/projects/2
+          github-token: ${{ secrets.GH_TOKEN }}
+          issue-number: ${{ steps.extract.outputs.number }}
+          field-name: "Status"
+          field-value: "In Progress"
