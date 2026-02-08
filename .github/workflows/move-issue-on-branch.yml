@@ -16,21 +16,164 @@ jobs:
 
       - name: Move issue to In Progress
         if: steps.extract.outputs.number != ''
-        uses: nipe0324/update-project-v2-item-field@v2.0.2
+        uses: actions/github-script@v7
         env:
           ISSUE_NUMBER: ${{ steps.extract.outputs.number }}
+          PROJECT_URL: https://github.com/users/renancvitor/projects/2
+          STATUS_NAME: In Progress
         with:
-          project-url: https://github.com/users/renancvitor/projects/2
           github-token: ${{ secrets.GH_TOKEN }}
-          all-items: true
-          skip-update-script: |
-            const targetNumber = Number(process.env.ISSUE_NUMBER)
-            if (!Number.isFinite(targetNumber)) {
-              return true
+          script: |
+            const issueNumber = Number(process.env.ISSUE_NUMBER)
+            if (!Number.isFinite(issueNumber)) {
+              core.setFailed('Invalid issue number from branch name.')
+              return
             }
-            const isIssue = item.type === 'ISSUE'
-            const number = item.content?.number
 
-            return !isIssue || number !== targetNumber
-          field-name: "Status"
-          field-value: "In Progress"
+            const projectUrl = new URL(process.env.PROJECT_URL)
+            const parts = projectUrl.pathname.split('/').filter(Boolean)
+            const scope = parts[0]
+            const owner = parts[1]
+            const projectNumber = Number(parts[3])
+
+            if (!owner || !Number.isFinite(projectNumber)) {
+              core.setFailed('Invalid project URL format.')
+              return
+            }
+
+            const ownerField = scope === 'orgs' ? 'organization' : 'user'
+
+            const projectQuery = `
+              query($login: String!, $number: Int!) {
+                ${ownerField}(login: $login) {
+                  projectV2(number: $number) {
+                    id
+                    fields(first: 100) {
+                      nodes {
+                        ... on ProjectV2SingleSelectField {
+                          id
+                          name
+                          options {
+                            id
+                            name
+                          }
+                        }
+                        ... on ProjectV2Field {
+                          id
+                          name
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            `
+
+            const projectResult = await github.graphql(projectQuery, {
+              login: owner,
+              number: projectNumber,
+            })
+
+            const project = projectResult[ownerField]?.projectV2
+            if (!project) {
+              core.setFailed('Project not found or token lacks access.')
+              return
+            }
+
+            const statusField = project.fields.nodes.find(
+              (field) => field?.name === 'Status' && field?.options
+            )
+            if (!statusField) {
+              core.setFailed('Status field not found in project.')
+              return
+            }
+
+            const statusOption = statusField.options.find(
+              (option) => option?.name === process.env.STATUS_NAME
+            )
+            if (!statusOption) {
+              core.setFailed('Status option not found: ' + process.env.STATUS_NAME)
+              return
+            }
+
+            const issueQuery = `
+              query($owner: String!, $repo: String!, $number: Int!) {
+                repository(owner: $owner, name: $repo) {
+                  issue(number: $number) {
+                    id
+                    projectItems(first: 100) {
+                      nodes {
+                        id
+                        project {
+                          id
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            `
+
+            const issueResult = await github.graphql(issueQuery, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              number: issueNumber,
+            })
+
+            const issue = issueResult.repository?.issue
+            if (!issue) {
+              core.setFailed('Issue not found in repository.')
+              return
+            }
+
+            let itemId = issue.projectItems.nodes.find(
+              (node) => node.project?.id === project.id
+            )?.id
+
+            if (!itemId) {
+              const addItemMutation = `
+                mutation($projectId: ID!, $contentId: ID!) {
+                  addProjectV2ItemById(input: { projectId: $projectId, contentId: $contentId }) {
+                    item {
+                      id
+                    }
+                  }
+                }
+              `
+
+              const addItemResult = await github.graphql(addItemMutation, {
+                projectId: project.id,
+                contentId: issue.id,
+              })
+
+              itemId = addItemResult.addProjectV2ItemById?.item?.id
+            }
+
+            if (!itemId) {
+              core.setFailed('Project item could not be resolved or created.')
+              return
+            }
+
+            const updateMutation = `
+              mutation($projectId: ID!, $itemId: ID!, $fieldId: ID!, $optionId: String!) {
+                updateProjectV2ItemFieldValue(
+                  input: {
+                    projectId: $projectId
+                    itemId: $itemId
+                    fieldId: $fieldId
+                    value: { singleSelectOptionId: $optionId }
+                  }
+                ) {
+                  projectV2Item {
+                    id
+                  }
+                }
+              }
+            `
+
+            await github.graphql(updateMutation, {
+              projectId: project.id,
+              itemId,
+              fieldId: statusField.id,
+              optionId: statusOption.id,
+            })
