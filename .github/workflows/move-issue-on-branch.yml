@@ -17,9 +17,20 @@ jobs:
       - name: Move issue to In Progress
         if: steps.extract.outputs.number != ''
         uses: nipe0324/update-project-v2-item-field@v2.0.2
+        env:
+          ISSUE_NUMBER: ${{ steps.extract.outputs.number }}
         with:
           project-url: https://github.com/users/renancvitor/projects/2
           github-token: ${{ secrets.GH_TOKEN }}
-          issue-number: ${{ steps.extract.outputs.number }}
+          all-items: true
+          skip-update-script: |
+            const targetNumber = Number(process.env.ISSUE_NUMBER)
+            if (!Number.isFinite(targetNumber)) {
+              return true
+            }
+            const isIssue = item.type === 'ISSUE'
+            const number = item.content?.number
+
+            return !isIssue || number !== targetNumber
           field-name: "Status"
           field-value: "In Progress"
