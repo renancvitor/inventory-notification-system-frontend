@@ -7,5 +7,21 @@ body {
       #0F1115 100%);
 
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  color: #fff;
+  color: #FFFFFF;
+}
+
+.save-btn {
+  background-color: #4C8DFF;
+  border-radius: 3px;
+  border-color: linear-gradient(100deg,
+      #7BA2E6 0%,
+      #4C8DFF 100%,
+    );
+  color: #FFFFFF;
+}
+
+.cancel-btn {
+  border-radius: 3px;
+  border-color: #2E3A55;
+  color: #A9B1C6;
 }
