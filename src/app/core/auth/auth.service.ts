@@ -14,14 +14,24 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   login(data: LoginRequest): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${this.apiUrl}/login`, data).pipe(
-      tap((response) => {
-        localStorage.setItem('token', response.token);
-      }),
+    return this.http.post<LoginResponse>(
+      `${this.apiUrl}/login`,
+      data,
+      { withCredentials: true }
+    );
+  }
+
+  logout(): Observable<void> {
+    return this.http.post<void>(
+      `${this.apiUrl}/auth/logout`,
+      {},
+      { withCredentials: true }
     );
   }
 
   getUsers() {
-    return this.http.get(`${this.apiUrl}/users`);
+    return this.http.get(`${this.apiUrl}/users`, {
+      withCredentials: true,
+    });
   }
 }
