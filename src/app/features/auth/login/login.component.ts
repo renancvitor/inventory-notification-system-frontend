@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../../core/auth/auth.service';
+import { Router } from '@angular/router';
+import { email } from '@angular/forms/signals';
 
 @Component({
   selector: 'app-login',
@@ -9,25 +11,15 @@ import { AuthService } from '../../../core/auth/auth.service';
   styleUrls: ['./login.scss'],
 })
 export class LoginComponent {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   loginTest() {
-    this.authService
-      .login({
-        email: 'admin@sistema.com',
-        password: '123456',
-      })
-      .subscribe({
-        next: (response) => console.log('Backend response: ', response),
-        error: (error) => console.log('Error: ', error),
-      });
-  }
-
-  usersTest() {
-    this.authService
-      .getUsers().subscribe({
-        next: response => console.log('Users: ', response),
-        error: error => console.log('Error: ', error)                
-      });
+    this.authService.login({
+      email: 'admin@sistema.com',
+      password: '123456',
+    }).subscribe({
+      next: () => this.router.navigate(['/']),
+      error: (err) => console.error('Login failed ', err)
+    });
   }
 }
