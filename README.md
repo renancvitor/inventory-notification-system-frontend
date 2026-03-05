@@ -120,19 +120,20 @@ Organização baseada em responsabilidades e módulos funcionais:
 
 ```plaintext
 src/
- ├── core/            # serviços globais, autenticação, interceptors
- ├── shared/          # componentes reutilizáveis
- ├── features/        # módulos funcionais do sistema
- │    ├── auth/
- │    ├── products/
- │    ├── orders/
- │    ├── movements/
- │    └── users/
- ├── layout/          # estrutura visual da aplicação
- └── environments/    # configurações por ambiente
+ ├── core/               # serviços globais, autenticação, interceptors
+ │    ├── api/
+ │    └── auth/
+ ├── features/           # módulos funcionais do sistema
+ │    ├── auth/login
+ │    └── home/
+ ├── shared/components   # componentes reutilizáveis
+ │    ├── button
+ │    └── footer
+ ├── layout/             # estrutura visual da aplicação
+ └── environments/       # configurações por ambiente
 
-LICENSE               # Licença do projeto
-README.md             # Documentação principal do repositório
+LICENSE                  # Licença do projeto
+README.md                # Documentação principal do repositório
 ```
 
 <p align="right"><a href="#inicio">⬆️ Voltar ao início</a></p>
