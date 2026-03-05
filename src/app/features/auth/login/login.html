@@ -1,7 +1,25 @@
-<h2>Login</h2>
+<div class="login-wrapper">
 
-<button (click)="loginTest()">
-  Testar Login
-</button>
+  <mat-card class="login-card">
 
-<br><br>
+    <h2 class="login-title">Acesse sua conta</h2>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nome de usuário</mat-label>
+      <input matInput>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Senha</mat-label>
+      <input matInput>
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      class="login-button">
+      Entrar
+    </button>
+
+  </mat-card>
+
+</div>
