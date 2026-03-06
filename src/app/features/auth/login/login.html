@@ -1,25 +1,47 @@
-<div class="login-wrapper">
+<form [formGroup]="loginForm">
 
-  <mat-card class="login-card">
+  <div class="login-wrapper">
 
-    <h2 class="login-title">Acesse sua conta</h2>
+    <mat-card class="login-card">
 
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Nome de usuário</mat-label>
-      <input matInput>
-    </mat-form-field>
+      <h2 class="login-title">Acesse sua conta</h2>
 
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Senha</mat-label>
-      <input matInput>
-    </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Nome de usuário</mat-label>
+        <input matInput formControlName="email">
 
-    <button
-      mat-raised-button
-      class="login-button">
-      Entrar
-    </button>
+        <mat-error *ngIf="loginForm.controls.email.hasError('required')">
+          O campo de e-mail é obrigatório.
+        </mat-error>
 
-  </mat-card>
+        <mat-error *ngIf="loginForm.controls.email.hasError('email')">
+          E-mail inválido.
+        </mat-error>
+      </mat-form-field>
 
-</div>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Senha</mat-label>
+        <input matInput type="password" formControlName="password">
+
+        <mat-error *ngIf="loginForm.controls.password.hasError('required')">
+          O campo de senha é obrigatório.
+        </mat-error>
+
+        <mat-error *ngIf="loginForm.controls.password.hasError('minlength')">
+          Mínimo de 6 caracteres.
+        </mat-error>
+      </mat-form-field>
+
+      <button
+        mat-raised-button
+        class="login-button"
+        [disabled]="loginForm.invalid"
+        (click)="login()">
+        Entrar
+      </button>
+
+    </mat-card>
+
+  </div>
+
+</form>
