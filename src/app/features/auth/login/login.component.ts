@@ -36,20 +36,33 @@ export class LoginComponent {
     });
   }
 
+  loading: boolean = false;
+  errorMessage: string | null = null;
+
   onSubmit() {
     if (this.loginForm.invalid) {
       return;
     }
 
-    const { email, password } = this.loginForm.value;
+    const { email, password } = this.loginForm.getRawValue();
+
+    this.loading = true;
+    this.errorMessage = null;
 
     this.authService.login({email: email!, password: password!})
     .subscribe({
-      next: (response) => {
-        console.log('Login success', response);
+      next: () => {
+        this.router.navigate(['/']);
       },
       error: (error) => {
-        console.error('Login error', error);
+        
+        if (error.error?.message) {
+          this.errorMessage = error.error.message;
+        } else { 
+          this.errorMessage = 'Erro ao realizar login';
+        }
+
+        this.loading = false;
       }
     });
   }
