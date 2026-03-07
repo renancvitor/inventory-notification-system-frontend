@@ -6,19 +6,20 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { ButtonComponent } from '../../../shared/components/button/button.component';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [MatFormFieldModule, MatCardModule, MatInputModule, ButtonComponent, ReactiveFormsModule],
+  imports: [MatFormFieldModule, MatCardModule, MatInputModule, ButtonComponent, ReactiveFormsModule, CommonModule],
   templateUrl: './login.html',
   styleUrls: ['./login.scss'],
 })
 export class LoginComponent {
   private formBuilder = new FormBuilder();
 
-  loginForm = this.formBuilder.group({
+  loginForm = this.formBuilder.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]]
   });
@@ -32,6 +33,24 @@ export class LoginComponent {
     }).subscribe({
       next: () => this.router.navigate(['/']),
       error: (err) => console.error('Login failed ', err)
+    });
+  }
+
+  onSubmit() {
+    if (this.loginForm.invalid) {
+      return;
+    }
+
+    const { email, password } = this.loginForm.value;
+
+    this.authService.login({email: email!, password: password!})
+    .subscribe({
+      next: (response) => {
+        console.log('Login success', response);
+      },
+      error: (error) => {
+        console.error('Login error', error);
+      }
     });
   }
 }
