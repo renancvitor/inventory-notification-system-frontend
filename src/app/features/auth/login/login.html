@@ -32,12 +32,16 @@
         </mat-error>
       </mat-form-field>
 
+      <div class="login-error" ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+
       <button
         mat-raised-button
         class="login-button"
         type="submit"
         [disabled]="loginForm.invalid">
-        Entrar
+        {{ loading ? 'Entrando...' : 'Entrar' }}
       </button>
 
     </mat-card>
