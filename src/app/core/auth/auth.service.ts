@@ -9,7 +9,9 @@ import { tap } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
+
   private readonly apiUrl = environment.apiUrl;
+  private loggedIn = false;
 
   constructor(private http: HttpClient) {}
 
@@ -18,6 +20,8 @@ export class AuthService {
       `${this.apiUrl}/login`,
       data,
       { withCredentials: true }
+    ).pipe(
+      tap(() => this.loggedIn = true)
     );
   }
 
@@ -26,12 +30,12 @@ export class AuthService {
       `${this.apiUrl}/auth/logout`,
       {},
       { withCredentials: true }
+    ).pipe(
+      tap(() => this.loggedIn = false)
     );
   }
 
-  getUsers() {
-    return this.http.get(`${this.apiUrl}/users`, {
-      withCredentials: true,
-    });
+  isAuthenticated(): boolean {
+    return this.loggedIn;
   }
 }

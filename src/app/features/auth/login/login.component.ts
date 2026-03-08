@@ -8,7 +8,6 @@ import { ButtonComponent } from '../../../shared/components/button/button.compon
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
-
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -25,16 +24,6 @@ export class LoginComponent {
   });
 
   constructor(private authService: AuthService, private router: Router) {}
-
-  login() {
-    this.authService.login({
-      email: 'admin@sistema.com',
-      password: '123456',
-    }).subscribe({
-      next: () => this.router.navigate(['/']),
-      error: (err) => console.error('Login failed ', err)
-    });
-  }
 
   loading: boolean = false;
   errorMessage: string | null = null;
@@ -53,16 +42,6 @@ export class LoginComponent {
     .subscribe({
       next: () => {
         this.router.navigate(['/']);
-      },
-      error: (error) => {
-        
-        if (error.error?.message) {
-          this.errorMessage = error.error.message;
-        } else { 
-          this.errorMessage = 'Erro ao realizar login';
-        }
-
-        this.loading = false;
       }
     });
   }
