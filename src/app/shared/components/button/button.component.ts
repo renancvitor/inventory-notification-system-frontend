@@ -11,8 +11,6 @@ import { CommonModule } from '@angular/common';
 })
 export class ButtonComponent {
 
-  @Input() customClass: string = '';
-  @Input() label: string = '';
   @Input() disabled: boolean = false;
   @Input() type: 'button' | 'submit' | 'reset' = 'button';
 
