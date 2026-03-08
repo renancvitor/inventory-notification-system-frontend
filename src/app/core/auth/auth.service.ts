@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { LoginRequest, LoginResponse } from '../../auth/auth.models';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs';
+import { catchError, map, Observable, tap, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -38,4 +37,18 @@ export class AuthService {
   isAuthenticated(): boolean {
     return this.loggedIn;
   }
+
+  checkSession(): Observable<boolean> {
+    return this.http.get<LoginResponse>(`${this.apiUrl}/auth/me`, {
+      withCredentials: true
+    }).pipe(
+      tap(() => this.loggedIn = true),
+      map(() => true),
+      catchError(() => {
+        this.loggedIn = false;
+        return of(false);
+      })
+    )
+  }
+
 }

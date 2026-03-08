@@ -1,0 +1,24 @@
+<mat-toolbar class="header">
+
+  <div class="logo">
+    Sistema de Notificação de Estoque
+  </div>
+
+  <nav class="nav-links">
+
+    <a mat-button routerLink="/" routerLinkActive="active">Início</a>
+    <a mat-button routerLink="/person" routerLinkActive="active">Pessoas</a>
+    <a mat-button routerLink="/users" routerLinkActive="active">Usuários</a>
+    <a mat-button routerLink="/products" routerLinkActive="active">Produtos</a>
+    <a mat-button routerLink="/orders" routerLinkActive="active">Pedidos</a>
+
+  </nav>
+
+  <div class="logout-container">
+      <button mat-button class="logout-btn" (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        Sair
+      </button>
+  </div>
+
+</mat-toolbar>

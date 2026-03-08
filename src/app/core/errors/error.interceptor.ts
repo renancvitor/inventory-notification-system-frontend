@@ -2,7 +2,7 @@ import { HttpErrorResponse, HttpInterceptorFn } from "@angular/common/http";
 import { inject } from "@angular/core";
 import { ErrorService } from "./error.service";
 import { ApiError } from "./api-error.model";
-import { catchError, EMPTY } from "rxjs";
+import { catchError, throwError } from "rxjs";
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 
@@ -10,6 +10,16 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 
     return next(req).pipe(
         catchError((error: HttpErrorResponse) => {
+
+            const isSessionCheckRequest = req.url.includes('/auth/me');
+            const isExpectedUnauthenticated = isSessionCheckRequest && error.status === 401;
+
+            const isLoginRequest = req.url.includes('/login');
+            const isExpectedLoginFailure = isLoginRequest && error.status === 401;
+
+            if (isExpectedUnauthenticated || isExpectedLoginFailure) {
+                return throwError(() => error);
+            }
 
             const apiError = error.error as ApiError;
 
@@ -19,7 +29,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 
             errorService.showError(message);
 
-            return EMPTY;
+            return throwError(() => error);
         })
     );
 }
