@@ -19,13 +19,13 @@ jobs:
             const owner = context.repo.owner
             const repo = context.repo.repo
 
-            const match = prBody.match(/(close|closes|fix|fixes|resolve|resolves)\s+#(\d+)/i)
+            const match = prBody.match(/#(\d+)/)
             if (!match) {
               core.info('No linked issue found in PR body')
               return
             }
 
-            const issueNumber = parseInt(match[2])
+            const issueNumber = parseInt(match[1])
 
             // Resolve the issue node ID
             const issueData = await github.graphql(`
