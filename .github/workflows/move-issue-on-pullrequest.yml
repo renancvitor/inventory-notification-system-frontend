@@ -1,15 +1,165 @@
+name: Move Issue to In Review on PR
+
 on:
-    pull_request:
-        types: [opened, reopened]
+  pull_request:
+    types: [opened, reopened]
 
 jobs:
-    move_to_in_review:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Move linked issue to In Review
-              uses: nipe0324/update-project-v2-item-field@v2.0.2
-              with:
-                project-url: https://github.com/users/renancvitor/projects/2
-                github-token: ${{ secrets.GH_TOKEN }}
-                field-name: 'Status'
-                field-value: 'In Review'
+  move_issue:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Move issue to In Review and remove PR card
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
+          script: |
+            const prBody = context.payload.pull_request.body ?? ''
+            const prNodeId = context.payload.pull_request.node_id
+            const owner = context.repo.owner
+            const repo = context.repo.repo
+
+            const match = prBody.match(/(close|closes|fix|fixes|resolve|resolves)\s+#(\d+)/i)
+            if (!match) {
+              core.info('No linked issue found in PR body')
+              return
+            }
+
+            const issueNumber = parseInt(match[2])
+
+            // Resolve the issue node ID
+            const issueData = await github.graphql(`
+              query($owner: String!, $repo: String!, $number: Int!) {
+                repository(owner: $owner, name: $repo) {
+                  issue(number: $number) {
+                    id
+                  }
+                }
+              }
+            `, { owner, repo, number: issueNumber })
+
+            const issueNodeId = issueData.repository.issue.id
+
+            // Fetch project metadata: id, Status field and its options
+            const projectData = await github.graphql(`
+              query($owner: String!) {
+                user(login: $owner) {
+                  projectV2(number: 2) {
+                    id
+                    fields(first: 20) {
+                      nodes {
+                        ... on ProjectV2SingleSelectField {
+                          id
+                          name
+                          options {
+                            id
+                            name
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            `, { owner })
+
+            const project = projectData.user.projectV2
+            const projectId = project.id
+
+            const statusField = project.fields.nodes.find(f => f.name === 'Status')
+            if (!statusField) {
+              core.setFailed('Status field not found in project')
+              return
+            }
+
+            const inReviewOption = statusField.options.find(o => o.name === 'In Review')
+            if (!inReviewOption) {
+              core.setFailed('"In Review" option not found in Status field')
+              return
+            }
+
+            // Find the project item that corresponds to the issue
+            const issueItemData = await github.graphql(`
+              query($nodeId: ID!) {
+                node(id: $nodeId) {
+                  ... on Issue {
+                    projectItems(first: 50) {
+                      nodes {
+                        id
+                        project {
+                          id
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            `, { nodeId: issueNodeId })
+
+            const issueItem = issueItemData.node.projectItems.nodes.find(
+              item => item.project.id === projectId
+            )
+
+            if (!issueItem) {
+              core.info(`Issue #${issueNumber} is not tracked in the project board`)
+              return
+            }
+
+            // Move the issue to "In Review"
+            await github.graphql(`
+              mutation($projectId: ID!, $itemId: ID!, $fieldId: ID!, $optionId: String!) {
+                updateProjectV2ItemFieldValue(input: {
+                  projectId: $projectId
+                  itemId: $itemId
+                  fieldId: $fieldId
+                  value: { singleSelectOptionId: $optionId }
+                }) {
+                  projectV2Item {
+                    id
+                  }
+                }
+              }
+            `, {
+              projectId,
+              itemId: issueItem.id,
+              fieldId: statusField.id,
+              optionId: inReviewOption.id
+            })
+
+            core.info(`Issue #${issueNumber} moved to "In Review"`)
+
+            // Remove the PR card from the board if GitHub auto-added it
+            const prItemData = await github.graphql(`
+              query($nodeId: ID!) {
+                node(id: $nodeId) {
+                  ... on PullRequest {
+                    projectItems(first: 50) {
+                      nodes {
+                        id
+                        project {
+                          id
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            `, { nodeId: prNodeId })
+
+            const prItem = prItemData.node.projectItems.nodes.find(
+              item => item.project.id === projectId
+            )
+
+            if (prItem) {
+              await github.graphql(`
+                mutation($projectId: ID!, $itemId: ID!) {
+                  deleteProjectV2Item(input: { projectId: $projectId, itemId: $itemId }) {
+                    deletedItemId
+                  }
+                }
+              `, { projectId, itemId: prItem.id })
+
+              core.info('PR card removed from project board')
+            } else {
+              core.info('PR was not present as a card on the project board')
+            }
