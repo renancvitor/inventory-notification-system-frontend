@@ -25,7 +25,7 @@ jobs:
               return
             }
 
-            const issueNumber = parseInt(match[1])
+            const issueNumber = parseInt(match[2])
 
             // Resolve the issue node ID
             const issueData = await github.graphql(`
