@@ -1,0 +1,19 @@
+<div class="filter-panel">
+
+  <h3>Filtros</h3>
+
+  <div class="filter-content">
+    <ng-content></ng-content>
+  </div>
+
+  <div class="filter-actions">
+    <app-button class="clear-btn" (click)="filtersCleared.emit()">
+      Limpar
+    </app-button>
+
+    <app-button class="apply-btn" (click)="filtersApplied.emit()">
+      Aplicar
+    </app-button>
+  </div>
+
+</div>

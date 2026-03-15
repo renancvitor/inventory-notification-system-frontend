@@ -22,7 +22,7 @@
       </div>
     </div>
 
-    <button class="filter-btn">
+    <button class="filter-btn" [matMenuTriggerFor]="filterMenu">
       <mat-icon>filter_alt</mat-icon>
       Filtrar
     </button>
@@ -95,3 +95,36 @@
   </div>
 
 </div>
+
+<mat-menu #filterMenu="matMenu">
+
+  <app-filter-panel
+    (filtersApplied)="applyFilters()"
+    (filtersCleared)="clearFilters()"
+  >
+
+    <div class="filter-group">
+
+      <span>Status</span>
+
+      <mat-radio-group [(ngModel)]="filters.status" (click)="$event.stopPropagation()">
+
+        <mat-radio-button value="all">
+          Todos
+        </mat-radio-button>
+
+        <mat-radio-button value="active">
+          Ativos
+        </mat-radio-button>
+
+        <mat-radio-button value="inactive">
+          Inativos
+        </mat-radio-button>
+
+      </mat-radio-group>
+
+    </div>
+
+  </app-filter-panel>
+
+</mat-menu>
