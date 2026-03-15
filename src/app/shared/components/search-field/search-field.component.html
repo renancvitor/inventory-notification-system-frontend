@@ -1,0 +1,18 @@
+<div class="search-box">
+
+    <span>Pesquisar</span>
+
+    <div class="search-input">
+
+        <input
+            type="text"
+            [placeholder]="placeholder"
+            [(ngModel)]="searchTerm"
+            (input)="onInput()"
+        >
+
+        <mat-icon>search</mat-icon>
+
+    </div>
+    
+</div>

@@ -14,11 +14,12 @@ import { MatRadioModule } from '@angular/material/radio';
 import { PersonService } from './person.service';
 import { ButtonComponent } from '../../shared/components/button/button.component';
 import { FilterPanelComponent } from '../../shared/components/filter/filter-panel.component/filter-panel.component';
+import { SearchFieldComponent } from '../../shared/components/search-field/search-field.component'; 
 
 @Component({
   selector: 'app-person.component',
   standalone: true,
-  imports: [CommonModule, MatTableModule, MatPaginatorModule, MatButtonModule, MatIconModule, ButtonComponent, MatMenuModule, FormsModule,
+  imports: [CommonModule, MatTableModule, MatPaginatorModule, MatButtonModule, MatIconModule, ButtonComponent, MatMenuModule, FormsModule, SearchFieldComponent,
     FilterPanelComponent, MatRadioGroup, MatRadioModule],
   templateUrl: './person.component.html',
   styleUrls: ['./person.component.scss'],
@@ -58,6 +59,14 @@ export class PersonComponent {
     this.loadPersons();
   }
 
+  searchTerm = '';
+  
+  onSearch(term: string) {
+    this.searchTerm = term;
+    this.paginator.pageIndex = 0;
+    this.loadPersons();
+  }
+
   loadPersons() {
 
     const active =
@@ -67,6 +76,7 @@ export class PersonComponent {
 
     this.personService.list({
       active,
+      search: this.searchTerm || undefined,
       page: this.paginator?.pageIndex ?? 0,
       size: this.paginator?.pageSize ?? 10
     })
