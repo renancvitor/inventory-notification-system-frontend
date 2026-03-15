@@ -13,14 +13,11 @@
 
   <div class="toolbar">
 
-    <div class="search-box">
-      <span>Pesquisar pessoa</span>
-
-      <div class="search-input">
-        <input type="text" placeholder="Nome, CPF ou e-mail">
-        <mat-icon>search</mat-icon>
-      </div>
-    </div>
+    <app-search-field
+      label="Pesquisar pessoa"
+      placeholder="Nome, CPF ou e-mail"
+      (search)="onSearch($event)">
+    </app-search-field>
 
     <button class="filter-btn" [matMenuTriggerFor]="filterMenu">
       <mat-icon>filter_alt</mat-icon>
