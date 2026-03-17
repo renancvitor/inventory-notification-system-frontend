@@ -1,0 +1,120 @@
+.toast {
+  width: 420px;
+
+  padding: 20px;
+
+  background: #1B2130;
+
+  border-radius: 10px;
+
+  border: 1px solid rgba(76, 141, 255, 0.15);
+
+  color: #E6EDF7;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  margin: 0 auto;
+}
+
+/* HEADER */
+
+.toast-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.toast-icon {
+  width: 28px;
+  height: 28px;
+
+  border-radius: 50%;
+
+  background: #1F8B4C;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: bold;
+  color: white;
+}
+
+.toast-title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* DADOS */
+
+.toast-person {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.toast-name {
+  font-weight: 500;
+}
+
+.toast-info {
+  font-size: 13px;
+  opacity: 0.7;
+}
+
+/* BOTÕES */
+
+.toast-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.register-btn {
+  padding: 10px 18px;
+
+  background: linear-gradient(
+    90deg,
+    #5A98FF 0%,
+    #2E5599 100%
+  );
+
+  border: 1px solid;
+  border-radius: 6px;
+  border-color: #455A80;
+
+  color: #FFFFFF;
+  font-weight: 500;
+
+  white-space: nowrap;
+}
+
+.register-btn:hover {
+  background: #4C8DFF;
+  filter: brightness(1.1);
+
+  white-space: nowrap;
+}
+
+.back-to-list-btn {
+  padding: 10px 18px;
+
+  background: transparent;
+  
+  border: 1px solid;
+  border-radius: 6px;
+  border-color: #455A80;
+
+  color: #9AA6BF;
+  font-weight: 500;
+
+  white-space: nowrap;
+}
+
+.back-to-list-btn:hover {
+  background: rgba(69, 90, 128, 0.1);
+  filter: brightness(1.1);
+
+  white-space: nowrap;
+}

@@ -1,0 +1,49 @@
+<div class="toast">
+
+  <div class="toast-header">
+
+    <div class="toast-icon">
+      ✓
+    </div>
+
+    <div class="toast-title">
+      Cadastro realizado com sucesso
+    </div>
+
+  </div>
+
+  <div class="toast-person">
+
+    <div class="toast-name">
+      {{ data.person.personName }}
+    </div>
+
+    <div class="toast-info">
+      {{ data.person.cpf }}
+      •
+      {{ data.person.email }}
+      •
+      registrado agora
+    </div>
+
+  </div>
+
+  <div class="toast-actions">
+
+    <app-button
+      class="register-btn"
+      (click)="action('new')"
+    >
+      Cadastrar outra
+    </app-button>
+
+    <app-button
+      class="back-to-list-btn" 
+      (click)="action('list')"
+    >
+      Voltar para Pessoas
+    </app-button>
+
+  </div>
+
+</div>
