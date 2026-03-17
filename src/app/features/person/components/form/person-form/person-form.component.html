@@ -1,0 +1,51 @@
+<form [formGroup]="personForm" (ngSubmit)="onSubmit()" class="person-form">
+
+  <h2>Nova pessoa</h2>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Nome da pessoa</mat-label>
+    <input
+      matInput
+      placeholder="Digite o nome da pessoa"
+      formControlName="personName"
+      class="input-personName"
+    >
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>E-mail</mat-label>
+    <input
+      matInput
+      placeholder="Digite o e-mail da pessoa"
+      formControlName="email"
+      class="input-email"
+    >
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>CPF</mat-label>
+    <input
+      matInput
+      placeholder="Digite o CPF da pessoa"
+      formControlName="cpf"
+      class="input-cpf"
+    >
+  </mat-form-field>
+
+  <div class="actions">
+
+    <app-button
+      class="register-btn"
+      type="submit"
+      [disabled]="personForm.invalid"
+    >
+      {{ loading ? 'Salvando...' : 'Cadastrar' }}
+    </app-button>
+
+    <app-button class="clear-btn" type="button" (click)="cancel.emit()">
+      Cancelar
+    </app-button>
+
+  </div>
+
+</form>

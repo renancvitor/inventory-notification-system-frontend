@@ -1,0 +1,10 @@
+<div class="person-create-page">
+
+  <app-person-form
+    [loading]="loading"
+    (submitForm)="createPerson($event)"
+    (cancel)="cancel()"
+  >
+  </app-person-form>
+
+</div>

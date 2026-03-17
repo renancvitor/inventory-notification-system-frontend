@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
@@ -11,18 +12,18 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatRadioGroup } from '@angular/material/radio';
 import { MatRadioModule } from '@angular/material/radio';
 
-import { PersonService } from './person.service';
-import { ButtonComponent } from '../../shared/components/button/button.component';
-import { FilterPanelComponent } from '../../shared/components/filter/filter-panel.component/filter-panel.component';
-import { SearchFieldComponent } from '../../shared/components/search-field/search-field.component'; 
+import { PersonService } from '../../person.service';
+import { ButtonComponent } from '../../../../shared/components/button/button.component';
+import { FilterPanelComponent } from '../../../../shared/components/filter/filter-panel.component/filter-panel.component';
+import { SearchFieldComponent } from '../../../../shared/components/search-field/search-field.component'; 
 
 @Component({
   selector: 'app-person.component',
   standalone: true,
   imports: [CommonModule, MatTableModule, MatPaginatorModule, MatButtonModule, MatIconModule, ButtonComponent, MatMenuModule, FormsModule, SearchFieldComponent,
-    FilterPanelComponent, MatRadioGroup, MatRadioModule],
-  templateUrl: './person.component.html',
-  styleUrls: ['./person.component.scss'],
+    FilterPanelComponent, MatRadioGroup, MatRadioModule, RouterModule],
+  templateUrl: './person-list.component.html',
+  styleUrls: ['./person-list.component.scss'],
 })
 export class PersonComponent {
 
