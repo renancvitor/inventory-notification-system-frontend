@@ -3,12 +3,13 @@ import { Router } from '@angular/router';
 import { PersonService } from '../../person.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { PersonFormComponent } from '../../components/form/person-form/person-form.component';
+import { PersonFormComponent } from '../../components/form/person-form.component';
+import { ToastComponent } from '../../../../shared/components/toast/toast.component';
 
 @Component({
   selector: 'app-person-create.component',
   standalone: true,
-  imports: [PersonFormComponent],
+  imports: [PersonFormComponent, ToastComponent],
   templateUrl: './person-create.component.html',
   styleUrls: ['./person-create.component.scss'],
 })
@@ -48,14 +49,26 @@ export class PersonCreateComponent {
 
   showSuccessToast(person: any) {
 
-    const snackBarRef = this.snackBar.open('Pessoa cadastrada com sucesso',
-      'Ver lista',
-      { duration: 5000 }
-    );
+    this.snackBar.openFromComponent(ToastComponent, {
+    panelClass: 'custom-toast',
+    horizontalPosition: 'center',
+    verticalPosition: 'top',
+    data: {
+      person,
+      onAction: (action: string) => {
 
-    snackBarRef.onAction().subscribe(() => {
-      this.router.navigate(['/person']);
-    });
+        if (action === 'list') {
+          this.router.navigate(['/person']);
+        }
+
+        if (action === 'new') {
+          this.personFormComponent.resetForm();
+        }
+
+      }
+    }
+  });
+
   }
 
 }

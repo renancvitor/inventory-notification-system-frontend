@@ -25,3 +25,13 @@ body {
   border-color: #2E3A55;
   color: #A9B1C6;
 }
+
+.custom-toast .mat-mdc-snack-bar-container {
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+
+.custom-toast {
+  margin-top: 80px;
+}
