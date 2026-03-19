@@ -1,0 +1,31 @@
+<div class="person-edit-page">
+
+  <div class="title">
+    Pessoa Fulano de tal
+    <div class="status">Status: Ativo</div>
+  </div>
+
+  <div class="card">
+
+    <label>Status</label>
+
+    <select formControlName="active">
+      <option [value]="true">Ativo</option>
+      <option [value]="false">Inativo</option>
+    </select>
+
+  </div>
+
+  <div class="actions">
+
+    <app-button variant="secondary" (click)="cancel()">
+      Cancelar
+    </app-button>
+
+    <app-button color="primary" (click)="save()">
+      Salvar alterações
+    </app-button>
+
+  </div>
+
+</div>
