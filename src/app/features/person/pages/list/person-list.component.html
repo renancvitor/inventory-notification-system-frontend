@@ -71,7 +71,7 @@
         <th mat-header-cell *matHeaderCellDef>Ações</th>
         <td mat-cell *matCellDef="let person">
 
-          <app-button mat-icon-button color="primary">
+          <app-button mat-icon-button color="primary" [routerLink]="['/person/edit', person.id]">
             <mat-icon>edit</mat-icon>
           </app-button>
 
