@@ -1,30 +1,55 @@
 <div class="person-edit-page">
 
   <div class="title">
-    Pessoa Fulano de tal
-    <div class="status">Status: Ativo</div>
+
+    <h2>{{ personName }}</h2>
+
+    <div class="status">
+      Status:
+      <span
+        [class.active]="form.value.active"
+        [class.inactive]="!form.value.active"
+      >
+        {{ form.value.active ? 'Ativo' : 'Inativo' }}
+      </span>
+    </div>
+
   </div>
 
-  <div class="card">
+  <div class="card" [formGroup]="form">
 
-    <label>Status</label>
+    <mat-form-field appearance="outline" class="full-width">
 
-    <select formControlName="active">
-      <option [value]="true">Ativo</option>
-      <option [value]="false">Inativo</option>
-    </select>
+      <mat-label>Status</mat-label>
+
+      <mat-select formControlName="active">
+
+        <mat-option [value]="true">Ativo</mat-option>
+        <mat-option [value]="false">Inativo</mat-option>
+
+      </mat-select>
+
+    </mat-form-field>
 
   </div>
 
   <div class="actions">
 
-    <app-button variant="secondary" (click)="cancel()">
-      Cancelar
-    </app-button>
+    <div class="actions-container">
 
-    <app-button color="primary" (click)="save()">
-      Salvar alterações
-    </app-button>
+      <app-button class="clear-btn" (click)="cancel()">
+        Cancelar
+      </app-button>
+
+      <app-button
+        class="register-btn"
+        [disabled]="loading"
+        (click)="save()"
+      >
+        {{ loading ? 'Salvando...' : 'Salvar alterações' }}
+      </app-button>
+
+    </div>
 
   </div>
 

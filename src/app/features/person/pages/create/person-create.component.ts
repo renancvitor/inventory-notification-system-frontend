@@ -9,7 +9,7 @@ import { ToastComponent } from '../../../../shared/components/toast/toast.compon
 @Component({
   selector: 'app-person-create.component',
   standalone: true,
-  imports: [PersonFormComponent, ToastComponent],
+  imports: [PersonFormComponent],
   templateUrl: './person-create.component.html',
   styleUrls: ['./person-create.component.scss'],
 })
@@ -50,24 +50,24 @@ export class PersonCreateComponent {
   showSuccessToast(person: any) {
 
     this.snackBar.openFromComponent(ToastComponent, {
-    panelClass: 'custom-toast',
-    horizontalPosition: 'center',
-    verticalPosition: 'top',
-    data: {
-      person,
-      onAction: (action: string) => {
+      panelClass: 'custom-toast',
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      data: {
+        person,
+        onAction: (action: string) => {
 
-        if (action === 'list') {
-          this.router.navigate(['/person']);
+          if (action === 'list') {
+            this.router.navigate(['/person']);
+          }
+
+          if (action === 'new') {
+            this.personFormComponent.resetForm();
+          }
+
         }
-
-        if (action === 'new') {
-          this.personFormComponent.resetForm();
-        }
-
       }
-    }
-  });
+    });
 
   }
 

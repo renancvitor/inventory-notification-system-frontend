@@ -41,5 +41,11 @@ export class PersonService {
       withCredentials: true
     });
   }
+
+  getById(id: number) {
+    return this.http.get(`${this.apiUrl}/${id}`, {
+      withCredentials: true
+    });
+  }
   
 }
