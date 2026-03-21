@@ -12,8 +12,8 @@ import { CommonModule } from '@angular/common';
   selector: 'app-login',
   standalone: true,
   imports: [MatFormFieldModule, MatCardModule, MatInputModule, ButtonComponent, ReactiveFormsModule, CommonModule],
-  templateUrl: './login.html',
-  styleUrls: ['./login.scss'],
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
   private formBuilder = new FormBuilder();

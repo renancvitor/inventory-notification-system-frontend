@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { PersonService } from '../../person.service';
+import { PersonService } from '../../services/person.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { PersonFormComponent } from '../../components/form/person-form.component';

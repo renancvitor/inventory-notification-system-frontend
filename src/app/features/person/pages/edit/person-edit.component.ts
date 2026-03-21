@@ -6,7 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { PersonService } from '../../person.service';
+import { PersonService } from '../../services/person.service';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
 import { ToastComponent } from '../../../../shared/components/toast/toast.component';
 

@@ -10,8 +10,8 @@ import { Router } from '@angular/router';
   selector: 'app-header',
   standalone: true,
   imports: [CommonModule, RouterLink, MatToolbarModule, MatIconModule],
-  templateUrl: './header.html',
-  styleUrls: ['./header.scss'],
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
 
