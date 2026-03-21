@@ -7,10 +7,10 @@
     <div class="status">
       Status:
       <span
-        [class.active]="form.value.active"
-        [class.inactive]="!form.value.active"
+        [class.active]="isActiveValue"
+        [class.inactive]="!isActiveValue"
       >
-        {{ form.value.active ? 'Ativo' : 'Inativo' }}
+        {{ isActiveValue ? 'Ativo' : 'Inativo' }}
       </span>
     </div>
 

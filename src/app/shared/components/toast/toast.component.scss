@@ -69,6 +69,11 @@
 .toast-actions {
   display: flex;
   gap: 12px;
+  justify-content: flex-start;
+}
+
+.toast-actions:has(app-button:only-child) {
+  justify-content: center;
 }
 
 .register-btn {

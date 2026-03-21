@@ -1,12 +1,14 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, NgZone, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { PersonService } from '../../person.service';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
+import { ToastComponent } from '../../../../shared/components/toast/toast.component';
 
 @Component({
   selector: 'app-person-edit',
@@ -21,10 +23,14 @@ export class PersonEditComponent {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private personService = inject(PersonService);
-
+  private snackBar = inject(MatSnackBar);
+  private ngZone = inject(NgZone);
+  private cdr = inject(ChangeDetectorRef);
+  
   loading = false;
   id!: number;
   personName = '';
+  isActiveValue = false;
 
   form = this.formBuilder.group({
     active: [true]
@@ -32,6 +38,11 @@ export class PersonEditComponent {
 
   ngOnInit() {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
+
+    this.form.get('active')?.valueChanges.subscribe(value => {
+      this.isActiveValue = !!value;
+    });
+    
     this.loadPerson();
   }
 
@@ -43,6 +54,8 @@ export class PersonEditComponent {
       this.form.patchValue({
         active: person.active
       });
+
+      this.isActiveValue = !!person.active;
     });
   }
 
@@ -52,7 +65,7 @@ export class PersonEditComponent {
 
     this.loading = true;
 
-    const active = this.form.value.active;
+    const active = this.form.get('active')?.value ?? false;
 
     const request = active
       ? this.personService.activate(this.id)
@@ -61,10 +74,17 @@ export class PersonEditComponent {
     request.subscribe({
       next: () => {
         this.loading = false;
-        this.router.navigate(['/person']);
+        this.cdr.detectChanges();
+        
+        this.showUpdateToast({
+          title: 'Cadastro atualizado com sucesso',
+          name: this.personName,
+          info: 'Status alterado para ' + (active ? 'Ativo' : 'Inativo')
+        });
       },
       error: () => {
         this.loading = false;
+        this.cdr.detectChanges();
       }
     });
 
@@ -72,6 +92,32 @@ export class PersonEditComponent {
 
   cancel() {
     this.router.navigate(['/person']);
+  }
+
+  showUpdateToast(data: any) {
+
+    this.snackBar.openFromComponent(ToastComponent, {
+      panelClass: 'custom-toast',
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      data: { 
+        ...data,
+        primaryAction: {
+          label: 'Voltar para Pessoas',
+          type: 'list'
+        },
+        secondaryAction: null,
+        onAction: (action: string) => {
+
+          if (action === 'list') {
+            this.ngZone.run(() => {
+              this.router.navigate(['/person']);
+            });
+          }
+        }
+      }
+    });
+
   }
 
 }

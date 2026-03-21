@@ -34,7 +34,11 @@ export class PersonCreateComponent {
       next: (person) => {
         this.loading = false;
         this.personFormComponent.resetForm();
-        this.showSuccessToast(person);
+        this.showSuccessToast({
+          title: 'Cadastro realizado com sucesso',
+          name: person.personName,
+          info: `${person.cpf} • ${person.email} • registrado agora`
+        });
       },
       error: (error) => {
         this.loading = false;
@@ -47,14 +51,22 @@ export class PersonCreateComponent {
     this.router.navigate(['/person']);
   }
 
-  showSuccessToast(person: any) {
+  showSuccessToast(data: any) {
 
     this.snackBar.openFromComponent(ToastComponent, {
       panelClass: 'custom-toast',
       horizontalPosition: 'center',
       verticalPosition: 'top',
-      data: {
-        person,
+      data: { 
+        ...data,
+        primaryAction: {
+          label: 'Cadastrar outra',
+          type: 'new'
+        },
+        secondaryAction: {
+          label: 'Voltar para Pessoas',
+          type: 'list'
+        },
         onAction: (action: string) => {
 
           if (action === 'list') {
