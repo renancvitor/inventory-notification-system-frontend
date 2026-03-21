@@ -26,8 +26,6 @@ export class ToastComponent {
   }
 
   action(action: string) {
-    // this.snackBarRef.dismissWithAction();
-    // this.data.onAction(action);
     this.data.onAction(action);
     this.snackBarRef.dismiss();
   }

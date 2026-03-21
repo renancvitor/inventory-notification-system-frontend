@@ -6,8 +6,8 @@ import { MAT_SNACK_BAR_DATA, MatSnackBarRef } from '@angular/material/snack-bar'
   selector: 'app-error-snackbar',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './error-snackbar.html',
-  styleUrls: ['./error-snackbar.scss'],
+  templateUrl: './error-snackbar.component.html',
+  styleUrls: ['./error-snackbar.component.scss'],
 })
 export class ErrorSnackbarComponent {
 

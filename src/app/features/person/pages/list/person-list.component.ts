@@ -12,9 +12,9 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatRadioGroup } from '@angular/material/radio';
 import { MatRadioModule } from '@angular/material/radio';
 
-import { PersonService } from '../../person.service';
+import { PersonService } from '../../services/person.service';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
-import { FilterPanelComponent } from '../../../../shared/components/filter/filter-panel.component/filter-panel.component';
+import { FilterPanelComponent } from '../../../../shared/components/filter-panel/filter-panel.component';
 import { SearchFieldComponent } from '../../../../shared/components/search-field/search-field.component'; 
 
 @Component({
