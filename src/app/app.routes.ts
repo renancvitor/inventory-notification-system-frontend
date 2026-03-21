@@ -4,6 +4,7 @@ import { LoginComponent } from './features/auth/login/login.component';
 import { HomeComponent } from './features/home/home.component';
 import { PersonComponent } from './features/person/pages/list/person-list.component';
 import { PersonCreateComponent } from './features/person/pages/create/person-create.component';
+import { PersonEditComponent } from './features/person/pages/person-edit/person-edit.component';
 
 export const routes: Routes = [
 
@@ -28,6 +29,11 @@ export const routes: Routes = [
         path: 'person/create',
         canActivate: [authGuard],
         component: PersonCreateComponent
+    },
+
+    {
+        path: 'person/edit/:id',
+        component: PersonEditComponent
     },
 
     {

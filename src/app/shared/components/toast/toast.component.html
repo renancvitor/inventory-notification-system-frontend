@@ -7,23 +7,19 @@
     </div>
 
     <div class="toast-title">
-      Cadastro realizado com sucesso
+      {{ data.title }}
     </div>
 
   </div>
 
   <div class="toast-person">
 
-    <div class="toast-name">
-      {{ data.person.personName }}
+    <div class="toast-name" *ngIf="data.name">
+      {{ data.name }}
     </div>
 
-    <div class="toast-info">
-      {{ data.person.cpf }}
-      •
-      {{ data.person.email }}
-      •
-      registrado agora
+    <div class="toast-info" *ngIf="data.info">
+      {{ data.info }}
     </div>
 
   </div>
@@ -31,17 +27,19 @@
   <div class="toast-actions">
 
     <app-button
+      *ngIf="data.primaryAction"
       class="register-btn"
-      (click)="action('new')"
+      (click)="action(data.primaryAction.type)"
     >
-      Cadastrar outra
+      {{ data.primaryAction.label }}
     </app-button>
 
     <app-button
+      *ngIf="data.secondaryAction"
       class="back-to-list-btn" 
-      (click)="action('list')"
+      (click)="action(data.secondaryAction.type)"
     >
-      Voltar para Pessoas
+      {{ data.secondaryAction.label }}
     </app-button>
 
   </div>

@@ -9,7 +9,7 @@ import { ToastComponent } from '../../../../shared/components/toast/toast.compon
 @Component({
   selector: 'app-person-create.component',
   standalone: true,
-  imports: [PersonFormComponent, ToastComponent],
+  imports: [PersonFormComponent],
   templateUrl: './person-create.component.html',
   styleUrls: ['./person-create.component.scss'],
 })
@@ -34,7 +34,11 @@ export class PersonCreateComponent {
       next: (person) => {
         this.loading = false;
         this.personFormComponent.resetForm();
-        this.showSuccessToast(person);
+        this.showSuccessToast({
+          title: 'Cadastro realizado com sucesso',
+          name: person.personName,
+          info: `${person.cpf} • ${person.email} • registrado agora`
+        });
       },
       error: (error) => {
         this.loading = false;
@@ -47,27 +51,35 @@ export class PersonCreateComponent {
     this.router.navigate(['/person']);
   }
 
-  showSuccessToast(person: any) {
+  showSuccessToast(data: any) {
 
     this.snackBar.openFromComponent(ToastComponent, {
-    panelClass: 'custom-toast',
-    horizontalPosition: 'center',
-    verticalPosition: 'top',
-    data: {
-      person,
-      onAction: (action: string) => {
+      panelClass: 'custom-toast',
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      data: { 
+        ...data,
+        primaryAction: {
+          label: 'Cadastrar outra',
+          type: 'new'
+        },
+        secondaryAction: {
+          label: 'Voltar para Pessoas',
+          type: 'list'
+        },
+        onAction: (action: string) => {
 
-        if (action === 'list') {
-          this.router.navigate(['/person']);
+          if (action === 'list') {
+            this.router.navigate(['/person']);
+          }
+
+          if (action === 'new') {
+            this.personFormComponent.resetForm();
+          }
+
         }
-
-        if (action === 'new') {
-          this.personFormComponent.resetForm();
-        }
-
       }
-    }
-  });
+    });
 
   }
 

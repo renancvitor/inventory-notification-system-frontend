@@ -1,0 +1,56 @@
+<div class="person-edit-page">
+
+  <div class="title">
+
+    <h2>{{ personName }}</h2>
+
+    <div class="status">
+      Status:
+      <span
+        [class.active]="isActiveValue"
+        [class.inactive]="!isActiveValue"
+      >
+        {{ isActiveValue ? 'Ativo' : 'Inativo' }}
+      </span>
+    </div>
+
+  </div>
+
+  <div class="card" [formGroup]="form">
+
+    <mat-form-field appearance="outline" class="full-width">
+
+      <mat-label>Status</mat-label>
+
+      <mat-select formControlName="active">
+
+        <mat-option [value]="true">Ativo</mat-option>
+        <mat-option [value]="false">Inativo</mat-option>
+
+      </mat-select>
+
+    </mat-form-field>
+
+  </div>
+
+  <div class="actions">
+
+    <div class="actions-container">
+
+      <app-button class="clear-btn" (click)="cancel()">
+        Cancelar
+      </app-button>
+
+      <app-button
+        class="register-btn"
+        [disabled]="loading"
+        (click)="save()"
+      >
+        {{ loading ? 'Salvando...' : 'Salvar alterações' }}
+      </app-button>
+
+    </div>
+
+  </div>
+
+</div>
