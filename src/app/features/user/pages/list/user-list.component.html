@@ -6,9 +6,6 @@
             <p>Gerencie os usuários do sistema • {{ totalUsers }} usuários cadastrados</p>
         </div>
 
-        <app-button class="new-user-btn">
-            Novo usuário
-        </app-button>
     </div>
 
     <div class="toolbar">
@@ -65,7 +62,7 @@
                 <th mat-header-cell *matHeaderCellDef> Ações </th>
                 <td mat-cell *matCellDef="let user">
 
-                    <button mat-icon-button color="primary">
+                    <button mat-icon-button color="primary" [routerLink]="['/users', user.id]">
                         <mat-icon>edit</mat-icon>
                     </button>
 

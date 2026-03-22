@@ -1,0 +1,74 @@
+<div class="user-edit-page">
+
+  <div class="title">
+
+    <h2>{{ name }}</h2>
+    
+    <div class="status">
+      Status:
+      <span
+        [class.active]="isActivateValue"
+        [class.inactive]="!isActivateValue"
+      >
+        {{ isActivateValue ? 'Ativo' : 'Inativo' }}
+      </span>
+    </div>
+
+  </div>
+
+  <div class="card" [formGroup]="form">
+
+    <mat-form-field appearance="outline" class="full-width">
+
+      <mat-label>Tipo de Usuário</mat-label>
+
+      <mat-select formControlName="userType">
+
+        <mat-option
+          *ngFor="let type of userTypes"
+          [value]="type.id">
+          
+          {{ type.displayName }}
+
+        </mat-option>
+
+      </mat-select>
+
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+
+      <mat-label>Status</mat-label>
+
+      <mat-select formControlName="activate">
+
+        <mat-option [value]="true">Ativo</mat-option>
+        <mat-option [value]="false">Inativo</mat-option>
+
+      </mat-select>
+
+    </mat-form-field>
+
+  </div>
+
+  <div class="actions">
+
+    <div class="actions-container">
+
+      <app-button class="clear-btn" (click)="cancel()">
+        Cancelar
+      </app-button>
+
+      <app-button
+        class="register-btn"
+        [disabled]="loading"
+        (click)="save()"
+      >
+        {{ loading ? 'Salvando...' : 'Salvar alterações' }}
+      </app-button>
+
+    </div>
+    
+  </div>
+  
+</div>
