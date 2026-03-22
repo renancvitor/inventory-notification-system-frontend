@@ -33,6 +33,7 @@ export class UserEditComponent {
   isActivateValue = false;
   originalActive = false;
   userTypes: any[] = [];
+  user: any;
 
   form = this.formBuilder.group({
     userType: [null as number | null],
@@ -51,15 +52,17 @@ export class UserEditComponent {
   }
 
   loadUser() {
-    this.userService.getById(this.id).subscribe((user: any) => {
-
-      this.name = user.name;
+    this.userService.getById(this.id).subscribe((user) => {
+      this.user = user;
+      this.name = user.personName;
       this.isActivateValue = !!user.active;
       this.originalActive = !!user.active;
 
       if (!this.originalActive) {
         this.form.get('userType')?.disable();
       }
+
+      this.cdr.detectChanges();
     });
   }
 

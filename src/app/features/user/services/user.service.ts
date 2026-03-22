@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
+import { UserDetail } from '../user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -50,7 +51,7 @@ export class UserService {
   }
 
   getById(id: number) {
-    return this.http.get(`${this.apiUrl}/${id}`, {
+    return this.http.get<UserDetail>(`${this.apiUrl}/${id}`, {
       withCredentials: true
     });
   }
