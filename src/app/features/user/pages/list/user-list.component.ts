@@ -5,20 +5,26 @@ import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { UserService } from '../../user.service';
+import { ButtonComponent } from '../../../../shared/components/button/button.component';
+import { SearchFieldComponent } from '../../../../shared/components/search-field/search-field.component';
+import { FilterPanelComponent } from '../../../../shared/components/filter-panel/filter-panel.component';
 
 @Component({
   selector: 'app-user-list.component',
-  imports: [CommonModule, MatTableModule, MatIconModule, MatPaginatorModule, MatButtonModule],
+  standalone: true,
+  imports: [CommonModule, MatTableModule, MatIconModule, MatPaginatorModule, MatButtonModule, ButtonComponent, SearchFieldComponent, MatMenuModule, FilterPanelComponent],
   templateUrl: './user-list.component.html',
-  styleUrl: './user-list.component.scss',
+  styleUrls: ['./user-list.component.scss'],
 })
 export class UserListComponent {
 
   displayedColumns: string[] = ['name', 'email', 'userType', 'active', 'actions'];
 
-  dataSource: any[] = [];
+  dataSource: MatTableDataSource<any> = new MatTableDataSource();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -32,6 +38,8 @@ export class UserListComponent {
     });
   }
 
+  totalUsers = 0;
+
   loadUsers() {
 
     this.userService.list({
@@ -39,9 +47,14 @@ export class UserListComponent {
       size: this.paginator?.pageSize ?? 10
     })
     .subscribe((response: any) => {
-      this.dataSource = response.content;
+      this.dataSource.data = response.content;
+      this.totalUsers = response.totalElements;
     });
-    
+
+  }
+
+  onSearch(value: string) {
+    console.log(value);    
   }
 
 }
