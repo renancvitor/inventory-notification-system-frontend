@@ -75,6 +75,12 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
+            <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell no-data" colspan="5">
+                Nenhum usuário encontrado
+            </td>
+            </tr>
+
         </table>
 
     </div>

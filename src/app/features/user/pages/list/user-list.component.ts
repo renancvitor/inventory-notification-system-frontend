@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -23,6 +23,7 @@ import { FilterPanelComponent } from '../../../../shared/components/filter-panel
     FilterPanelComponent, MatRadioModule, MatRadioGroup, FormsModule],
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserListComponent {
 
@@ -32,7 +33,7 @@ export class UserListComponent {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private changeDetectorRef: ChangeDetectorRef) {}
 
   userTypes: any[] = [];
 
@@ -40,11 +41,11 @@ export class UserListComponent {
     this.userService.getUserTypes().subscribe((types) => {
       this.userTypes = types;
     });
+
+    this.loadUsers();
   }
   
   ngAfterViewInit() {
-    this.loadUsers();
-
     this.paginator.page.subscribe(() => {
       this.loadUsers();
     });
@@ -56,6 +57,11 @@ export class UserListComponent {
     status: 'all',
     userType: 'all'
   };
+
+  private resetAndReload() {
+    this.paginator.pageIndex = 0;
+    this.loadUsers();
+  }
 
   applyFilters() {
     this.paginator.pageIndex = 0;
@@ -102,6 +108,8 @@ export class UserListComponent {
     .subscribe((response: any) => {
       this.dataSource.data = response.content;
       this.totalUsers = response.totalElements;
+      
+      this.changeDetectorRef.markForCheck();
     });
 
   }
