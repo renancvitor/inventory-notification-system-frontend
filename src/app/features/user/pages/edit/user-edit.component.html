@@ -2,7 +2,7 @@
 
   <div class="title">
 
-    <h2>{{ name }}</h2>
+    <h2>{{ user?.personName }}</h2>
     
     <div class="status">
       Status:
@@ -12,6 +12,13 @@
       >
         {{ isActivateValue ? 'Ativo' : 'Inativo' }}
       </span>
+    </div>
+
+    <div class="status">
+        Tipo de Usuário:
+        <span>
+          {{ user?.nameUserType || 'N/A' }}
+        </span>
     </div>
 
   </div>
