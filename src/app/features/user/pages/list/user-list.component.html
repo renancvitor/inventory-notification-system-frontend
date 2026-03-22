@@ -114,6 +114,28 @@
 
             </div>
 
+            <div class="filter-group">
+
+                <span>Tipo de Usuário</span>
+
+                <mat-radio-group [(ngModel)]="filters.userType" (click)="$event.stopPropagation()">
+
+                    <mat-radio-button value="all">
+                    Todos
+                    </mat-radio-button>
+
+                    <mat-radio-button
+                        *ngFor="let type of userTypes"
+                        [value]="type.name">
+
+                    {{ type.displayName }}
+
+                    </mat-radio-button>
+
+                </mat-radio-group>
+
+            </div>
+
         </app-filter-panel>
         
     </mat-menu>

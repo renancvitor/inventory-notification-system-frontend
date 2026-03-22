@@ -33,6 +33,14 @@ export class UserListComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(private userService: UserService) {}
+
+  userTypes: any[] = [];
+
+  ngOnInit() {
+    this.userService.getUserTypes().subscribe((types) => {
+      this.userTypes = types;
+    });
+  }
   
   ngAfterViewInit() {
     this.loadUsers();
@@ -45,7 +53,8 @@ export class UserListComponent {
   totalUsers = 0;
 
   filters = {
-    status: 'all'
+    status: 'all',
+    userType: 'all'
   };
 
   applyFilters() {
@@ -54,7 +63,11 @@ export class UserListComponent {
   }
 
   clearFilters() {
-    this.filters.status = 'all';
+    this.filters = {
+      status: 'all',
+      userType: 'all'
+    };
+
     this.paginator.pageIndex = 0;
     this.loadUsers();
   }
@@ -74,8 +87,14 @@ export class UserListComponent {
         ? undefined
         : this.filters.status === 'active';
 
+    const userType =
+      this.filters.userType === 'all'
+        ? undefined
+        : this.filters.userType;
+
     this.userService.list({
       active,
+      userType,
       search: this.searchTerm || undefined,
       page: this.paginator?.pageIndex ?? 0,
       size: this.paginator?.pageSize ?? 10
