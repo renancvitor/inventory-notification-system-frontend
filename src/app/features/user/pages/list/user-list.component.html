@@ -80,8 +80,36 @@
     </mat-paginator>
 
     <mat-menu #filterMenu="matMenu">
-        <button mat-menu-item>Ativos</button>
-        <button mat-menu-item>Inativos</button>
+
+        <app-filter-panel
+            (filtersApplied)="applyFilters()"
+            (filtersCleared)="clearFilters()"
+         >
+
+            <div class="filter-group">
+
+                <span>Status</span>
+
+                <mat-radio-group [(ngModel)]="filters.status" (click)="$event.stopPropagation()">
+
+                    <mat-radio-button value="all">
+                    Todos
+                    </mat-radio-button>
+
+                    <mat-radio-button value="active">
+                    Ativos
+                    </mat-radio-button>
+
+                    <mat-radio-button value="inactive">
+                    Inativos
+                    </mat-radio-button>
+
+                </mat-radio-group>
+
+            </div>
+
+        </app-filter-panel>
+        
     </mat-menu>
 
 </div>
