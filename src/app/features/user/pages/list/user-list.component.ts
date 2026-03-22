@@ -13,14 +13,13 @@ import { MatRadioGroup } from '@angular/material/radio';
 import { RouterModule } from '@angular/router';
 
 import { UserService } from '../../services/user.service';
-import { ButtonComponent } from '../../../../shared/components/button/button.component';
 import { SearchFieldComponent } from '../../../../shared/components/search-field/search-field.component';
 import { FilterPanelComponent } from '../../../../shared/components/filter-panel/filter-panel.component';
 
 @Component({
   selector: 'app-user-list.component',
   standalone: true,
-  imports: [CommonModule, MatTableModule, MatIconModule, MatPaginatorModule, MatButtonModule, ButtonComponent, SearchFieldComponent, MatMenuModule, 
+  imports: [CommonModule, MatTableModule, MatIconModule, MatPaginatorModule, MatButtonModule, SearchFieldComponent, MatMenuModule, 
     FilterPanelComponent, MatRadioModule, MatRadioGroup, FormsModule, RouterModule],
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss'],
