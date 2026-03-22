@@ -1,8 +1,155 @@
-.user-container {
-    padding: 30px;
+.user-page {
+    max-width: 1120px;
+    margin: 40px auto;
+}
+
+/* HEADER */
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+
+    h1 {
+        font-size: 20px;
+        margin: 0;
+    }
+
+    p {
+        opacity: 0.6;
+        margin-top: 4px;
+    }
+}
+
+/* BOTÃO NOVO USUÁRIO */
+
+.new-user-btn {
+    padding: 10px 18px;
+
+    background: linear-gradient(
+        90deg,
+        #5A98FF 0%,
+        #2E5599 100%
+    );
+
+    border: none;
+    border-radius: 6px;
+
+    color: #FFFFFF;
+    font-weight: 500;
+}
+
+/* TOOLBAR */
+
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 20px;
+
+    background: #1B2130;
+
+    border-radius: 8px;
+    border: 1px solid #2E5599;
+
+    margin-bottom: 8px;
+}
+
+/* SEARCH */
+
+.search-box {
+
+    mat-icon {
+        opacity: 0.6;
+    }
+}
+
+/* FILTRO */
+
+.filter-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 8px 16px;
+
+    border-radius: 6px;
+    border: 1px solid #455A80;
+
+    background: transparent;
+    color: #FFFFFF;
+}
+
+/* TABLE */
+
+.table-container {
+    background: #1B2130;
+    backdrop-filter: blur(10px);
+
+    border-radius: 8px;
+    border: 1px solid #2E5599;
+
+    padding: 10px 0;
 }
 
 table { 
     width: 100%;
-    margin-top: 20px;
+}
+
+.mat-column-actions {
+    text-align: center;
+}
+
+/* HEADER */
+
+.mat-mdc-header-cell {
+  font-weight: 600;
+  opacity: 0.8;
+  color: #9AA4B2;
+}
+
+/* HOVER */
+
+.mat-mdc-row:hover {
+  background: #242C3F;
+}
+
+/* DATA */
+
+.mat-mdc-row {
+  color: #E6EDF7;
+}
+
+/* STATUS */
+
+.status {
+  padding: 4px 12px;
+  border-radius: 14px;
+  font-size: 12px;
+}
+
+.status.active {
+  background: #1F8B4C;
+  color: #EAFBF1;
+  font-size: 12px;
+}
+
+.status.inactive {
+  background: #3a4158;
+  color: #b0b7c3;
+}
+
+/* PAGINATOR */
+
+mat-paginator {
+  margin-top: 8px;
+  background: transparent;
+  padding-right: 16px;
+}
+
+::ng-deep .mat-mdc-paginator .mat-mdc-text-field-wrapper {
+  padding-left: 12px;
+  padding-right: 12px;
 }
