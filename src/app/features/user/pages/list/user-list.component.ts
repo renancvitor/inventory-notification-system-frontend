@@ -10,6 +10,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatRadioGroup } from '@angular/material/radio';
+import { RouterModule } from '@angular/router';
 
 import { UserService } from '../../services/user.service';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
@@ -20,7 +21,7 @@ import { FilterPanelComponent } from '../../../../shared/components/filter-panel
   selector: 'app-user-list.component',
   standalone: true,
   imports: [CommonModule, MatTableModule, MatIconModule, MatPaginatorModule, MatButtonModule, ButtonComponent, SearchFieldComponent, MatMenuModule, 
-    FilterPanelComponent, MatRadioModule, MatRadioGroup, FormsModule],
+    FilterPanelComponent, MatRadioModule, MatRadioGroup, FormsModule, RouterModule],
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

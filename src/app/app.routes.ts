@@ -9,6 +9,7 @@ import { PersonCreateComponent } from './features/person/pages/create/person-cre
 import { PersonEditComponent } from './features/person/pages/edit/person-edit.component';
 
 import { UserListComponent } from './features/user/pages/list/user-list.component';
+import { UserEditComponent } from './features/user/pages/edit/user-edit.component';
 
 export const routes: Routes = [
 
@@ -37,6 +38,7 @@ export const routes: Routes = [
 
     {
         path: 'person/edit/:id',
+        canActivate: [authGuard],
         component: PersonEditComponent
     },
 
@@ -44,6 +46,11 @@ export const routes: Routes = [
         path: 'users',
         canActivate: [authGuard],
         component: UserListComponent
+    },
+
+    {
+        path: 'users/:id',
+        canActivate: [authGuard],        component: UserEditComponent
     },
 
     {

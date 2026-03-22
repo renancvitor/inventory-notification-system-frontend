@@ -25,8 +25,8 @@ export class UserService {
     });
   }
 
-  updateUserType(id: number, userType: string): Observable<any> {
-    return this.http.put(`${this.apiUrl}/type/${id}`, { userType }, {
+  updateUserType(id: number, data: { idUserType: number }) {
+    return this.http.put(`${this.apiUrl}/type/${id}`, data, {
       withCredentials: true
     });
   }
@@ -45,6 +45,12 @@ export class UserService {
 
   getUserTypes() {
     return this.http.get<any[]>(`${this.apiUrl}/user-types`, {
+      withCredentials: true
+    });
+  }
+
+  getById(id: number) {
+    return this.http.get(`${this.apiUrl}/${id}`, {
       withCredentials: true
     });
   }
