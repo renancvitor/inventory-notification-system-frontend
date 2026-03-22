@@ -75,6 +75,12 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
+            <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell no-data" colspan="5">
+                Nenhum usuário encontrado
+            </td>
+            </tr>
+
         </table>
 
     </div>
@@ -108,6 +114,28 @@
 
                     <mat-radio-button value="inactive">
                     Inativos
+                    </mat-radio-button>
+
+                </mat-radio-group>
+
+            </div>
+
+            <div class="filter-group">
+
+                <span>Tipo de Usuário</span>
+
+                <mat-radio-group [(ngModel)]="filters.userType" (click)="$event.stopPropagation()">
+
+                    <mat-radio-button value="all">
+                    Todos
+                    </mat-radio-button>
+
+                    <mat-radio-button
+                        *ngFor="let type of userTypes"
+                        [value]="type.name">
+
+                    {{ type.displayName }}
+
                     </mat-radio-button>
 
                 </mat-radio-group>

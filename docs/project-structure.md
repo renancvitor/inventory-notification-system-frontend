@@ -51,11 +51,19 @@ src/app/
  │    │    │         ├── person-list.component.scss
  │    │    │         ├── person-list.component.spec.ts
  │    │    │         └── person-list.component.ts
- │    │    ├── person.service.spec.ts
- │    │    └── person.service.ts
+ │    │    └── services/
+ │    │         ├── person.service.spec.ts
+ │    │         └── person.service.ts
  │    └── user/
- │         ├── user.service.spec.ts
- │         └── user.service.ts
+ │         ├── pages/
+ │         │    └── list/
+ │         │         ├── user-list.component.html
+ │         │         ├── user-list.component.scss
+ │         │         ├── user-list.component.spec.ts
+ │         │         └── user-list.component.ts 
+ │         └── services/
+ │              ├── user.service.spec.ts
+ │              └── user.service.ts
  ├── shared/
  │    ├── components/
  │    │    ├── button/

@@ -12,10 +12,11 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  list(params?: {active?: boolean; page?: number; size?: number; search?: string }) {
+  list(params?: {active?: boolean; userType?: string; page?: number; size?: number; search?: string }) {
     return this.http.get(this.apiUrl, {
       params: {
         ...(params?.active !== undefined && { active:params.active }),
+        ...(params?.userType !== undefined && { userType:params.userType }),
         ...(params?.page !== undefined && { page:params.page }),
         ...(params?.size !== undefined && { size:params.size }),
         ...(params?.search !== undefined && { search:params.search }),
@@ -41,5 +42,11 @@ export class UserService {
       withCredentials: true
     });
   }
-  
+
+  getUserTypes() {
+    return this.http.get<any[]>(`${this.apiUrl}/user-types`, {
+      withCredentials: true
+    });
+  }
+
 }

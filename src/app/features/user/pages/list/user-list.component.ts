@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -23,6 +23,7 @@ import { FilterPanelComponent } from '../../../../shared/components/filter-panel
     FilterPanelComponent, MatRadioModule, MatRadioGroup, FormsModule],
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserListComponent {
 
@@ -32,11 +33,19 @@ export class UserListComponent {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private changeDetectorRef: ChangeDetectorRef) {}
+
+  userTypes: any[] = [];
+
+  ngOnInit() {
+    this.userService.getUserTypes().subscribe((types) => {
+      this.userTypes = types;
+    });
+
+    this.loadUsers();
+  }
   
   ngAfterViewInit() {
-    this.loadUsers();
-
     this.paginator.page.subscribe(() => {
       this.loadUsers();
     });
@@ -45,8 +54,14 @@ export class UserListComponent {
   totalUsers = 0;
 
   filters = {
-    status: 'all'
+    status: 'all',
+    userType: 'all'
   };
+
+  private resetAndReload() {
+    this.paginator.pageIndex = 0;
+    this.loadUsers();
+  }
 
   applyFilters() {
     this.paginator.pageIndex = 0;
@@ -54,7 +69,11 @@ export class UserListComponent {
   }
 
   clearFilters() {
-    this.filters.status = 'all';
+    this.filters = {
+      status: 'all',
+      userType: 'all'
+    };
+
     this.paginator.pageIndex = 0;
     this.loadUsers();
   }
@@ -74,8 +93,14 @@ export class UserListComponent {
         ? undefined
         : this.filters.status === 'active';
 
+    const userType =
+      this.filters.userType === 'all'
+        ? undefined
+        : this.filters.userType;
+
     this.userService.list({
       active,
+      userType,
       search: this.searchTerm || undefined,
       page: this.paginator?.pageIndex ?? 0,
       size: this.paginator?.pageSize ?? 10
@@ -83,6 +108,8 @@ export class UserListComponent {
     .subscribe((response: any) => {
       this.dataSource.data = response.content;
       this.totalUsers = response.totalElements;
+      
+      this.changeDetectorRef.markForCheck();
     });
 
   }
