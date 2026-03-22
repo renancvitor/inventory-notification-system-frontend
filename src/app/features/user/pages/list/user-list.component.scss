@@ -153,3 +153,40 @@ mat-paginator {
   padding-left: 12px;
   padding-right: 12px;
 }
+
+/* FILTER */
+
+mat-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.filter-group span {
+  font-size: 13px;
+  opacity: 0.7;
+}
+
+.filter-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+::ng-deep .filter-menu .mat-mdc-menu-content {
+  padding: 0 !important;
+}
+
+::ng-deep .mat-mdc-menu-content {
+  padding: 0 !important;
+}
+
+::ng-deep .mat-mdc-menu-panel {
+  max-width: none !important;
+}
