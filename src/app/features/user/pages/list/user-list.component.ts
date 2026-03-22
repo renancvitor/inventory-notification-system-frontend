@@ -11,7 +11,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatRadioGroup } from '@angular/material/radio';
 
-import { UserService } from '../../user.service';
+import { UserService } from '../../services/user.service';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
 import { SearchFieldComponent } from '../../../../shared/components/search-field/search-field.component';
 import { FilterPanelComponent } from '../../../../shared/components/filter-panel/filter-panel.component';
@@ -59,6 +59,14 @@ export class UserListComponent {
     this.loadUsers();
   }
 
+  searchTerm = '';
+
+  onSearch(term: string) {
+    this.searchTerm = term;
+    this.paginator.pageIndex = 0;
+    this.loadUsers();
+  }
+
   loadUsers() {
 
     const active =
@@ -68,6 +76,7 @@ export class UserListComponent {
 
     this.userService.list({
       active,
+      search: this.searchTerm || undefined,
       page: this.paginator?.pageIndex ?? 0,
       size: this.paginator?.pageSize ?? 10
     })
@@ -76,10 +85,6 @@ export class UserListComponent {
       this.totalUsers = response.totalElements;
     });
 
-  }
-
-  onSearch(value: string) {
-    console.log(value);    
   }
 
 }
