@@ -1,17 +1,21 @@
 import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { MatTableModule } from '@angular/material/table';
+import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { ProductService } from '../services/product.service';
+import { ButtonComponent } from '../../../shared/components/button/button.component';
+import { SearchFieldComponent } from '../../../shared/components/search-field/search-field.component';
+import { FilterPanelComponent } from '../../../shared/components/filter-panel/filter-panel.component';
 
 @Component({
   selector: 'app-product-list.component',
   standalone: true,
-  imports: [CommonModule, MatTableModule, MatPaginatorModule, MatIconModule, MatButtonModule],
+  imports: [CommonModule, MatTableModule, MatPaginatorModule, MatIconModule, MatButtonModule, MatMenuModule, ButtonComponent, SearchFieldComponent, FilterPanelComponent],
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.scss'],
 })
@@ -19,7 +23,7 @@ export class ProductListComponent {
 
   displayedColumns: string[] = ['name', 'brand', 'category', 'price', 'validity', 'stock', 'active', 'actions'];
 
-  dataSource: any[] = [];
+  dataSource: MatTableDataSource<any> = new MatTableDataSource<any>([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -33,6 +37,8 @@ export class ProductListComponent {
     });
   }
 
+  totalProducts = 0;
+
   loadProducts() {
 
     this.productService.list({
@@ -40,8 +46,13 @@ export class ProductListComponent {
       size: this.paginator?.pageSize ?? 10,
     })
     .subscribe((response: any) => {
-      this.dataSource = response.content;
+      this.dataSource.data = response.content;
+      this.totalProducts = response.totalElements;
     })
+  }
+
+  onSearch(value: string) {
+    //
   }
 
 }

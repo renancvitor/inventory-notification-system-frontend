@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { authGuard } from './core/auth/auth.guard';
 
 import { LoginComponent } from './features/auth/login/login.component';
+
 import { HomeComponent } from './features/home/home.component';
 
 import { PersonComponent } from './features/person/pages/list/person-list.component';
@@ -10,6 +11,8 @@ import { PersonEditComponent } from './features/person/pages/edit/person-edit.co
 
 import { UserListComponent } from './features/user/pages/list/user-list.component';
 import { UserEditComponent } from './features/user/pages/edit/user-edit.component';
+
+import { ProductListComponent } from './features/product/pages/product-list.component';
 
 export const routes: Routes = [
 
@@ -50,7 +53,14 @@ export const routes: Routes = [
 
     {
         path: 'users/:id',
-        canActivate: [authGuard],        component: UserEditComponent
+        canActivate: [authGuard],
+        component: UserEditComponent
+    },
+
+    {
+        path: 'products',
+        canActivate: [authGuard],
+        component: ProductListComponent
     },
 
     {
