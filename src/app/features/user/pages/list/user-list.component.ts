@@ -58,11 +58,6 @@ export class UserListComponent {
     userType: 'all'
   };
 
-  private resetAndReload() {
-    this.paginator.pageIndex = 0;
-    this.loadUsers();
-  }
-
   applyFilters() {
     this.paginator.pageIndex = 0;
     this.loadUsers();

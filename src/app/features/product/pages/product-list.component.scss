@@ -11,7 +11,7 @@
     align-items: center;
     margin-bottom: 25px;
 
-    h1 {
+    h2 {
         font-size: 20px;
         margin: 0;
     }
@@ -22,9 +22,9 @@
     }
 }
 
-/* BOTÃO NOVO USUÁRIO */
+/* BOTÃO NOVO PRODUTO */
 
-.new-user-btn {
+.new-product-btn {
     padding: 10px 18px;
 
     background: linear-gradient(
@@ -152,4 +152,41 @@ mat-paginator {
 ::ng-deep .mat-mdc-paginator .mat-mdc-text-field-wrapper {
   padding-left: 12px;
   padding-right: 12px;
+}
+
+/* FILTER */
+
+mat-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.filter-group span {
+  font-size: 13px;
+  opacity: 0.7;
+}
+
+.filter-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+::ng-deep .filter-menu .mat-mdc-menu-content {
+  padding: 0 !important;
+}
+
+::ng-deep .mat-mdc-menu-content {
+  padding: 0 !important;
+}
+
+::ng-deep .mat-mdc-menu-panel {
+  max-width: none !important;
 }
