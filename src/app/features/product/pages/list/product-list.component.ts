@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
@@ -9,15 +10,16 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatRadioModule } from '@angular/material/radio';
 
-import { ProductService } from '../services/product.service';
-import { ButtonComponent } from '../../../shared/components/button/button.component';
-import { SearchFieldComponent } from '../../../shared/components/search-field/search-field.component';
-import { FilterPanelComponent } from '../../../shared/components/filter-panel/filter-panel.component';
+import { ProductService } from '../../services/product.service';
+import { ButtonComponent } from '../../../../shared/components/button/button.component';
+import { SearchFieldComponent } from '../../../../shared/components/search-field/search-field.component';
+import { FilterPanelComponent } from '../../../../shared/components/filter-panel/filter-panel.component';
 
 @Component({
   selector: 'app-product-list.component',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatTableModule, MatPaginatorModule, MatIconModule, MatButtonModule, MatMenuModule, MatRadioModule, ButtonComponent, SearchFieldComponent, FilterPanelComponent],
+  imports: [CommonModule, FormsModule, MatTableModule, MatPaginatorModule, MatIconModule, MatButtonModule,
+    MatMenuModule, MatRadioModule, ButtonComponent, SearchFieldComponent, FilterPanelComponent, RouterModule],
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.scss'],
 })

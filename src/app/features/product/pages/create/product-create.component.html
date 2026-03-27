@@ -1,0 +1,14 @@
+<div class="product-create-page">
+
+  <app-product-form
+    title="Novo produto"
+    [loading]="loading"
+    [loadingCategories]="loadingCategories"
+    [categories]="categories"
+    [showSummary]="false"
+    (submitForm)="createProduct($event)"
+    (cancel)="cancel()"
+  >
+  </app-product-form>
+
+</div>
