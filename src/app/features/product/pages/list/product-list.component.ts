@@ -152,8 +152,8 @@ export class ProductListComponent implements AfterViewInit {
     });
   }
 
-  onSearch(value: string) {
-    this.searchTerm = value.trim();
+  onSearch(term: string) {
+    this.searchTerm = term;
     this.paginator.pageIndex = 0;
     this.loadProducts();
   }
