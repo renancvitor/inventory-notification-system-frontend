@@ -44,7 +44,7 @@ export class ProductFormComponent {
     productName: ['', Validators.required],
     categoryId: [null as number | null, Validators.required],
     price: [null as number | null, [Validators.required, Validators.min(0.01)]],
-    validity: ['', Validators.required],
+    validity: [''],
     description: [''],
     stock: [0, [Validators.required, Validators.min(0)]],
     minimumStock: [null as number | null, [Validators.min(0)]],

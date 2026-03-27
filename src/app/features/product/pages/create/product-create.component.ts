@@ -1,9 +1,10 @@
-import { Component, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, ViewChild, inject } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { ProductCategory, ProductService } from '../../services/product.service';
 import { ProductFormComponent, ProductFormValue } from '../../components/form/product-form.component';
+import { ToastComponent } from '../../../../shared/components/toast/toast.component';
 
 @Component({
   selector: 'app-product-create.component',
@@ -14,6 +15,8 @@ import { ProductFormComponent, ProductFormValue } from '../../components/form/pr
 })
 export class ProductCreateComponent {
 
+  private readonly route = inject(ActivatedRoute);
+
   constructor(private productService: ProductService, private router: Router, private snackBar: MatSnackBar) {}
 
   @ViewChild(ProductFormComponent) productFormComponent!: ProductFormComponent;
@@ -23,7 +26,11 @@ export class ProductCreateComponent {
   categories: ProductCategory[] = [];
 
   ngOnInit() {
-    this.loadCategories();
+    this.categories = this.route.snapshot.data['categories'] ?? [];
+
+    if (!this.categories.length) {
+      this.loadCategories();
+    }
   }
 
   createProduct(productData: ProductFormValue) {
@@ -55,14 +62,32 @@ export class ProductCreateComponent {
   }
 
   showSuccessToast(product: any) {
+    this.snackBar.openFromComponent(ToastComponent, {
+      panelClass: 'custom-toast',
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      data: {
+        title: 'Cadastro realizado com sucesso',
+        name: product.productName,
+        info: `${product.category} • ${this.formatPrice(product.price)} • Estoque inicial: ${product.stock}`,
+        primaryAction: {
+          label: 'Cadastrar outro',
+          type: 'new'
+        },
+        secondaryAction: {
+          label: 'Voltar para Produtos',
+          type: 'list'
+        },
+        onAction: (action: string) => {
+          if (action === 'list') {
+            this.router.navigate(['/products']);
+          }
 
-    const snackBarRef = this.snackBar.open(`Produto "${product.productName}" criado com sucesso!`,
-      'Ver Produto', 
-      { duration: 5000 }
-    );
-
-    snackBarRef.onAction().subscribe(() => {
-      this.router.navigate(['/products']);
+          if (action === 'new') {
+            this.productFormComponent.resetForm();
+          }
+        }
+      }
     });
   }
 
@@ -78,6 +103,15 @@ export class ProductCreateComponent {
         this.loadingCategories = false;
       }
     });
+  }
+
+  private formatPrice(value: number | string) {
+    return new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(Number(value));
   }
 
 }

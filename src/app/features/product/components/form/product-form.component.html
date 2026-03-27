@@ -80,10 +80,10 @@
     </label>
 
     <label class="product-form__field">
-      <span>Estoque minimo</span>
+      <span>Estoque</span>
       <input
         type="number"
-        formControlName="minimumStock"
+        formControlName="stock"
         placeholder="0"
       >
     </label>
@@ -100,7 +100,7 @@
     </label>
   </section>
 
-  <input class="product-form__hidden-control" type="hidden" formControlName="stock">
+  <input class="product-form__hidden-control" type="hidden" formControlName="minimumStock">
 
   <div class="product-form__footer">
     <app-button

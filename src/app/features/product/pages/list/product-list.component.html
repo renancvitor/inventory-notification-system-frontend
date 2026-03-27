@@ -33,12 +33,16 @@
     
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef> Nome </th>
-                <td mat-cell *matCellDef="let product"> {{ product.productName }} </td>
+                <td mat-cell *matCellDef="let product">
+                    <span class="product-list__text-cell">{{ product.productName }}</span>
+                </td>
             </ng-container>
     
             <ng-container matColumnDef="brand">
                 <th mat-header-cell *matHeaderCellDef> Marca </th>
-                <td mat-cell *matCellDef="let product"> {{ product.brand }} </td>
+                <td mat-cell *matCellDef="let product">
+                    <span class="product-list__text-cell">{{ product.brand }}</span>
+                </td>
             </ng-container>
     
             <ng-container matColumnDef="category">
@@ -48,12 +52,12 @@
     
             <ng-container matColumnDef="price">
                 <th mat-header-cell *matHeaderCellDef> Preço </th>
-                <td mat-cell *matCellDef="let product"> {{ product.price | currency }} </td>
+                <td mat-cell *matCellDef="let product"> {{ formatPrice(product.price) }} </td>
             </ng-container>
     
             <ng-container matColumnDef="validity">
                 <th mat-header-cell *matHeaderCellDef> Validade </th>
-                <td mat-cell *matCellDef="let product"> {{ product.validity | date }} </td>
+                <td mat-cell *matCellDef="let product"> {{ formatValidity(product.validity) }} </td>
             </ng-container>
     
             <ng-container matColumnDef="stock">

@@ -1,5 +1,7 @@
+import { inject } from '@angular/core';
 import { Routes } from '@angular/router';
 import { authGuard } from './core/auth/auth.guard';
+import { catchError, of } from 'rxjs';
 
 import { LoginComponent } from './features/auth/login/login.component';
 
@@ -14,6 +16,7 @@ import { UserEditComponent } from './features/user/pages/edit/user-edit.componen
 
 import { ProductListComponent } from './features/product/pages/list/product-list.component';
 import { ProductCreateComponent } from './features/product/pages/create/product-create.component';
+import { ProductService } from './features/product/services/product.service';
 
 export const routes: Routes = [
 
@@ -67,6 +70,11 @@ export const routes: Routes = [
     {
         path: 'products/create',
         canActivate: [authGuard],
+        resolve: {
+            categories: () => inject(ProductService).listCategories().pipe(
+                catchError(() => of([]))
+            )
+        },
         component: ProductCreateComponent
     },
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, shareReplay } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 
 export interface ProductCategory {
@@ -16,6 +16,7 @@ export class ProductService {
 
   private readonly apiUrl = `${environment.apiUrl}/products`;
   private readonly categoriesUrl = `${environment.apiUrl}/categories`;
+  private categoriesRequest$?: Observable<ProductCategory[]>;
 
   constructor(private http: HttpClient) {}
 
@@ -40,10 +41,16 @@ export class ProductService {
      });
   }
 
-  listCategories(): Observable<ProductCategory[]> {
-    return this.http.get<ProductCategory[]>(this.categoriesUrl, {
-      withCredentials: true
-    });
+  listCategories(forceRefresh = false): Observable<ProductCategory[]> {
+    if (!this.categoriesRequest$ || forceRefresh) {
+      this.categoriesRequest$ = this.http.get<ProductCategory[]>(this.categoriesUrl, {
+        withCredentials: true
+      }).pipe(
+        shareReplay(1)
+      );
+    }
+
+    return this.categoriesRequest$;
   }
 
   update(id: number, data: any): Observable<any> {

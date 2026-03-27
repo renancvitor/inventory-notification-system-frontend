@@ -122,6 +122,13 @@ table {
   color: #E6EDF7;
 }
 
+.product-list__text-cell {
+  display: block;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
 /* STATUS */
 
 .status {

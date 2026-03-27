@@ -25,6 +25,19 @@ import { FilterPanelComponent } from '../../../../shared/components/filter-panel
 })
 export class ProductListComponent implements AfterViewInit {
 
+  private readonly brlFormatter = new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+
+  private readonly dateFormatter = new Intl.DateTimeFormat('pt-BR', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  });
+
   displayedColumns: string[] = ['name', 'brand', 'category', 'price', 'validity', 'stock', 'active', 'actions'];
 
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>([]);
@@ -155,6 +168,31 @@ export class ProductListComponent implements AfterViewInit {
     const parsedValue = value.trim();
     this.filter.maxPrice = parsedValue === '' ? 'all' : parsedValue;
     this.applyFilter();
+  }
+
+  formatPrice(value: number | string | null | undefined) {
+    const numericValue = Number(value);
+
+    if (value === null || value === undefined || Number.isNaN(numericValue)) {
+      return '-';
+    }
+
+    return this.brlFormatter.format(numericValue);
+  }
+
+  formatValidity(value: string | Date | null | undefined) {
+    if (!value) {
+      return '-';
+    }
+
+    const normalizedValue = typeof value === 'string' ? `${value}T00:00:00` : value;
+    const date = new Date(normalizedValue);
+
+    if (Number.isNaN(date.getTime())) {
+      return '-';
+    }
+
+    return this.dateFormatter.format(date);
   }
 
 }
