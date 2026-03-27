@@ -1,0 +1,123 @@
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="product-form">
+
+  <div class="product-form__header" *ngIf="showSummary">
+    <div class="product-form__summary">
+      <h2>{{ productForm.controls.productName.value || 'Produto' }}</h2>
+
+      <div class="product-form__meta" *ngIf="statusLabel || showStockSummary">
+        <p *ngIf="statusLabel">
+          <span class="product-form__label">Status:</span>
+          <strong class="product-form__status">{{ statusLabel }}</strong>
+        </p>
+
+        <p *ngIf="showStockSummary">
+          <span class="product-form__label">Estoque:</span>
+          <strong class="product-form__stock">{{ productForm.controls.stock.value || 0 }}</strong>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <section class="product-form__panel product-form__panel--grid">
+    <div class="product-form__panel-title" *ngIf="title">
+      <h2>{{ title }}</h2>
+    </div>
+
+    <label class="product-form__field">
+      <span>Nome do produto</span>
+      <input
+        type="text"
+        formControlName="productName"
+        placeholder="Digite o nome do produto"
+      >
+    </label>
+
+    <label class="product-form__field product-form__field--select">
+      <span>Categoria</span>
+      <select
+        formControlName="categoryId"
+        [disabled]="loadingCategories"
+        [class.product-form__control--placeholder]="!productForm.controls.categoryId.value"
+      >
+        <option [ngValue]="null" disabled>
+          {{ loadingCategories ? 'Carregando categorias...' : 'Selecione uma categoria' }}
+        </option>
+
+        <option *ngFor="let category of categories" [ngValue]="category.id">
+          {{ category.displayName }}
+        </option>
+      </select>
+    </label>
+
+    <label class="product-form__field">
+      <span>Preco R$</span>
+      <input
+        type="number"
+        formControlName="price"
+        min="0.01"
+        step="0.01"
+        placeholder="R$ 0,00"
+      >
+    </label>
+
+    <label class="product-form__field">
+      <span>Validade</span>
+      <input
+        type="date"
+        formControlName="validity"
+        [min]="minValidityDate"
+        [class.product-form__control--placeholder]="!productForm.controls.validity.value"
+      >
+    </label>
+
+    <label class="product-form__field">
+      <span>Marca</span>
+      <input
+        type="text"
+        formControlName="brand"
+        placeholder="Digite a marca"
+      >
+    </label>
+
+    <label class="product-form__field">
+      <span>Estoque</span>
+      <input
+        type="number"
+        formControlName="stock"
+        placeholder="0"
+      >
+    </label>
+  </section>
+
+  <section class="product-form__panel">
+    <label class="product-form__field product-form__field--textarea">
+      <span>Descricao</span>
+      <textarea
+        formControlName="description"
+        placeholder="Descreva o produto"
+        rows="4"
+      ></textarea>
+    </label>
+  </section>
+
+  <input class="product-form__hidden-control" type="hidden" formControlName="minimumStock">
+
+  <div class="product-form__footer">
+    <app-button
+      class="product-form__action product-form__action--primary"
+      type="submit"
+      [disabled]="productForm.invalid || loading || loadingCategories"
+    >
+      {{ loading ? 'Salvando...' : submitLabel }}
+    </app-button>
+
+    <app-button
+      class="product-form__action product-form__action--secondary"
+      type="button"
+      (click)="cancel.emit()"
+    >
+      Cancelar
+    </app-button>
+  </div>
+
+</form>

@@ -1,7 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, shareReplay } from 'rxjs';
 import { environment } from '../../../../environments/environment';
+
+export interface ProductCategory {
+  id: number;
+  name: string;
+  displayName: string;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -9,6 +15,8 @@ import { environment } from '../../../../environments/environment';
 export class ProductService {
 
   private readonly apiUrl = `${environment.apiUrl}/products`;
+  private readonly categoriesUrl = `${environment.apiUrl}/categories`;
+  private categoriesRequest$?: Observable<ProductCategory[]>;
 
   constructor(private http: HttpClient) {}
 
@@ -33,6 +41,18 @@ export class ProductService {
      });
   }
 
+  listCategories(forceRefresh = false): Observable<ProductCategory[]> {
+    if (!this.categoriesRequest$ || forceRefresh) {
+      this.categoriesRequest$ = this.http.get<ProductCategory[]>(this.categoriesUrl, {
+        withCredentials: true
+      }).pipe(
+        shareReplay(1)
+      );
+    }
+
+    return this.categoriesRequest$;
+  }
+
   update(id: number, data: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/${id}`, data, { 
       withCredentials: true
@@ -47,6 +67,18 @@ export class ProductService {
 
   activate(id: number): Observable<any> {
     return this.http.put(`${this.apiUrl}/${id}/activate`, {}, { 
+      withCredentials: true
+     });
+  }
+
+  categories(id: number, data: { categoryId: number }) {
+    return this.http.put(`${this.apiUrl}/${id}/categories`, data, { 
+      withCredentials: true
+     });
+  }
+
+  getById(id: number) {
+    return this.http.get(`${this.apiUrl}/${id}`, { 
       withCredentials: true
      });
   }

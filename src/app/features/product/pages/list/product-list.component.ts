@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
@@ -9,19 +10,33 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatRadioModule } from '@angular/material/radio';
 
-import { ProductService } from '../services/product.service';
-import { ButtonComponent } from '../../../shared/components/button/button.component';
-import { SearchFieldComponent } from '../../../shared/components/search-field/search-field.component';
-import { FilterPanelComponent } from '../../../shared/components/filter-panel/filter-panel.component';
+import { ProductService } from '../../services/product.service';
+import { ButtonComponent } from '../../../../shared/components/button/button.component';
+import { SearchFieldComponent } from '../../../../shared/components/search-field/search-field.component';
+import { FilterPanelComponent } from '../../../../shared/components/filter-panel/filter-panel.component';
 
 @Component({
   selector: 'app-product-list.component',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatTableModule, MatPaginatorModule, MatIconModule, MatButtonModule, MatMenuModule, MatRadioModule, ButtonComponent, SearchFieldComponent, FilterPanelComponent],
+  imports: [CommonModule, FormsModule, MatTableModule, MatPaginatorModule, MatIconModule, MatButtonModule,
+    MatMenuModule, MatRadioModule, ButtonComponent, SearchFieldComponent, FilterPanelComponent, RouterModule],
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.scss'],
 })
 export class ProductListComponent implements AfterViewInit {
+
+  private readonly brlFormatter = new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+
+  private readonly dateFormatter = new Intl.DateTimeFormat('pt-BR', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  });
 
   displayedColumns: string[] = ['name', 'brand', 'category', 'price', 'validity', 'stock', 'active', 'actions'];
 
@@ -153,6 +168,31 @@ export class ProductListComponent implements AfterViewInit {
     const parsedValue = value.trim();
     this.filter.maxPrice = parsedValue === '' ? 'all' : parsedValue;
     this.applyFilter();
+  }
+
+  formatPrice(value: number | string | null | undefined) {
+    const numericValue = Number(value);
+
+    if (value === null || value === undefined || Number.isNaN(numericValue)) {
+      return '-';
+    }
+
+    return this.brlFormatter.format(numericValue);
+  }
+
+  formatValidity(value: string | Date | null | undefined) {
+    if (!value) {
+      return '-';
+    }
+
+    const normalizedValue = typeof value === 'string' ? `${value}T00:00:00` : value;
+    const date = new Date(normalizedValue);
+
+    if (Number.isNaN(date.getTime())) {
+      return '-';
+    }
+
+    return this.dateFormatter.format(date);
   }
 
 }
