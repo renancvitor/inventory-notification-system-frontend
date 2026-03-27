@@ -1,4 +1,4 @@
-.header {
+.site-header {
 
   display: flex;
   justify-content: space-between;
@@ -15,7 +15,7 @@
 }
 
 /* LOGO */
-.logo {
+.site-header__logo {
   flex: 1;
   font-size: 18px;
   font-weight: 500;
@@ -24,7 +24,7 @@
 }
 
 /* NAV LINKS */
-.nav-links {
+.site-header__nav {
   flex: 1;
   display: flex;
   justify-content: center;
@@ -32,7 +32,7 @@
 }
 
 /* LINKS */
-.nav-links a {
+.site-header__nav-link {
 
   color: #A9B1C6;
   font-weight: 500;
@@ -46,14 +46,14 @@
 }
 
 /* HOVER */
-.nav-links a:hover {
+.site-header__nav-link:hover {
 
   background: transparent;
   color: #FFFFFF;
 }
 
 /* LINK ATIVO */
-.nav-links a.active {
+.site-header__nav-link--active {
 
   color: #4C8DFF;
 
@@ -61,13 +61,13 @@
 }
 
 /* LOGOUT */
-.logout-container {
+.site-header__logout {
   flex: 1;
   display: flex;
   justify-content: flex-end;
 }
 
-.logout-btn {
+.site-header__logout-button {
 
   display: flex;
   align-items: center;
@@ -81,7 +81,7 @@
   transition: all 0.2s ease;
 }
 
-.logout-btn:hover {
+.site-header__logout-button:hover {
 
   background: #d32f2f;
   color: white;

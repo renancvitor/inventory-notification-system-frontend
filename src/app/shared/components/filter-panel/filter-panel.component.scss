@@ -15,18 +15,18 @@
   gap: 18px;
 }
 
-h3 {
+.filter-panel__title {
   margin: 0 0 16px 0;
   font-size: 16px;
 }
 
-.filter-content {
+.filter-panel__content {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-.filter-actions {
+.filter-panel__actions {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
@@ -36,7 +36,7 @@ h3 {
   padding: 0 !important;
 }
 
-.apply-btn {
+.filter-panel__apply-action {
   padding: 10px 18px;
 
   background: linear-gradient(
@@ -53,12 +53,12 @@ h3 {
   font-weight: 500;
 }
 
-.apply-btn:hover {
+.filter-panel__apply-action:hover {
   background: #4C8DFF;
   filter: brightness(1.1);
 }
 
-.clear-btn {
+.filter-panel__clear-action {
   padding: 10px 18px;
 
   background: transparent;
@@ -71,7 +71,7 @@ h3 {
   font-weight: 500;
 }
 
-.clear-btn:hover {
+.filter-panel__clear-action:hover {
   background: rgba(69, 90, 128, 0.1);
   filter: brightness(1.1);
 }

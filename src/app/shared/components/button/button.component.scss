@@ -2,7 +2,7 @@
   display: block;
 }
 
-.app-button {
+.app-button__control {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -13,7 +13,7 @@
   gap: 8px;
 }
 
-.app-button:disabled {
+.app-button__control:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }

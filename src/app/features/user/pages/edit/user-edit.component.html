@@ -1,31 +1,32 @@
 <div class="user-edit-page">
 
-  <div class="title">
+  <div class="user-edit-page__header">
 
     <h2>{{ user?.personName }}</h2>
     
-    <div class="status">
+    <div class="user-edit-page__status">
       Status:
       <span
-        [class.active]="isActivateValue"
-        [class.inactive]="!isActivateValue"
+        class="user-edit-page__status-value"
+        [class.user-edit-page__status-value--active]="isActivateValue"
+        [class.user-edit-page__status-value--inactive]="!isActivateValue"
       >
         {{ isActivateValue ? 'Ativo' : 'Inativo' }}
       </span>
     </div>
 
-    <div class="status">
+    <div class="user-edit-page__status">
         Tipo de Usuário:
-        <span>
+        <span class="user-edit-page__status-value">
           {{ user?.nameUserType || 'N/A' }}
         </span>
     </div>
 
   </div>
 
-  <div class="card" [formGroup]="form">
+  <div class="user-edit-page__card" [formGroup]="form">
 
-    <mat-form-field appearance="outline" class="full-width">
+    <mat-form-field appearance="outline" class="user-edit-page__field">
 
       <mat-label>Tipo de Usuário</mat-label>
 
@@ -43,7 +44,7 @@
 
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="full-width">
+    <mat-form-field appearance="outline" class="user-edit-page__field">
 
       <mat-label>Status</mat-label>
 
@@ -58,16 +59,16 @@
 
   </div>
 
-  <div class="actions">
+  <div class="user-edit-page__actions">
 
-    <div class="actions-container">
+    <div class="user-edit-page__actions-container">
 
-      <app-button class="clear-btn" (click)="cancel()">
+      <app-button class="user-edit-page__cancel-button" (click)="cancel()">
         Cancelar
       </app-button>
 
       <app-button
-        class="register-btn"
+        class="user-edit-page__save-button"
         [disabled]="loading"
         (click)="save()"
       >

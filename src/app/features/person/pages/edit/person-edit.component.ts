@@ -97,7 +97,7 @@ export class PersonEditComponent {
   showUpdateToast(data: any) {
 
     this.snackBar.openFromComponent(ToastComponent, {
-      panelClass: 'custom-toast',
+      panelClass: 'app-toast',
       horizontalPosition: 'center',
       verticalPosition: 'top',
       data: { 

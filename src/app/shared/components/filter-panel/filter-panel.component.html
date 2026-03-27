@@ -1,17 +1,17 @@
 <div class="filter-panel">
 
-  <h3>Filtros</h3>
+  <h3 class="filter-panel__title">Filtros</h3>
 
-  <div class="filter-content">
+  <div class="filter-panel__content">
     <ng-content></ng-content>
   </div>
 
-  <div class="filter-actions">
-    <app-button class="clear-btn" (click)="filtersCleared.emit()">
+  <div class="filter-panel__actions">
+    <app-button class="filter-panel__clear-action" (click)="filtersCleared.emit()">
       Limpar
     </app-button>
 
-    <app-button class="apply-btn" (click)="filtersApplied.emit()">
+    <app-button class="filter-panel__apply-action" (click)="filtersApplied.emit()">
       Aplicar
     </app-button>
   </div>

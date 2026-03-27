@@ -1,11 +1,11 @@
-.product-page {
+.product-list {
     max-width: 1120px;
     margin: 40px auto;
 }
 
 /* HEADER */
 
-.page-header {
+.product-list__header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -24,7 +24,7 @@
 
 /* BOTÃO NOVO PRODUTO */
 
-.new-product-btn {
+.product-list__create-button {
     padding: 10px 18px;
 
     background: linear-gradient(
@@ -42,7 +42,7 @@
 
 /* TOOLBAR */
 
-.toolbar {
+.product-list__toolbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -57,18 +57,9 @@
     margin-bottom: 8px;
 }
 
-/* SEARCH */
-
-.search-box {
-
-    mat-icon {
-        opacity: 0.6;
-    }
-}
-
 /* FILTRO */
 
-.filter-btn {
+.product-list__filter-button {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -84,7 +75,7 @@
 
 /* TABLE */
 
-.table-container {
+.product-list__table-container {
     background: #1B2130;
     backdrop-filter: blur(10px);
 
@@ -131,19 +122,19 @@ table {
 
 /* STATUS */
 
-.status {
+.product-list__status {
   padding: 4px 12px;
   border-radius: 14px;
   font-size: 12px;
 }
 
-.status.active {
+.product-list__status--active {
   background: #1F8B4C;
   color: #EAFBF1;
   font-size: 12px;
 }
 
-.status.inactive {
+.product-list__status--inactive {
   background: #3a4158;
   color: #b0b7c3;
 }
@@ -169,21 +160,15 @@ mat-radio-group {
   gap: 10px;
 }
 
-.filter-group {
+.product-list__filter-group {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.filter-group span {
+.product-list__filter-group span {
   font-size: 13px;
   opacity: 0.7;
-}
-
-.filter-actions {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
 }
 
 ::ng-deep .filter-menu .mat-mdc-menu-content {

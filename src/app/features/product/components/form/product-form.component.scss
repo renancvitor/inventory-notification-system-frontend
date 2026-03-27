@@ -50,11 +50,6 @@
   font-weight: 700;
 }
 
-.product-form__action {
-  min-width: 168px;
-  height: 42px;
-}
-
 .product-form__panel {
   padding: 18px 20px;
 
@@ -185,9 +180,12 @@ input[type='date'].product-form__control--placeholder::-webkit-date-and-time-val
 
 .product-form__footer {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   gap: 12px;
+}
+
+.product-form__action {
+  flex: 1 1 0;
 }
 
 .product-form__action--primary {
@@ -237,7 +235,4 @@ input[type='date'].product-form__control--placeholder::-webkit-date-and-time-val
     align-items: stretch;
   }
 
-  .product-form__action {
-    width: 100%;
-  }
 }

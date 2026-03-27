@@ -1,32 +1,36 @@
-.person-page {
+.person-list {
   max-width: 1120px;
   margin: 40px auto;
 }
 
 /* HEADER */
 
-.page-header {
+.person-list__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 25px;
+}
 
-  h1 {
-    font-size: 28px;
-    margin: 0;
-  }
+.person-list__title {
+  font-size: 28px;
+  margin: 0;
+}
 
-  p {
-    opacity: 0.6;
-    margin-top: 4px;
-  }
+.person-list__subtitle {
+  opacity: 0.6;
+  margin-top: 4px;
 }
 
 /* BOTÃO NOVA PESSOA */
 
-.new-person-btn {
+.person-list__action {
   padding: 10px 18px;
+  border-radius: 6px;
+  font-weight: 500;
+}
 
+.person-list__action--create {
   background: linear-gradient(
     90deg,
     #5A98FF 0%,
@@ -34,15 +38,13 @@
   );
 
   border: none;
-  border-radius: 6px;
 
   color: #FFFFFF;
-  font-weight: 500;
 }
 
 /* TOOLBAR */
 
-.toolbar {
+.person-list__toolbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -59,13 +61,13 @@
 
 /* SEARCH */
 
-.search-box span {
+.person-list__search-box span {
   font-size: 12px;
   opacity: 0.6;
   background: #1B2130;
 }
 
-.search-input {
+.person-list__search-input {
   display: flex;
   align-items: center;
 
@@ -90,7 +92,7 @@
 
 /* FILTRO */
 
-.filter-btn {
+.person-list__filter-button {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -106,7 +108,7 @@
 
 /* TABELA */
 
-.table-container {
+.person-list__table-container {
   background: #1B2130;
   backdrop-filter: blur(10px);
 
@@ -146,19 +148,19 @@ table {
 
 /* STATUS */
 
-.status {
+.person-list__status {
   padding: 4px 12px;
   border-radius: 14px;
   font-size: 12px;
 }
 
-.status.active {
+.person-list__status--active {
   background: #1F8B4C;
   color: #EAFBF1;
   font-size: 12px;
 }
 
-.status.inactive {
+.person-list__status--inactive {
   background: #3a4158;
   color: #b0b7c3;
 }
@@ -184,18 +186,18 @@ mat-radio-group {
   gap: 10px;
 }
 
-.filter-group {
+.person-list__filter-group {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.filter-group span {
+.person-list__filter-group span {
   font-size: 13px;
   opacity: 0.7;
 }
 
-.filter-actions {
+.person-list__filter-actions {
   display: flex;
   justify-content: space-between;
   margin-top: 10px;

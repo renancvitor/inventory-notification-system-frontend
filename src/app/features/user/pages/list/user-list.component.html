@@ -1,6 +1,6 @@
-<div class="user-page">
+<div class="user-list-page">
 
-    <div class="page-header">
+    <div class="user-list-page__header">
         <div>
             <h2>Usuários</h2>
             <p>Gerencie os usuários do sistema • {{ totalUsers }} usuários cadastrados</p>
@@ -8,7 +8,7 @@
 
     </div>
 
-    <div class="toolbar">
+    <div class="user-list-page__toolbar">
 
         <app-search-field
             label="Pesquisar usuário"
@@ -16,14 +16,14 @@
             (search)="onSearch($event)">
         </app-search-field>
 
-        <button class="filter-btn" [matMenuTriggerFor]="filterMenu">
+        <button class="user-list-page__filter-button" [matMenuTriggerFor]="filterMenu">
             <mat-icon>filter_alt</mat-icon>
             Filtrar
         </button>
 
     </div>
 
-    <div class="table-container">
+    <div class="user-list-page__table-container">
 
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
@@ -47,9 +47,9 @@
                 <td mat-cell *matCellDef="let user"> 
 
                     <span 
-                        class="status" 
-                        [class.active]="user.active"
-                        [class.inactive]="!user.active">
+                        class="user-list-page__status"
+                        [class.user-list-page__status--active]="user.active"
+                        [class.user-list-page__status--inactive]="!user.active">
 
                         {{ user.active ? 'Ativo' : 'Inativo' }}
 
@@ -73,7 +73,7 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
             <tr class="mat-row" *matNoDataRow>
-            <td class="mat-cell no-data" colspan="5">
+            <td class="mat-cell user-list-page__no-data" colspan="5">
                 Nenhum usuário encontrado
             </td>
             </tr>
@@ -95,7 +95,7 @@
             (filtersCleared)="clearFilters()"
          >
 
-            <div class="filter-group">
+            <div class="user-list-page__filter-group">
 
                 <span>Status</span>
 
@@ -117,7 +117,7 @@
 
             </div>
 
-            <div class="filter-group">
+            <div class="user-list-page__filter-group">
 
                 <span>Tipo de Usuário</span>
 

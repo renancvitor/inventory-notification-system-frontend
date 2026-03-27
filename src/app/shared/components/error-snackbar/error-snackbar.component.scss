@@ -16,11 +16,11 @@
   max-width: 420px;
 }
 
-.message {
+.error-snackbar__message {
   flex: 1;
 }
 
-.close-btn {
+.error-snackbar__close-button {
   border: none;
   background: white;
   color: #d32f2f;
@@ -34,7 +34,7 @@
   transition: all 0.2s ease;
 }
 
-.close-btn:hover {
+.error-snackbar__close-button:hover {
   background: white;
   color: #b71c1c;
 }
