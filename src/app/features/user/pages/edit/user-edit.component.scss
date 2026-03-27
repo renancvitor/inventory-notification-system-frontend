@@ -8,7 +8,7 @@
   gap: 20px;
 }
 
-.card {
+.user-edit-page__card {
   width: 360px;
 
   padding: 24px;
@@ -24,22 +24,22 @@
   border: 1px solid rgba(76, 141, 255, 0.15);
 }
 
-.actions {
+.user-edit-page__actions {
   margin-top: 10px;
 }
 
-.actions-container {
+.user-edit-page__actions-container {
   display: flex;
   gap: 12px;
   justify-content: flex-end;
 }
 
-.actions-container app-button {
+.user-edit-page__actions-container app-button {
   min-width: 150px;
   display: flex;
 }
 
-.register-btn {
+.user-edit-page__save-button {
   padding: 10px 18px;
 
   background: linear-gradient(
@@ -56,12 +56,12 @@
   font-weight: 500;
 }
 
-.register-btn:hover {
+.user-edit-page__save-button:hover {
   background: #4C8DFF;
   filter: brightness(1.1);
 }
 
-.clear-btn {
+.user-edit-page__cancel-button {
   padding: 10px 18px;
 
   background: transparent;
@@ -74,12 +74,12 @@
   font-weight: 500;
 }
 
-.clear-btn:hover {
+.user-edit-page__cancel-button:hover {
   background: rgba(69, 90, 128, 0.1);
   filter: brightness(1.1);
 }
 
-.full-width {
+.user-edit-page__field {
   width: 100%;
 }
 
@@ -151,39 +151,39 @@
   background: #242C3F !important;
 }
 
-.title {
+.user-edit-page__header {
   text-align: center;
 }
 
-.title h2 {
+.user-edit-page__header h2 {
   margin: 0;
   font-size: 20px;
   font-weight: 600;
 }
 
-.title .status {
+.user-edit-page__status {
   margin-top: 4px;
   font-size: 14px;
   color: #9AA4B2;
 }
 
-.status span.active {
+.user-edit-page__status-value--active {
   color: #1F8B4C; // verde
 }
 
-.status span.inactive {
+.user-edit-page__status-value--inactive {
   color: #9AA4B2; // cinza (igual sistema)
 }
 
 /* ====== STATUS AJUSTE (span funcionando corretamente) ====== */
 
-.status span {
+.user-edit-page__status-value {
   margin-left: 4px;
 }
 
 /* ====== MULTIPLOS FIELDS (userType + status) ====== */
 
-.card mat-form-field {
+.user-edit-page__card mat-form-field {
   width: 100%;
 }
 
@@ -196,9 +196,8 @@
 
 /* ====== FIX VISUAL PARA DOIS SELECTS ====== */
 
-.card {
+.user-edit-page__card {
   gap: 16px; // mantém consistência com mais campos
 }
 
 /* ====== SELECT DISABLED (CORRETO) ====== */
-

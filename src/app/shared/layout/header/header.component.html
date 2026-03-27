@@ -1,21 +1,21 @@
-<mat-toolbar class="header">
+<mat-toolbar class="site-header">
 
-  <div class="logo">
+  <div class="site-header__logo">
     Sistema de Notificação de Estoque
   </div>
 
-  <nav class="nav-links">
+  <nav class="site-header__nav">
 
-    <a mat-button routerLink="/" routerLinkActive="active">Início</a>
-    <a mat-button routerLink="/person" routerLinkActive="active">Pessoas</a>
-    <a mat-button routerLink="/users" routerLinkActive="active">Usuários</a>
-    <a mat-button routerLink="/products" routerLinkActive="active">Produtos</a>
-    <a mat-button routerLink="/orders" routerLinkActive="active">Pedidos</a>
+    <a mat-button class="site-header__nav-link" routerLink="/" routerLinkActive="site-header__nav-link--active">Início</a>
+    <a mat-button class="site-header__nav-link" routerLink="/person" routerLinkActive="site-header__nav-link--active">Pessoas</a>
+    <a mat-button class="site-header__nav-link" routerLink="/users" routerLinkActive="site-header__nav-link--active">Usuários</a>
+    <a mat-button class="site-header__nav-link" routerLink="/products" routerLinkActive="site-header__nav-link--active">Produtos</a>
+    <a mat-button class="site-header__nav-link" routerLink="/orders" routerLinkActive="site-header__nav-link--active">Pedidos</a>
 
   </nav>
 
-  <div class="logout-container">
-      <button mat-button class="logout-btn" (click)="logout()">
+  <div class="site-header__logout">
+      <button mat-button class="site-header__logout-button" (click)="logout()">
         <mat-icon>logout</mat-icon>
         Sair
       </button>

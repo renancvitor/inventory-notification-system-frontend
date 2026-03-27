@@ -1,48 +1,48 @@
 <form [formGroup]="personForm" (ngSubmit)="onSubmit()" class="person-form">
 
-  <h2>Nova pessoa</h2>
+  <h2 class="person-form__title">Nova pessoa</h2>
 
-  <mat-form-field appearance="outline">
+  <mat-form-field appearance="outline" class="person-form__field person-form__field--name">
     <mat-label>Nome da pessoa</mat-label>
     <input
       matInput
       placeholder="Digite o nome da pessoa"
       formControlName="personName"
-      class="input-personName"
+      class="person-form__input person-form__input--name"
     >
   </mat-form-field>
 
-  <mat-form-field appearance="outline">
+  <mat-form-field appearance="outline" class="person-form__field person-form__field--email">
     <mat-label>E-mail</mat-label>
     <input
       matInput
       placeholder="Digite o e-mail da pessoa"
       formControlName="email"
-      class="input-email"
+      class="person-form__input person-form__input--email"
     >
   </mat-form-field>
 
-  <mat-form-field appearance="outline">
+  <mat-form-field appearance="outline" class="person-form__field person-form__field--cpf">
     <mat-label>CPF</mat-label>
     <input
       matInput
       placeholder="Digite o CPF da pessoa"
       formControlName="cpf"
-      class="input-cpf"
+      class="person-form__input person-form__input--cpf"
     >
   </mat-form-field>
 
-  <div class="actions">
+  <div class="person-form__actions">
 
     <app-button
-      class="register-btn"
+      class="person-form__action person-form__action--primary"
       type="submit"
       [disabled]="personForm.invalid"
     >
       {{ loading ? 'Salvando...' : 'Cadastrar' }}
     </app-button>
 
-    <app-button class="clear-btn" type="button" (click)="cancel.emit()">
+    <app-button class="person-form__action person-form__action--secondary" type="button" (click)="cancel.emit()">
       Cancelar
     </app-button>
 

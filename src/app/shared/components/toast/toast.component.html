@@ -1,34 +1,34 @@
 <div class="toast">
 
-  <div class="toast-header">
+  <div class="toast__header">
 
-    <div class="toast-icon">
+    <div class="toast__icon">
       ✓
     </div>
 
-    <div class="toast-title">
+    <div class="toast__title">
       {{ data.title }}
     </div>
 
   </div>
 
-  <div class="toast-person">
+  <div class="toast__person">
 
-    <div class="toast-name" *ngIf="data.name">
+    <div class="toast__name" *ngIf="data.name">
       {{ data.name }}
     </div>
 
-    <div class="toast-info" *ngIf="data.info">
+    <div class="toast__info" *ngIf="data.info">
       {{ data.info }}
     </div>
 
   </div>
 
-  <div class="toast-actions">
+  <div class="toast__actions">
 
     <app-button
       *ngIf="data.primaryAction"
-      class="register-btn"
+      class="toast__primary-action"
       (click)="action(data.primaryAction.type)"
     >
       {{ data.primaryAction.label }}
@@ -36,7 +36,7 @@
 
     <app-button
       *ngIf="data.secondaryAction"
-      class="back-to-list-btn" 
+      class="toast__secondary-action"
       (click)="action(data.secondaryAction.type)"
     >
       {{ data.secondaryAction.label }}

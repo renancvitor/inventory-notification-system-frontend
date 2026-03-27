@@ -1,14 +1,15 @@
-<div class="person-edit-page">
+<div class="person-edit">
 
-  <div class="title">
+  <div class="person-edit__header">
 
-    <h2>{{ personName }}</h2>
+    <h2 class="person-edit__title">{{ personName }}</h2>
 
-    <div class="status">
+    <div class="person-edit__status">
       Status:
       <span
-        [class.active]="isActiveValue"
-        [class.inactive]="!isActiveValue"
+        class="person-edit__status-value"
+        [class.person-edit__status-value--active]="isActiveValue"
+        [class.person-edit__status-value--inactive]="!isActiveValue"
       >
         {{ isActiveValue ? 'Ativo' : 'Inativo' }}
       </span>
@@ -16,9 +17,9 @@
 
   </div>
 
-  <div class="card" [formGroup]="form">
+  <div class="person-edit__card" [formGroup]="form">
 
-    <mat-form-field appearance="outline" class="full-width">
+    <mat-form-field appearance="outline" class="person-edit__field person-edit__field--full-width">
 
       <mat-label>Status</mat-label>
 
@@ -33,16 +34,16 @@
 
   </div>
 
-  <div class="actions">
+  <div class="person-edit__actions">
 
-    <div class="actions-container">
+    <div class="person-edit__actions-container">
 
-      <app-button class="clear-btn" (click)="cancel()">
+      <app-button class="person-edit__action person-edit__action--secondary" (click)="cancel()">
         Cancelar
       </app-button>
 
       <app-button
-        class="register-btn"
+        class="person-edit__action person-edit__action--primary"
         [disabled]="loading"
         (click)="save()"
       >

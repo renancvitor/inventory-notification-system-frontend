@@ -1,4 +1,4 @@
-.person-edit-page {
+.person-edit {
   min-height: 100vh;
 
   display: flex;
@@ -8,7 +8,7 @@
   gap: 20px;
 }
 
-.card {
+.person-edit__card {
   width: 360px;
 
   padding: 24px;
@@ -24,153 +24,149 @@
   border: 1px solid rgba(76, 141, 255, 0.15);
 }
 
-.actions {
+.person-edit__actions {
   margin-top: 10px;
 }
 
-.actions-container {
+.person-edit__actions-container {
   display: flex;
   gap: 12px;
   justify-content: flex-end;
 }
 
-.actions-container app-button {
+.person-edit__actions-container app-button {
   min-width: 150px;
   display: flex;
 }
 
-.register-btn {
+.person-edit__action {
   padding: 10px 18px;
+  border-radius: 6px;
+  font-weight: 500;
+}
 
+.person-edit__action--primary {
   background: linear-gradient(
     90deg,
     #5A98FF 0%,
     #2E5599 100%
   );
-
   border: 1px solid;
-  border-radius: 6px;
   border-color: #455A80;
-
   color: #FFFFFF;
-  font-weight: 500;
 }
 
-.register-btn:hover {
+.person-edit__action--primary:hover {
   background: #4C8DFF;
   filter: brightness(1.1);
 }
 
-.clear-btn {
-  padding: 10px 18px;
-
+.person-edit__action--secondary {
   background: transparent;
-  
+
   border: 1px solid;
-  border-radius: 6px;
   border-color: #455A80;
 
   color: #9AA6BF;
-  font-weight: 500;
 }
 
-.clear-btn:hover {
+.person-edit__action--secondary:hover {
   background: rgba(69, 90, 128, 0.1);
   filter: brightness(1.1);
 }
 
-.full-width {
+.person-edit__field {
   width: 100%;
 }
 
 /* ====== MAT SELECT DARK THEME ====== */
 
-.mat-mdc-form-field {
+.person-edit .mat-mdc-form-field {
   width: 100%;
 }
 
-.mat-mdc-text-field-wrapper {
+.person-edit .mat-mdc-text-field-wrapper {
   background: #1B2130 !important;
   border-radius: 8px !important;
 }
 
 /* altura menor */
-.mat-mdc-form-field-infix {
+.person-edit .mat-mdc-form-field-infix {
   min-height: 40px !important;
   padding: 12px 0 !important;
 }
 
 /* borda */
-.mdc-notched-outline__leading,
-.mdc-notched-outline__notch,
-.mdc-notched-outline__trailing {
+.person-edit .mdc-notched-outline__leading,
+.person-edit .mdc-notched-outline__notch,
+.person-edit .mdc-notched-outline__trailing {
   border-color: rgba(76, 141, 255, 0.2) !important;
 }
 
 /* foco */
-.mat-mdc-form-field.mat-focused .mdc-notched-outline__leading,
-.mat-mdc-form-field.mat-focused .mdc-notched-outline__notch,
-.mat-mdc-form-field.mat-focused .mdc-notched-outline__trailing {
+.person-edit .mat-mdc-form-field.mat-focused .mdc-notched-outline__leading,
+.person-edit .mat-mdc-form-field.mat-focused .mdc-notched-outline__notch,
+.person-edit .mat-mdc-form-field.mat-focused .mdc-notched-outline__trailing {
   border-color: #4C8DFF !important;
 }
 
 /* texto */
-.mat-mdc-select-value {
+.person-edit .mat-mdc-select-value {
   color: #E6EDF7 !important;
   padding-left: 4px;
 }
 
 /* label */
-.mat-mdc-floating-label {
+.person-edit .mat-mdc-floating-label {
   color: #9AA4B2 !important;
   padding-left: 4px;
 }
 
 /* arrow */
-.mat-mdc-form-field-icon-suffix {
+.person-edit .mat-mdc-form-field-icon-suffix {
   padding-right: 12px !important; // 👈 espaço da direita
 }
 
-.mat-mdc-form-field-flex {
+.person-edit .mat-mdc-form-field-flex {
   padding: 0 4px;
 }
 
 /* dropdown */
-.mat-mdc-select-panel {
+.person-edit .mat-mdc-select-panel {
   background: #1B2130 !important;
   color: #E6EDF7 !important;
 }
 
-.mat-mdc-option {
+.person-edit .mat-mdc-option {
   background: #1B2130 !important;
   color: #E6EDF7 !important;
 }
 
 /* hover */
-.mat-mdc-option:hover {
+.person-edit .mat-mdc-option:hover {
   background: #242C3F !important;
 }
 
-.title {
+.person-edit__header {
   text-align: center;
 }
 
-.title h2 {
+.person-edit__title {
   margin: 0;
   font-size: 20px;
   font-weight: 600;
 }
 
-.title .status {
+.person-edit__status {
   margin-top: 4px;
   font-size: 14px;
   color: #9AA4B2;
 }
 
-.status span.active {
+.person-edit__status-value--active {
   color: #1F8B4C; // verde
 }
 
-.status span.inactive {
+.person-edit__status-value--inactive {
   color: #9AA4B2; // cinza (igual sistema)
 }

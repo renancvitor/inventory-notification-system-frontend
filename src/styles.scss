@@ -10,7 +10,7 @@ body {
   color: #FFFFFF;
 }
 
-.save-btn {
+.app-action-button--save {
   background-color: #4C8DFF;
   border-radius: 3px;
   border-color: linear-gradient(100deg,
@@ -20,19 +20,19 @@ body {
   color: #FFFFFF;
 }
 
-.cancel-btn {
+.app-action-button--cancel {
   border-radius: 3px;
   border-color: #2E3A55;
   color: #A9B1C6;
 }
 
-.custom-toast .mat-mdc-snack-bar-container {
+.app-toast .mat-mdc-snack-bar-container {
   background: transparent;
   box-shadow: none;
   padding: 0;
 }
 
-.custom-toast {
+.app-toast {
   margin-top: 80px;
 }
 

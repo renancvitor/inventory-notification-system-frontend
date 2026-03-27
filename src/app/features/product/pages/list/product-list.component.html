@@ -1,18 +1,18 @@
-<div class="product-page">
+<div class="product-list">
 
-    <div class="page-header">
+    <div class="product-list__header">
         <div>
             <h2>Produtos</h2>
     
             <p>Gerencie os produtos aqui • {{ totalProducts }} produtos cadastrados</p>
         </div>
 
-        <app-button class="new-product-btn" routerLink="/products/create">
+        <app-button class="product-list__create-button" routerLink="/products/create">
             Novo Produto
         </app-button>
     </div>
 
-    <div class="toolbar">
+    <div class="product-list__toolbar">
 
         <app-search-field
             label="Pesquisar produtos"
@@ -20,14 +20,14 @@
             (search)="onSearch($event)">
         </app-search-field>
 
-        <button class="filter-btn" [matMenuTriggerFor]="filterMenu">
+        <button class="product-list__filter-button" [matMenuTriggerFor]="filterMenu">
             <mat-icon>filter_alt</mat-icon>
             Filtrar
         </button>
 
     </div>
 
-    <div class="table-container">
+    <div class="product-list__table-container">
 
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     
@@ -70,9 +70,9 @@
                 <td mat-cell *matCellDef="let product"> 
 
                         <span 
-                            class="status" 
-                            [class.active]="product.active"
-                            [class.inactive]="!product.active">
+                            class="product-list__status"
+                            [class.product-list__status--active]="product.active"
+                            [class.product-list__status--inactive]="!product.active">
     
                             {{ product.active ? 'Ativo' : 'Inativo' }} 
                         </span>
@@ -109,7 +109,7 @@
             (filtersApplied)="applyFilter()"
             (filtersCleared)="clearFilter()"
         >
-            <div class="filter-group">
+            <div class="product-list__filter-group">
                 <span>Status</span>
 
                 <mat-radio-group [(ngModel)]="filter.status" (click)="$event.stopPropagation()">
@@ -128,7 +128,7 @@
 
             </div>
 
-            <div class="filter-group" (click)="$event.stopPropagation()">
+            <div class="product-list__filter-group" (click)="$event.stopPropagation()">
                 <app-search-field
                     #minPriceField
                     label="Preço mínimo"
@@ -137,7 +137,7 @@
                 </app-search-field>
             </div>
 
-            <div class="filter-group" (click)="$event.stopPropagation()">
+            <div class="product-list__filter-group" (click)="$event.stopPropagation()">
                 <app-search-field
                     #maxPriceField
                     label="Preço máximo"

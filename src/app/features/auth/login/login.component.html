@@ -1,12 +1,12 @@
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
-  <div class="login-wrapper">
+  <div class="login-page">
 
-    <mat-card class="login-card">
+    <mat-card class="login-page__card">
 
-      <h2 class="login-title">Acesse sua conta</h2>
+      <h2 class="login-page__title">Acesse sua conta</h2>
 
-      <mat-form-field appearance="outline" class="full-width">
+      <mat-form-field appearance="outline" class="login-page__field">
         <mat-label>Nome de usuário</mat-label>
         <input matInput formControlName="email">
 
@@ -19,7 +19,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="outline" class="full-width">
+      <mat-form-field appearance="outline" class="login-page__field">
         <mat-label>Senha</mat-label>
         <input matInput type="password" formControlName="password">
 
@@ -34,7 +34,7 @@
 
       <app-button
         mat-raised-button
-        class="login-button"
+        class="login-page__submit"
         type="submit"
         [disabled]="loading">
         {{ loading ? 'Entrando...' : 'Entrar' }}

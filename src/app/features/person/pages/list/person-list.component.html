@@ -1,17 +1,17 @@
-<div class="person-page">
+<div class="person-list">
 
-  <div class="page-header">
-    <div>
-      <h1>Pessoas</h1>
-      <p>Gerencie os cadastros do sistema • {{ totalPerson }} pessoas cadastradas</p>
+  <div class="person-list__header">
+    <div class="person-list__header-content">
+      <h1 class="person-list__title">Pessoas</h1>
+      <p class="person-list__subtitle">Gerencie os cadastros do sistema • {{ totalPerson }} pessoas cadastradas</p>
     </div>
 
-    <app-button class="new-person-btn" routerLink="/person/create">
+    <app-button class="person-list__action person-list__action--create" routerLink="/person/create">
       Nova pessoa
     </app-button>
   </div>
 
-  <div class="toolbar">
+  <div class="person-list__toolbar">
 
     <app-search-field
       label="Pesquisar pessoa"
@@ -19,14 +19,14 @@
       (search)="onSearch($event)">
     </app-search-field>
 
-    <button class="filter-btn" [matMenuTriggerFor]="filterMenu">
+    <button class="person-list__filter-button" [matMenuTriggerFor]="filterMenu">
       <mat-icon>filter_alt</mat-icon>
       Filtrar
     </button>
 
   </div>
 
-  <div class="table-container">
+  <div class="person-list__table-container">
 
     <table mat-table [dataSource]="dataSource">
 
@@ -56,9 +56,9 @@
         <td mat-cell *matCellDef="let person">
 
           <span
-            class="status"
-            [class.active]="person.active"
-            [class.inactive]="!person.active">
+            class="person-list__status"
+            [class.person-list__status--active]="person.active"
+            [class.person-list__status--inactive]="!person.active">
 
             {{ person.active ? 'Ativo' : 'Inativo' }}
 
@@ -100,7 +100,7 @@
     (filtersCleared)="clearFilters()"
   >
 
-    <div class="filter-group">
+    <div class="person-list__filter-group">
 
       <span>Status</span>
 

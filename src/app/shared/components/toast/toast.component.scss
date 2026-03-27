@@ -20,13 +20,13 @@
 
 /* HEADER */
 
-.toast-header {
+.toast__header {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.toast-icon {
+.toast__icon {
   width: 28px;
   height: 28px;
 
@@ -42,41 +42,41 @@
   color: white;
 }
 
-.toast-title {
+.toast__title {
   font-size: 16px;
   font-weight: 600;
 }
 
 /* DADOS */
 
-.toast-person {
+.toast__person {
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
 
-.toast-name {
+.toast__name {
   font-weight: 500;
 }
 
-.toast-info {
+.toast__info {
   font-size: 13px;
   opacity: 0.7;
 }
 
 /* BOTÕES */
 
-.toast-actions {
+.toast__actions {
   display: flex;
   gap: 12px;
   justify-content: flex-start;
 }
 
-.toast-actions:has(app-button:only-child) {
+.toast__actions:has(app-button:only-child) {
   justify-content: center;
 }
 
-.register-btn {
+.toast__primary-action {
   padding: 10px 18px;
 
   background: linear-gradient(
@@ -95,14 +95,14 @@
   white-space: nowrap;
 }
 
-.register-btn:hover {
+.toast__primary-action:hover {
   background: #4C8DFF;
   filter: brightness(1.1);
 
   white-space: nowrap;
 }
 
-.back-to-list-btn {
+.toast__secondary-action {
   padding: 10px 18px;
 
   background: transparent;
@@ -117,7 +117,7 @@
   white-space: nowrap;
 }
 
-.back-to-list-btn:hover {
+.toast__secondary-action:hover {
   background: rgba(69, 90, 128, 0.1);
   filter: brightness(1.1);
 
