@@ -8,10 +8,14 @@
 
   padding: 0 32px;
 
-  background: rgba(20, 26, 38, 0.85);
-  backdrop-filter: blur(8px);
+  background:
+    radial-gradient(circle at top left, rgba(33, 150, 243, 0.14), transparent 30%),
+    rgba(10, 16, 30, 0.88);
+  color: #f4f8fb;
+  backdrop-filter: blur(12px);
 
-  border-bottom: 1px solid rgba(76, 141, 255, 0.15);
+  border-bottom: 1px solid rgba(144, 202, 249, 0.16);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
 
   height: 64px;
   box-sizing: border-box;
@@ -21,9 +25,9 @@
 .site-header__logo {
   flex: 1;
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.5px;
-  color: #FFFFFF;
+  color: #f4f8fb;
 }
 
 /* NAV LINKS */
@@ -36,31 +40,25 @@
 
 /* LINKS */
 .site-header__nav-link {
-
-  color: #A9B1C6;
+  color: rgba(207, 216, 220, 0.78);
   font-weight: 500;
   font-size: 16px;
-
-  border-radius: 6px;
-
+  border-radius: 999px;
   transition: all 0.2s ease;
-
   text-decoration: none;
 }
 
 /* HOVER */
 .site-header__nav-link:hover {
-
-  background: transparent;
-  color: #FFFFFF;
+  background: rgba(144, 202, 249, 0.08);
+  color: #f4f8fb;
 }
 
 /* LINK ATIVO */
 .site-header__nav-link--active {
-
-  color: #4C8DFF;
-
-  border-bottom: 2px solid #4C8DFF;
+  color: #90caf9;
+  background: rgba(144, 202, 249, 0.1);
+  border-bottom: 2px solid #42a5f5;
 }
 
 /* LOGOUT */
@@ -71,23 +69,16 @@
 }
 
 .site-header__logout-button {
-
   display: flex;
   align-items: center;
   gap: 6px;
-
-  color: #FF6B6B;
+  color: #ff8a80;
   font-weight: 500;
-
-  border-radius: 6px;
-
+  border-radius: 999px;
   transition: all 0.2s ease;
 }
 
 .site-header__logout-button:hover {
-  background: #d32f2f;
-  color: white;
-
-  border-radius: 2px;
-  border-color: white;
+  background: rgba(255, 82, 82, 0.18);
+  color: #ffe3e0;
 }
