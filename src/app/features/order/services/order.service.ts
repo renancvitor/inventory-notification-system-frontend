@@ -1,7 +1,28 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../../environments/environment';
+
+export interface OrderMovementSummary {
+  movementType?: string;
+}
+
+export interface OrderSummary {
+  id: number;
+  createdAt?: string;
+  totalValue?: number;
+  status?: string;
+  orderType?: string;
+  requestedBy?: string;
+  approvedBy?: string | null;
+  rejectedBy?: string | null;
+  movements?: OrderMovementSummary[];
+}
+
+export interface PaginatedResponse<T> {
+  content: T[];
+  totalElements: number;
+}
 
 export interface OrderListParams {
   page?: number;
@@ -25,8 +46,8 @@ export class OrderService {
 
   constructor(private http: HttpClient) {}
 
-  list(params?: OrderListParams) {
-    return this.http.get(this.apiUrl, {
+  list(params?: OrderListParams): Observable<PaginatedResponse<OrderSummary>> {
+    return this.http.get<PaginatedResponse<OrderSummary>>(this.apiUrl, {
       params: {
         ...(params?.page !== undefined && { page: params.page }),
         ...(params?.size !== undefined && { size: params.size }),

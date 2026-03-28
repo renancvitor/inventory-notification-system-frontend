@@ -1,0 +1,132 @@
+<div class="order-list">
+
+    <div class="order-list__header">
+        <div class="order-list__header-content">
+            <h2 class="order-list__title">Pedidos</h2>
+
+            <p class="order-list__subtitle">Gerencie os cadastros do sistema • {{ totalOrders }} pedidos cadastrados</p>
+        </div>
+
+        <app-button class="order-list__action order-list__action--create" type="button">
+            Novo pedido
+        </app-button>
+    </div>
+
+    <div class="order-list__toolbar">
+        <app-search-field
+            label="Pesquisar pedido"
+            placeholder="Buscar por número, pessoa ou tipo"
+            (search)="onSearch($event)">
+        </app-search-field>
+
+        <button class="order-list__filter-button" [matMenuTriggerFor]="filterMenu" type="button">
+            <span class="order-list__filter-badge" *ngIf="activeFilterCount > 0">{{ activeFilterCount }}</span>
+            <mat-icon>filter_alt</mat-icon>
+            Filtrar
+        </button>
+    </div>
+
+    <div class="order-list__table-container">
+        <table mat-table [dataSource]="dataSource">
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef> Nº Pedido </th>
+                <td mat-cell *matCellDef="let order"> {{ formatOrderId(order.id) }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="createdAt">
+                <th mat-header-cell *matHeaderCellDef> Data Cadastro </th>
+                <td mat-cell *matCellDef="let order"> {{ formatDate(order.createdAt) }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="orderType">
+                <th mat-header-cell *matHeaderCellDef> Tipo de pedido </th>
+                <td mat-cell *matCellDef="let order"> {{ order.orderType || '-' }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="totalValue">
+                <th mat-header-cell *matHeaderCellDef> Valor total </th>
+                <td mat-cell *matCellDef="let order"> {{ formatCurrency(order.totalValue) }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef> Status </th>
+                <td mat-cell *matCellDef="let order">
+                    <span class="order-list__status" [ngClass]="getStatusClass(order.status)">
+                        {{ order.status || '-' }}
+                    </span>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="analyzedBy">
+                <th mat-header-cell *matHeaderCellDef> Analisado por </th>
+                <td mat-cell *matCellDef="let order"> {{ getAnalyzedBy(order) }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef> Ações </th>
+                <td mat-cell *matCellDef="let order">
+                    <button mat-button class="order-list__view-action" type="button" [attr.aria-label]="'Visualizar detalhes do pedido ' + order.id">
+                        <span>Visualizar</span>
+                        <mat-icon>visibility</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell order-list__no-data" colspan="7">
+                    Nenhum pedido encontrado
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <mat-paginator
+        [length]="totalOrders"
+        [pageSize]="10"
+        [pageSizeOptions]="[5, 10, 20]">
+    </mat-paginator>
+
+    <mat-menu #filterMenu="matMenu" class="filter-menu" xPosition="after" yPosition="below">
+        <app-filter-panel
+            (filtersApplied)="applyFilter()"
+            (filtersCleared)="clearFilter()">
+            <div class="order-list__filter-group">
+                <span>Status</span>
+
+                <mat-radio-group [(ngModel)]="filter.status" (click)="$event.stopPropagation()">
+                    <mat-radio-button value="all">
+                        Todos
+                    </mat-radio-button>
+                    <mat-radio-button value="approved">
+                        Aprovado
+                    </mat-radio-button>
+                    <mat-radio-button value="pending">
+                        Pendente
+                    </mat-radio-button>
+                    <mat-radio-button value="rejected">
+                        Reprovado
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+
+            <div class="order-list__filter-group">
+                <span>Tipo de pedido</span>
+
+                <mat-radio-group [(ngModel)]="filter.type" (click)="$event.stopPropagation()">
+                    <mat-radio-button value="all">
+                        Todos
+                    </mat-radio-button>
+                    <mat-radio-button value="input">
+                        Entrada
+                    </mat-radio-button>
+                    <mat-radio-button value="output">
+                        Saída
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </app-filter-panel>
+    </mat-menu>
+</div>
