@@ -18,6 +18,7 @@ import { ProductListComponent } from './features/product/pages/list/product-list
 import { ProductCreateComponent } from './features/product/pages/create/product-create.component';
 import { ProductEditComponent } from './features/product/pages/edit/product-edit.component';
 import { ProductService } from './features/product/services/product.service';
+
 import { OrderListComponent } from './features/order/pages/list/order-list.component';
 
 export const routes: Routes = [
