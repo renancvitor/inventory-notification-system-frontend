@@ -1,0 +1,21 @@
+.product-edit {
+  min-height: 100vh;
+  padding: 32px 24px;
+  box-sizing: border-box;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.product-edit__loading {
+  width: min(100%, 560px);
+  padding: 24px;
+
+  background: #1b2130;
+  border: 1px solid rgba(76, 141, 255, 0.08);
+  border-radius: 10px;
+
+  color: #eef3ff;
+  text-align: center;
+}

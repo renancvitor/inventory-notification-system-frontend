@@ -1,5 +1,5 @@
 import { inject } from '@angular/core';
-import { Routes } from '@angular/router';
+import { ActivatedRouteSnapshot, Routes } from '@angular/router';
 import { authGuard } from './core/auth/auth.guard';
 import { catchError, of } from 'rxjs';
 
@@ -16,6 +16,7 @@ import { UserEditComponent } from './features/user/pages/edit/user-edit.componen
 
 import { ProductListComponent } from './features/product/pages/list/product-list.component';
 import { ProductCreateComponent } from './features/product/pages/create/product-create.component';
+import { ProductEditComponent } from './features/product/pages/edit/product-edit.component';
 import { ProductService } from './features/product/services/product.service';
 
 export const routes: Routes = [
@@ -79,9 +80,17 @@ export const routes: Routes = [
     },
 
     {
-        path: 'products/id',
+        path: 'products/edit/:id',
         canActivate: [authGuard],
-        component: ProductCreateComponent
+        resolve: {
+            product: (route: ActivatedRouteSnapshot) => inject(ProductService).getById(Number(route.paramMap.get('id'))).pipe(
+                catchError(() => of(null))
+            ),
+            categories: () => inject(ProductService).listCategories().pipe(
+                catchError(() => of([]))
+            )
+        },
+        component: ProductEditComponent
     },
 
     {

@@ -1,0 +1,24 @@
+<div class="product-edit">
+
+  <div class="product-edit__loading" *ngIf="!productData">
+    Produto nao encontrado.
+  </div>
+
+  <app-product-form
+    *ngIf="productData"
+    title="Editar produto"
+    submitLabel="Salvar alterações"
+    [loading]="loading"
+    [loadingCategories]="loadingCategories"
+    [categories]="categories"
+    [showSummary]="true"
+    [statusLabel]="'Ativo'"
+    [showStockSummary]="true"
+    [showStockField]="false"
+    [showMinimumStockField]="true"
+    (submitForm)="saveProduct($event)"
+    (cancel)="cancel()"
+  >
+  </app-product-form>
+
+</div>
