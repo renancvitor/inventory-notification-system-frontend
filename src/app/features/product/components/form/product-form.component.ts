@@ -34,6 +34,8 @@ export class ProductFormComponent {
   @Input() showSummary = false;
   @Input() statusLabel: string | null = null;
   @Input() showStockSummary = false;
+  @Input() showStockField = true;
+  @Input() showMinimumStockField = false;
   @Input() submitLabel = 'Salvar Alterações';
 
   private formBuilder = inject(FormBuilder);

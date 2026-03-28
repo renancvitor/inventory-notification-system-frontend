@@ -79,11 +79,21 @@
       >
     </label>
 
-    <label class="product-form__field">
+    <label class="product-form__field" *ngIf="showStockField">
       <span>Estoque</span>
       <input
         type="number"
         formControlName="stock"
+        placeholder="0"
+      >
+    </label>
+
+    <label class="product-form__field" *ngIf="showMinimumStockField">
+      <span>Estoque minimo</span>
+      <input
+        type="number"
+        formControlName="minimumStock"
+        min="0"
         placeholder="0"
       >
     </label>
@@ -99,8 +109,6 @@
       ></textarea>
     </label>
   </section>
-
-  <input class="product-form__hidden-control" type="hidden" formControlName="minimumStock">
 
   <div class="product-form__footer">
     <app-button
