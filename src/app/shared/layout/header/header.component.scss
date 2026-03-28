@@ -1,8 +1,10 @@
 .site-header {
-
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 
   padding: 0 32px;
 
@@ -12,6 +14,7 @@
   border-bottom: 1px solid rgba(76, 141, 255, 0.15);
 
   height: 64px;
+  box-sizing: border-box;
 }
 
 /* LOGO */
@@ -82,10 +85,9 @@
 }
 
 .site-header__logout-button:hover {
-
   background: #d32f2f;
   color: white;
-  
+
   border-radius: 2px;
   border-color: white;
 }

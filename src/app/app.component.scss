@@ -1,0 +1,28 @@
+:host {
+  display: block;
+  height: 100dvh;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  height: 100%;
+  overflow: hidden;
+}
+
+.app-shell--authenticated {
+  grid-template-rows: auto minmax(0, 1fr) auto;
+}
+
+.app-shell__header,
+.app-shell__footer {
+  display: block;
+  min-width: 0;
+  flex-shrink: 0;
+}
+
+.app-shell__content {
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
