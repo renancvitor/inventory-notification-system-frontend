@@ -20,6 +20,7 @@ import { ProductEditComponent } from './features/product/pages/edit/product-edit
 import { ProductService } from './features/product/services/product.service';
 
 import { OrderListComponent } from './features/order/pages/list/order-list.component';
+import { OrderCreateComponent } from './features/order/pages/create/order-create.component';
 
 export const routes: Routes = [
 
@@ -99,6 +100,12 @@ export const routes: Routes = [
         path: 'orders',
         canActivate: [authGuard],
         component: OrderListComponent
+    },
+
+    {
+        path: 'orders/create',
+        canActivate: [authGuard],
+        component: OrderCreateComponent
     },
 
     {

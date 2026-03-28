@@ -1,10 +1,27 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, shareReplay } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 
 export interface OrderMovementSummary {
   movementType?: string;
+}
+
+export interface MovementTypeOption {
+  id: number;
+  name: string;
+}
+
+export interface OrderCreateItemPayload {
+  productId: number;
+  movementTypeId: number;
+  quantity: number;
+  unitPrice: number;
+}
+
+export interface OrderCreatePayload {
+  description: string;
+  items: OrderCreateItemPayload[];
 }
 
 export interface OrderSummary {
@@ -43,6 +60,8 @@ export interface OrderListParams {
 export class OrderService {
 
   private readonly apiUrl = `${environment.apiUrl}/orders`;
+  private readonly movementTypesUrl = `${environment.apiUrl}/movement-types`;
+  private movementTypesRequest$?: Observable<MovementTypeOption[]>;
 
   constructor(private http: HttpClient) {}
 
@@ -64,8 +83,20 @@ export class OrderService {
     });
   }
 
-  create(data: any): Observable<any> {
-    return this.http.post(this.apiUrl, data, { 
+  listMovementTypes(forceRefresh = false): Observable<MovementTypeOption[]> {
+    if (!this.movementTypesRequest$ || forceRefresh) {
+      this.movementTypesRequest$ = this.http.get<MovementTypeOption[]>(this.movementTypesUrl, {
+        withCredentials: true
+      }).pipe(
+        shareReplay(1)
+      );
+    }
+
+    return this.movementTypesRequest$;
+  }
+
+  create(data: OrderCreatePayload): Observable<OrderSummary> {
+    return this.http.post<OrderSummary>(this.apiUrl, data, {
       withCredentials: true
     });
   }
@@ -87,5 +118,5 @@ export class OrderService {
       withCredentials: true
     });
   }
-  
+
 }

@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { of } from 'rxjs';
 
 import { OrderListComponent } from './order-list.component';
@@ -12,6 +13,7 @@ describe('OrderListComponent', () => {
     await TestBed.configureTestingModule({
       imports: [OrderListComponent],
       providers: [
+        provideRouter([]),
         {
           provide: OrderService,
           useValue: {
