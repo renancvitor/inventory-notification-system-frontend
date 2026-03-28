@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
@@ -26,6 +27,7 @@ import { FilterPanelComponent } from '../../../../shared/components/filter-panel
     MatButtonModule,
     MatMenuModule,
     MatRadioModule,
+    RouterModule,
     ButtonComponent,
     SearchFieldComponent,
     FilterPanelComponent,

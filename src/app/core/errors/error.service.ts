@@ -10,11 +10,13 @@ export class ErrorService {
     constructor(private snackBar: MatSnackBar) {}
 
     showError(message: string) {
-        this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: { message },
-            duration: 5000,
-            horizontalPosition: 'center',
-            verticalPosition: 'top'
+        setTimeout(() => {
+            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                data: { message },
+                duration: 5000,
+                horizontalPosition: 'center',
+                verticalPosition: 'top'
+            });
         });
     }
 }

@@ -1,0 +1,15 @@
+<div class="order-create">
+
+  <app-order-form
+    title="Novo pedido"
+    [loading]="loading"
+    [productsLoading]="productsLoading"
+    [movementTypesLoading]="movementTypesLoading"
+    [products]="products"
+    [movementTypes]="movementTypes"
+    (submitForm)="createOrder($event)"
+    (cancel)="cancel()"
+  >
+  </app-order-form>
+
+</div>

@@ -1,0 +1,162 @@
+<form [formGroup]="orderForm" (ngSubmit)="onSubmit()" class="order-form">
+
+  <section class="order-form__panel order-form__panel--top">
+    <div class="order-form__panel-title">
+      <h2>{{ title }}</h2>
+    </div>
+
+    <div class="order-form__top-layout">
+      <label class="order-form__field order-form__field--select">
+        <span>Tipo de pedido</span>
+        <select
+          [formControl]="orderForm.controls.movementTypeId"
+          [value]="orderForm.controls.movementTypeId.value ?? ''"
+          (change)="setMovementType($any($event.target).value)"
+          [class.order-form__control--placeholder]="!orderForm.controls.movementTypeId.value"
+        >
+          <option value="" disabled>
+            {{ movementTypesLoading ? 'Carregando tipos...' : 'Selecione...' }}
+          </option>
+
+          <option *ngFor="let movementType of movementTypes" [value]="movementType.id">
+            {{ movementType.name }}
+          </option>
+        </select>
+      </label>
+
+      <div class="order-form__footer">
+        <app-button
+          class="order-form__action order-form__action--secondary"
+          type="button"
+          (click)="cancel.emit()"
+        >
+          Cancelar
+        </app-button>
+
+        <app-button
+          class="order-form__action order-form__action--primary"
+          type="submit"
+          [disabled]="!canSubmit"
+        >
+          {{ loading ? 'Finalizando...' : 'Finalizar pedido' }}
+        </app-button>
+      </div>
+    </div>
+  </section>
+
+  <section class="order-form__panel order-form__panel--items">
+    <div class="order-form__items-toolbar">
+      <label class="order-form__field order-form__field--search">
+        <span>Adicionar produtos</span>
+
+        <div class="order-form__search-shell">
+          <input
+            type="text"
+            [value]="productSearchTerm"
+            (input)="onProductSearch($any($event.target).value)"
+            (keydown)="onProductSearchKeydown($event)"
+            placeholder="Buscar por código ou nome"
+            [disabled]="productsLoading || !isMovementTypeSelected"
+          >
+
+          <mat-icon>search</mat-icon>
+        </div>
+
+        <div class="order-form__search-results" *ngIf="productSearchTerm.trim() && filteredProducts.length > 0">
+          <button
+            class="order-form__search-result"
+            *ngFor="let product of filteredProducts"
+            [class.order-form__search-result--active]="isHighlightedProduct(product.id)"
+            type="button"
+            (click)="addProduct(product)"
+          >
+            <strong>{{ product.productName }}</strong>
+            <span>#{{ product.id }} • {{ formatCurrency(product.price) }}</span>
+          </button>
+        </div>
+      </label>
+
+      <div class="order-form__total">
+        <span>Valor total:</span>
+        <strong>{{ formatCurrency(totalValue) }}</strong>
+      </div>
+    </div>
+
+    <div class="order-form__table-wrapper">
+      <table class="order-form__table" *ngIf="orderItems.length > 0; else emptyState">
+        <thead>
+          <tr>
+            <th>Produto</th>
+            <th>Quantidade</th>
+            <th>Valor unitário</th>
+            <th>Valor total</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let item of orderItems; trackBy: trackByProductId">
+            <td>
+              <input
+                class="order-form__table-input order-form__table-input--product"
+                type="text"
+                [value]="item.productName"
+                readonly
+              >
+            </td>
+            <td>
+              <input
+                class="order-form__table-input order-form__table-input--qty"
+                type="number"
+                min="1"
+                step="1"
+                [value]="item.quantity"
+                (focus)="selectQuantityInput($event)"
+                (input)="updateQuantity(item.productId, $any($event.target).value)"
+              >
+            </td>
+            <td>
+              <input
+                class="order-form__table-input"
+                type="text"
+                [value]="formatCurrency(item.unitPrice)"
+                readonly
+              >
+            </td>
+            <td>
+              <input
+                class="order-form__table-input"
+                type="text"
+                [value]="formatCurrency(getItemTotal(item))"
+                readonly
+              >
+            </td>
+            <td>
+              <button class="order-form__delete" type="button" (click)="removeItem(item.productId)">
+                Excluir
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <ng-template #emptyState>
+        <div class="order-form__empty">
+          {{ isMovementTypeSelected ? 'Pesquise um produto e pressione Enter para adiciona-lo ao pedido.' : 'Selecione o tipo de pedido para habilitar a busca de produtos.' }}
+        </div>
+      </ng-template>
+    </div>
+  </section>
+
+  <section class="order-form__panel">
+    <label class="order-form__field order-form__field--textarea">
+      <span>Descrição</span>
+      <textarea
+        formControlName="description"
+        placeholder="Detalhe o motivo ou contexto deste pedido"
+        rows="4"
+      ></textarea>
+    </label>
+  </section>
+
+</form>
