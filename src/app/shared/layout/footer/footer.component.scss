@@ -4,8 +4,22 @@
     z-index: 1000;
     width: 100%;
     box-sizing: border-box;
+    background:
+        radial-gradient(circle at bottom right, rgba(33, 150, 243, 0.12), transparent 35%),
+        rgba(10, 16, 30, 0.9);
+    color: rgba(207, 216, 220, 0.86);
+    border-top: 1px solid rgba(144, 202, 249, 0.16);
+    box-shadow: 0 -12px 32px rgba(0, 0, 0, 0.16);
+    backdrop-filter: blur(12px);
+    min-height: 56px;
+    padding: 0 1.5rem;
 }
 
 .site-footer__spacer {
     flex: 1;
+}
+
+.site-footer__copyright,
+.site-footer__brand {
+    font-size: 0.95rem;
 }
