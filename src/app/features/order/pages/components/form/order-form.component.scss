@@ -1,6 +1,6 @@
 .order-form {
   width: min(100%, 1300px);
-  min-height: calc(100vh - 168px);
+  min-height: calc(100dvh - var(--app-header-height) - var(--app-footer-height) - 32px);
 
   display: flex;
   flex-direction: column;
@@ -317,9 +317,9 @@
 }
 
 .order-form__table-wrapper {
-  height: clamp(180px, 24vh, 220px);
+  height: clamp(240px, 30vh, 260px);
   min-height: 0;
-  max-height: clamp(180px, 24vh, 220px);
+  max-height: clamp(240px, 30vh, 260px);
   overflow-x: auto;
   overflow-y: auto;
   border: 1px solid #2c3650;
