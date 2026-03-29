@@ -5,7 +5,8 @@
 
 .user-edit-page {
   min-height: 100%;
-  padding: 12px 24px 20px;
+  width: 100%;
+  padding: clamp(8px, 3vw, 20px) clamp(16px, 4vw, 24px) 20px;
   box-sizing: border-box;
 
   display: flex;
@@ -16,9 +17,10 @@
 }
 
 .user-edit-page__card {
-  width: 360px;
-
-  padding: 24px;
+  width: min(100%, 420px);
+  max-width: 100%;
+  padding: clamp(20px, 4vw, 24px);
+  box-sizing: border-box;
 
   display: flex;
   flex-direction: column;
@@ -32,24 +34,28 @@
 }
 
 .user-edit-page__actions {
+  width: min(100%, 420px);
+  max-width: 100%;
   margin-top: 10px;
 }
 
 .user-edit-page__actions-container {
   display: flex;
   gap: 12px;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .user-edit-page__actions-container app-button {
-  min-width: 150px;
-  display: flex;
+  width: auto;
+  min-width: 0;
 }
 
 .user-edit-page__action {
   padding: 10px 18px;
   border-radius: 6px;
   font-weight: 500;
+  white-space: nowrap;
 }
 
 .user-edit-page__action--primary {
@@ -152,6 +158,8 @@
   margin: 0;
   font-size: 20px;
   font-weight: 600;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .user-edit-page__status {
@@ -183,5 +191,19 @@
 @media (max-width: 640px) {
   .user-edit-page {
     padding: 8px 16px 16px;
+  }
+
+  .user-edit-page__card {
+    width: 100%;
+    border-radius: 16px;
+  }
+
+  .user-edit-page__actions-container {
+    flex-direction: column;
+  }
+
+  .user-edit-page__actions-container app-button {
+    width: 100%;
+    min-width: 0;
   }
 }

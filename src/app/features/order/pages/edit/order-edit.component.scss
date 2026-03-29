@@ -1,8 +1,25 @@
 .order-edit {
   display: flex;
   justify-content: center;
+  width: 100%;
+  min-height: 100%;
   padding: 12px 20px 20px;
   box-sizing: border-box;
+}
+
+.order-edit > * {
+  width: min(100%, 1024px);
+  max-width: 100%;
+}
+
+.order-edit ::ng-deep .order-form__panel--items {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.order-edit ::ng-deep .order-form__table-wrapper {
+  height: clamp(216px, 27vh, 234px);
+  max-height: clamp(216px, 27vh, 234px);
 }
 
 .order-edit__loading {
@@ -16,4 +33,23 @@
   background: #1b2130;
   border: 1px solid rgba(76, 141, 255, 0.08);
   border-radius: 10px;
+}
+
+@media (max-width: 900px) {
+  .order-edit {
+    padding: 12px 16px 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  .order-edit {
+    padding: 8px 12px 16px;
+  }
+
+  .order-edit__loading {
+    min-height: calc(100dvh - 152px);
+    padding: 20px 16px;
+    border-radius: 14px;
+    text-align: center;
+  }
 }

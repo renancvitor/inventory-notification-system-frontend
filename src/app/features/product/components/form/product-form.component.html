@@ -36,7 +36,6 @@
       <span>Categoria</span>
       <select
         formControlName="categoryId"
-        [disabled]="loadingCategories"
         [class.product-form__control--placeholder]="!productForm.controls.categoryId.value"
       >
         <option [ngValue]="null" disabled>

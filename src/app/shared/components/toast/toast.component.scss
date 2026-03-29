@@ -1,5 +1,6 @@
 .toast {
-  width: 420px;
+  width: min(420px, calc(100vw - 24px));
+  max-width: calc(100vw - 24px);
 
   padding: 20px;
 
@@ -70,6 +71,7 @@
   display: flex;
   gap: 12px;
   justify-content: flex-start;
+  flex-wrap: wrap;
 }
 
 .toast__actions:has(app-button:only-child) {
@@ -122,4 +124,20 @@
   filter: brightness(1.1);
 
   white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .toast {
+    padding: 16px;
+  }
+
+  .toast__actions {
+    flex-direction: column;
+  }
+
+  .toast__primary-action,
+  .toast__secondary-action {
+    width: 100%;
+    white-space: normal;
+  }
 }

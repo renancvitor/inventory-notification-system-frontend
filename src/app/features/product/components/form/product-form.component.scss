@@ -1,5 +1,8 @@
 .product-form {
-  width: min(100%, 1280px);
+  width: min(100%, 1024px);
+  max-width: 100%;
+  margin-inline: auto;
+  box-sizing: border-box;
 
   display: flex;
   flex-direction: column;
@@ -22,6 +25,8 @@
     font-weight: 700;
     line-height: 1.2;
     color: #eef3ff;
+    overflow-wrap: anywhere;
+    word-break: break-word;
   }
 
   p {
@@ -36,6 +41,10 @@
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
+}
+
+.product-form__meta p {
+  margin: 0;
 }
 
 .product-form__label {
@@ -74,6 +83,8 @@
     font-weight: 700;
     line-height: 1.2;
     color: #eef3ff;
+    overflow-wrap: anywhere;
+    word-break: break-word;
   }
 }
 
@@ -181,11 +192,15 @@ input[type='date'].product-form__control--placeholder::-webkit-date-and-time-val
 .product-form__footer {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 12px;
+  flex-wrap: wrap;
 }
 
 .product-form__action {
-  flex: 1 1 0;
+  flex: 0 0 auto;
+  min-width: 0;
+  width: auto;
 }
 
 .product-form__action--primary {
@@ -225,6 +240,10 @@ input[type='date'].product-form__control--placeholder::-webkit-date-and-time-val
 }
 
 @media (max-width: 720px) {
+  .product-form__panel {
+    padding: 16px;
+  }
+
   .product-form__panel--grid {
     grid-template-columns: 1fr;
     gap: 16px;
@@ -233,6 +252,13 @@ input[type='date'].product-form__control--placeholder::-webkit-date-and-time-val
   .product-form__footer {
     flex-direction: column;
     align-items: stretch;
+    justify-content: flex-start;
+  }
+
+  .product-form__action {
+    width: 100%;
+    min-width: 0;
+    flex: none;
   }
 
 }

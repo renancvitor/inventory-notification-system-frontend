@@ -21,6 +21,7 @@
 
   height: var(--app-header-height);
   box-sizing: border-box;
+  gap: 16px;
 }
 
 /* LOGO */
@@ -30,6 +31,8 @@
   font-weight: 600;
   letter-spacing: 0.5px;
   color: #f4f8fb;
+  text-decoration: none;
+  min-width: 0;
 }
 
 /* NAV LINKS */
@@ -38,6 +41,7 @@
   display: flex;
   justify-content: center;
   gap: 50px;
+  min-width: 0;
 }
 
 /* LINKS */
@@ -83,4 +87,49 @@
 .site-header__logout-button:hover {
   background: rgba(255, 82, 82, 0.18);
   color: #ffe3e0;
+}
+
+.site-header__mobile-toggle {
+  display: none;
+  flex-shrink: 0;
+}
+
+::ng-deep .site-header__mobile-menu-panel {
+  min-width: 220px;
+  max-width: min(92vw, 320px);
+}
+
+@media (max-width: 960px) {
+  .site-header {
+    padding: 0 16px;
+    gap: 8px;
+  }
+
+  .site-header__logo {
+    font-size: 16px;
+    line-height: 1.2;
+  }
+
+  .site-header__nav--desktop,
+  .site-header__logout--desktop {
+    display: none;
+  }
+
+  .site-header__mobile-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    color: #f4f8fb;
+  }
+}
+
+@media (max-width: 480px) {
+  .site-header {
+    padding: 0 12px;
+  }
+
+  .site-header__logo {
+    font-size: 15px;
+  }
 }

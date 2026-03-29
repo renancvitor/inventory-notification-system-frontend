@@ -3,7 +3,8 @@
 }
 
 .search-field {
-  width: fit-content;
+  display: block;
+  width: 100%;
   max-width: 100%;
 }
 
@@ -16,7 +17,7 @@
 .search-field__input {
   display: inline-flex;
   align-items: center;
-  width: fit-content;
+  width: 100%;
   max-width: 100%;
 
   margin-top: 6px;
@@ -26,16 +27,22 @@
   border: 1px solid rgba(76, 141, 255, 0.2);
 
   input {
-    flex: 0 1 300px;
+    flex: 1 1 auto;
     background: transparent;
     border: none;
     outline: none;
-    width: 300px;
+    width: 100%;
     min-width: 0;
     color: white;
   }
 
   mat-icon {
     opacity: 0.6;
+  }
+}
+
+@media (max-width: 640px) {
+  .search-field__input {
+    padding: 8px 12px;
   }
 }
