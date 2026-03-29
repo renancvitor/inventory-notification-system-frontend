@@ -5,8 +5,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import {
   OrderFormComponent,
-  OrderFormInitialValue,
-  OrderFormValue,
 } from '../components/form/order-form.component';
 import {
   MovementTypeOption,
@@ -14,6 +12,7 @@ import {
   OrderItemSummary,
   OrderService,
 } from '../../services/order.service';
+import { OrderFormInitialValue, OrderFormValue } from '../../services/order-form.model';
 import { ProductListItem, ProductService } from '../../../product/services/product.service';
 import { ToastComponent } from '../../../../shared/components/toast/toast.component';
 

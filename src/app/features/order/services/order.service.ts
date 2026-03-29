@@ -2,83 +2,27 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, shareReplay } from 'rxjs';
 import { environment } from '../../../../environments/environment';
+import {
+  MovementTypeOption,
+  OrderCreatePayload,
+  OrderDetail,
+  OrderListParams,
+  OrderListResponse,
+  OrderSummary,
+  OrderUpdatePayload,
+} from './order.model';
 
-export interface OrderMovementSummary {
-  id?: number;
-  productId?: number;
-  productName?: string;
-  movementType?: string;
-  quantity?: number;
-  unitPrice?: number;
-  movementationDate?: string;
-  personName?: string;
-}
-
-export interface OrderItemSummary {
-  productId?: number;
-  productName?: string;
-  movementTypeId?: number;
-  movementType?: string;
-  quantity?: number;
-  unitPrice?: number;
-  totalValue?: number;
-}
-
-export interface MovementTypeOption {
-  id: number;
-  name: string;
-}
-
-export interface OrderCreateItemPayload {
-  productId: number;
-  movementTypeId: number;
-  quantity: number;
-  unitPrice: number;
-}
-
-export interface OrderCreatePayload {
-  description: string;
-  items: OrderCreateItemPayload[];
-}
-
-export interface OrderSummary {
-  id: number;
-  createdAt?: string;
-  totalValue?: number;
-  status?: string;
-  orderType?: string;
-  requestedBy?: string;
-  requestedByName?: string | null;
-  approvedBy?: string | null;
-  approvedByName?: string | null;
-  rejectedBy?: string | null;
-  rejectedByName?: string | null;
-  movements?: OrderMovementSummary[];
-}
-
-export interface OrderDetail extends OrderSummary {
-  description?: string;
-  items?: OrderItemSummary[];
-  movements?: OrderMovementSummary[];
-}
-
-export interface PaginatedResponse<T> {
-  content: T[];
-  totalElements: number;
-}
-
-export interface OrderListParams {
-  page?: number;
-  size?: number;
-  search?: string;
-  orderStatusId?: number;
-  requestedBy?: number;
-  approvedBy?: number;
-  rejectedBy?: number;
-  createdAt?: string;
-  updatedAt?: string;
-  totalValue?: number;
-}
+export type {
+  MovementTypeOption,
+  OrderCreateItemPayload,
+  OrderCreatePayload,
+  OrderDetail,
+  OrderItemSummary,
+  OrderListParams,
+  OrderMovementSummary,
+  OrderSummary,
+  OrderUpdatePayload,
+} from './order.model';
 
 @Injectable({
   providedIn: 'root',
@@ -91,8 +35,8 @@ export class OrderService {
 
   constructor(private http: HttpClient) {}
 
-  list(params?: OrderListParams): Observable<PaginatedResponse<OrderSummary>> {
-    return this.http.get<PaginatedResponse<OrderSummary>>(this.apiUrl, {
+  list(params?: OrderListParams): Observable<OrderListResponse> {
+    return this.http.get<OrderListResponse>(this.apiUrl, {
       params: {
         ...(params?.page !== undefined && { page: params.page }),
         ...(params?.size !== undefined && { size: params.size }),
@@ -133,20 +77,20 @@ export class OrderService {
     });
   }
 
-  update(id: number, data: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}`, data, {
+  update(id: number, data: OrderUpdatePayload): Observable<OrderDetail> {
+    return this.http.put<OrderDetail>(`${this.apiUrl}/${id}`, data, {
       withCredentials: true
     });
   }
 
-  reject(id: number): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}/reject`, {}, {
+  reject(id: number): Observable<OrderDetail> {
+    return this.http.put<OrderDetail>(`${this.apiUrl}/${id}/reject`, {}, {
       withCredentials: true
     });
   }
 
-  approve(id: number): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}/approve`, {}, {
+  approve(id: number): Observable<OrderDetail> {
+    return this.http.put<OrderDetail>(`${this.apiUrl}/${id}/approve`, {}, {
       withCredentials: true
     });
   }

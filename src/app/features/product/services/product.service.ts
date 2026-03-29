@@ -2,30 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, shareReplay } from 'rxjs';
 import { environment } from '../../../../environments/environment';
+import {
+  ProductCategory,
+  ProductCreatePayload,
+  ProductDetail,
+  ProductListResponse,
+  ProductUpdatePayload,
+} from './product.model';
 
-export interface ProductListItem {
-  id: number;
-  productName: string;
-  category: string;
-  price: number;
-  validity?: string;
-  description?: string;
-  stock: number;
-  minimumStock?: number;
-  brand: string;
-  active: boolean;
-}
-
-export interface ProductListResponse {
-  content: ProductListItem[];
-  totalElements: number;
-}
-
-export interface ProductCategory {
-  id: number;
-  name: string;
-  displayName: string;
-}
+export type { ProductCategory, ProductDetail, ProductListItem, ProductListResponse } from './product.model';
 
 @Injectable({
   providedIn: 'root',
@@ -53,8 +38,8 @@ export class ProductService {
     });
   }
 
-  create(data: any): Observable<any> {
-    return this.http.post(this.apiUrl, data, {
+  create(data: ProductCreatePayload): Observable<ProductDetail> {
+    return this.http.post<ProductDetail>(this.apiUrl, data, {
       withCredentials: true
     });
   }
@@ -71,20 +56,20 @@ export class ProductService {
     return this.categoriesRequest$;
   }
 
-  update(id: number, data: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}`, data, {
+  update(id: number, data: ProductUpdatePayload): Observable<ProductDetail> {
+    return this.http.put<ProductDetail>(`${this.apiUrl}/${id}`, data, {
       withCredentials: true
     });
   }
 
-  delete(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`, {
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`, {
       withCredentials: true
     });
   }
 
-  activate(id: number): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}/activate`, {}, {
+  activate(id: number): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/${id}/activate`, {}, {
       withCredentials: true
     });
   }
@@ -95,8 +80,8 @@ export class ProductService {
     });
   }
 
-  getById(id: number) {
-    return this.http.get(`${this.apiUrl}/${id}`, {
+  getById(id: number): Observable<ProductDetail> {
+    return this.http.get<ProductDetail>(`${this.apiUrl}/${id}`, {
       withCredentials: true
     });
   }

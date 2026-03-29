@@ -13,6 +13,7 @@ import { MatRadioGroup } from '@angular/material/radio';
 import { RouterModule } from '@angular/router';
 
 import { UserService } from '../../services/user.service';
+import { UserListItem, UserListResponse, UserType } from '../../services/user.model';
 import { SearchFieldComponent } from '../../../../shared/components/search-field/search-field.component';
 import { FilterPanelComponent } from '../../../../shared/components/filter-panel/filter-panel.component';
 
@@ -29,13 +30,13 @@ export class UserListComponent {
 
   displayedColumns: string[] = ['name', 'email', 'userType', 'active', 'actions'];
 
-  dataSource: MatTableDataSource<any> = new MatTableDataSource();
+  dataSource: MatTableDataSource<UserListItem> = new MatTableDataSource<UserListItem>([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(private userService: UserService, private changeDetectorRef: ChangeDetectorRef) {}
 
-  userTypes: any[] = [];
+  userTypes: UserType[] = [];
 
   ngOnInit() {
     this.userService.getUserTypes().subscribe((types) => {
@@ -106,7 +107,7 @@ export class UserListComponent {
       page: this.paginator?.pageIndex ?? 0,
       size: this.paginator?.pageSize ?? 10
     })
-    .subscribe((response: any) => {
+    .subscribe((response: UserListResponse) => {
       this.dataSource.data = response.content;
       this.totalUsers = response.totalElements;
       

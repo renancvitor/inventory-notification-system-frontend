@@ -2,6 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
+import {
+  PersonCreatePayload,
+  PersonDetail,
+  PersonListResponse,
+} from './person.model';
 
 @Injectable({
   providedIn: 'root',
@@ -12,8 +17,8 @@ export class PersonService {
 
   constructor(private http: HttpClient) {}
 
-  list(params?: { active?: boolean; page?: number; size?: number; search?: string }) {
-    return this.http.get(this.apiUrl, {
+  list(params?: { active?: boolean; page?: number; size?: number; search?: string }): Observable<PersonListResponse> {
+    return this.http.get<PersonListResponse>(this.apiUrl, {
       params: {
         ...(params?.active !== undefined && { active: params.active }),
         ...(params?.page !== undefined && { page: params.page }),
@@ -24,8 +29,8 @@ export class PersonService {
     });
   }
 
-  create(data: any): Observable<any> {
-    return this.http.post(this.apiUrl, data, {
+  create(data: PersonCreatePayload): Observable<PersonDetail> {
+    return this.http.post<PersonDetail>(this.apiUrl, data, {
       withCredentials: true
     });
   }
@@ -42,8 +47,8 @@ export class PersonService {
     });
   }
 
-  getById(id: number) {
-    return this.http.get(`${this.apiUrl}/${id}`, {
+  getById(id: number): Observable<PersonDetail> {
+    return this.http.get<PersonDetail>(`${this.apiUrl}/${id}`, {
       withCredentials: true
     });
   }

@@ -2,7 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { UpdatePasswordRequest, UserDetail } from '../user.model';
+import { UpdatePasswordFormValue } from '../../auth/services/update-password.model';
+import {
+  UpdateUserTypeRequest,
+  UserDetail,
+  UserListResponse,
+  UserType,
+} from './user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -13,8 +19,8 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  list(params?: {active?: boolean; userType?: string; page?: number; size?: number; search?: string }) {
-    return this.http.get(this.apiUrl, {
+  list(params?: {active?: boolean; userType?: string; page?: number; size?: number; search?: string }): Observable<UserListResponse> {
+    return this.http.get<UserListResponse>(this.apiUrl, {
       params: {
         ...(params?.active !== undefined && { active:params.active }),
         ...(params?.userType !== undefined && { userType:params.userType }),
@@ -26,8 +32,8 @@ export class UserService {
     });
   }
 
-  updateUserType(id: number, data: { idUserType: number }) {
-    return this.http.put(`${this.apiUrl}/type/${id}`, data, {
+  updateUserType(id: number, data: UpdateUserTypeRequest): Observable<UserDetail> {
+    return this.http.put<UserDetail>(`${this.apiUrl}/type/${id}`, data, {
       withCredentials: true
     });
   }
@@ -44,8 +50,8 @@ export class UserService {
     });
   }
 
-  getUserTypes() {
-    return this.http.get<any[]>(`${this.apiUrl}/user-types`, {
+  getUserTypes(): Observable<UserType[]> {
+    return this.http.get<UserType[]>(`${this.apiUrl}/user-types`, {
       withCredentials: true
     });
   }
@@ -56,7 +62,7 @@ export class UserService {
     });
   }
 
-  updatePassword(id: number, data: UpdatePasswordRequest) {
+  updatePassword(id: number, data: UpdatePasswordFormValue) {
     return this.http.put<UserDetail>(`${this.apiUrl}/${id}/password`, data, {
       withCredentials: true
     });

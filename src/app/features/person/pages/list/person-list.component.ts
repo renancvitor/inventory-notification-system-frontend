@@ -13,6 +13,7 @@ import { MatRadioGroup } from '@angular/material/radio';
 import { MatRadioModule } from '@angular/material/radio';
 
 import { PersonService } from '../../services/person.service';
+import { PersonListItem, PersonListResponse } from '../../services/person.model';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
 import { FilterPanelComponent } from '../../../../shared/components/filter-panel/filter-panel.component';
 import { SearchFieldComponent } from '../../../../shared/components/search-field/search-field.component'; 
@@ -29,7 +30,7 @@ export class PersonComponent {
 
   displayedColumns: string[] = ['personName', 'cpf', 'email', 'active', 'actions'];
 
-  dataSource: MatTableDataSource<any> = new MatTableDataSource();
+  dataSource: MatTableDataSource<PersonListItem> = new MatTableDataSource<PersonListItem>([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -85,7 +86,7 @@ export class PersonComponent {
       page: this.paginator?.pageIndex ?? 0,
       size: this.paginator?.pageSize ?? 10
     })
-    .subscribe((response: any) => {
+    .subscribe((response: PersonListResponse) => {
       this.dataSource.data = response.content;
       this.totalPerson = response.totalElements;
     });

@@ -5,6 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
+import { PersonFormValue } from '../../services/person.model';
 
 @Component({
   selector: 'app-person-form',
@@ -15,11 +16,7 @@ import { ButtonComponent } from '../../../../shared/components/button/button.com
 })
 export class PersonFormComponent {
 
-  @Output() submitForm = new EventEmitter<{
-    personName: string;
-    email: string;
-    cpf: string;
-  }>();
+  @Output() submitForm = new EventEmitter<PersonFormValue>();
   @Output() cancel = new EventEmitter<void>();
   @Input() loading = false;
   @Input() showActions = true;

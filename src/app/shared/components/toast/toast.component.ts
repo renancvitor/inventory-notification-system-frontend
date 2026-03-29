@@ -2,6 +2,7 @@ import { Component, Inject, HostListener } from '@angular/core';
 import { MAT_SNACK_BAR_DATA, MatSnackBarRef } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
 import { ButtonComponent } from '../button/button.component';
+import { ToastData } from '../../services/toast.model';
 
 @Component({
   selector: 'app-toast',
@@ -13,7 +14,7 @@ import { ButtonComponent } from '../button/button.component';
 export class ToastComponent {
 
   constructor(
-    @Inject(MAT_SNACK_BAR_DATA) public data: any,
+    @Inject(MAT_SNACK_BAR_DATA) public data: ToastData,
     private snackBarRef: MatSnackBarRef<ToastComponent>
   ) {}
 
