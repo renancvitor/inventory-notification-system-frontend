@@ -76,7 +76,7 @@ export class OrderEditComponent implements OnInit {
     return {
       orderId: this.order.id,
       status: this.order.status,
-      requestedBy: this.order.requestedBy,
+      requestedBy: this.order.requestedByName || this.order.requestedBy,
       analyzedBy: this.getAnalyzedBy(this.order),
       createdAt: this.order.createdAt,
     };
@@ -238,7 +238,7 @@ export class OrderEditComponent implements OnInit {
   }
 
   private getAnalyzedBy(order: OrderDetail) {
-    return order.approvedBy || order.rejectedBy || '-';
+    return order.approvedByName || order.rejectedByName || order.approvedBy || order.rejectedBy || '-';
   }
 
   private showToast(title: string, order: OrderDetail) {

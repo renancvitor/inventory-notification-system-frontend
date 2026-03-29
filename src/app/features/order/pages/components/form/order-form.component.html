@@ -38,9 +38,7 @@
       <label class="order-form__field order-form__field--select">
         <span>Tipo de pedido</span>
         <select
-          [formControl]="orderForm.controls.movementTypeId"
-          [value]="orderForm.controls.movementTypeId.value ?? ''"
-          (change)="setMovementType($any($event.target).value)"
+          formControlName="movementTypeId"
           [class.order-form__control--placeholder]="!orderForm.controls.movementTypeId.value"
         >
           <option value="" disabled>

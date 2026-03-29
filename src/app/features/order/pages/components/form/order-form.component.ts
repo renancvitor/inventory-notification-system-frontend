@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { ButtonComponent } from '../../../../../shared/components/button/button.component';
 import { MovementTypeOption } from '../../../services/order.service';
@@ -71,6 +72,7 @@ export class OrderFormComponent {
   private _movementTypesLoading = false;
   private _initialValue: OrderFormInitialValue | null = null;
 
+  private readonly destroyRef = inject(DestroyRef);
   private readonly formBuilder = inject(FormBuilder);
   private readonly brlFormatter = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
@@ -92,6 +94,15 @@ export class OrderFormComponent {
     movementTypeId: [null as number | null, Validators.required],
     description: ['', Validators.required],
   });
+
+  constructor() {
+    this.orderForm.controls.movementTypeId.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        this.productSearchTerm = '';
+        this.highlightedProductIndex = 0;
+      });
+  }
 
   @Input()
   set initialValue(value: OrderFormInitialValue | null) {
@@ -285,16 +296,6 @@ export class OrderFormComponent {
 
     const input = event.target as HTMLInputElement | null;
     input?.select();
-  }
-
-  setMovementType(value: string) {
-    if (this.isViewMode) {
-      return;
-    }
-
-    this.orderForm.controls.movementTypeId.setValue(value ? Number(value) : null);
-    this.productSearchTerm = '';
-    this.highlightedProductIndex = 0;
   }
 
   getMovementTypeName() {

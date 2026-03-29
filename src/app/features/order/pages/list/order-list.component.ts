@@ -152,7 +152,7 @@ export class OrderListComponent implements AfterViewInit {
   }
 
   getAnalyzedBy(order: OrderSummary) {
-    return order.approvedBy || order.rejectedBy || '-';
+    return order.approvedByName || order.rejectedByName || order.approvedBy || order.rejectedBy || '-';
   }
 
   getStatusClass(status: string | undefined) {

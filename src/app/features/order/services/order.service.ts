@@ -48,8 +48,11 @@ export interface OrderSummary {
   status?: string;
   orderType?: string;
   requestedBy?: string;
+  requestedByName?: string | null;
   approvedBy?: string | null;
+  approvedByName?: string | null;
   rejectedBy?: string | null;
+  rejectedByName?: string | null;
   movements?: OrderMovementSummary[];
 }
 

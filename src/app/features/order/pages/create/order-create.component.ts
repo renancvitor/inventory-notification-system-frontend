@@ -71,20 +71,24 @@ export class OrderCreateComponent implements OnInit {
 
   private loadMovementTypes() {
     this.movementTypesLoading = true;
+    this.changeDetectorRef.detectChanges();
 
     this.orderService.listMovementTypes().subscribe({
       next: (movementTypes) => {
         this.movementTypes = movementTypes;
         this.movementTypesLoading = false;
+        this.changeDetectorRef.detectChanges();
       },
       error: () => {
         this.movementTypesLoading = false;
+        this.changeDetectorRef.detectChanges();
       }
     });
   }
 
   private loadProducts() {
     this.productsLoading = true;
+    this.changeDetectorRef.detectChanges();
 
     this.productService.list({
       active: true,
@@ -97,9 +101,11 @@ export class OrderCreateComponent implements OnInit {
           price: Number(product.price ?? 0),
         }));
         this.productsLoading = false;
+        this.changeDetectorRef.detectChanges();
       },
       error: () => {
         this.productsLoading = false;
+        this.changeDetectorRef.detectChanges();
       }
     });
   }
