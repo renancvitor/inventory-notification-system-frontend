@@ -47,24 +47,33 @@
 .product-list__toolbar {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
+    gap: 20px;
 
     padding: 20px;
 
     background: #1B2130;
 
-    border-radius: 8px;
+    border-radius: 8px 8px 0 0;
     border: 1px solid #2E5599;
+    border-bottom: none;
 
     margin-bottom: 8px;
+}
+
+.product-list__toolbar app-search-field {
+    flex: 1;
 }
 
 /* FILTRO */
 
 .product-list__filter-button {
-    display: flex;
+    position: relative;
+    display: inline-flex;
     align-items: center;
     gap: 8px;
+    min-width: 104px;
+    justify-content: center;
 
     padding: 8px 16px;
 
@@ -73,18 +82,36 @@
 
     background: transparent;
     color: #FFFFFF;
+    cursor: pointer;
+}
+
+.product-list__filter-badge {
+    position: absolute;
+    top: -7px;
+    right: -7px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 4px;
+    border-radius: 999px;
+    background: #5A98FF;
+    color: #FFFFFF;
+    font-size: 11px;
+    line-height: 18px;
+    text-align: center;
 }
 
 /* TABLE */
 
 .product-list__table-container {
+    min-height: 460px;
     background: #1B2130;
     backdrop-filter: blur(10px);
 
-    border-radius: 8px;
+    border-radius: 0 0 8px 8px;
     border: 1px solid #2E5599;
 
-    padding: 10px 0;
+    padding: 0 0 10px;
+    overflow: hidden;
 }
 
 table {
@@ -189,4 +216,20 @@ mat-radio-group {
 
 ::ng-deep .mat-mdc-menu-panel {
   max-width: none !important;
+}
+
+@media (max-width: 900px) {
+  .product-list {
+    margin: 24px 16px;
+  }
+
+  .product-list__header,
+  .product-list__toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .product-list__filter-button {
+    align-self: flex-end;
+  }
 }

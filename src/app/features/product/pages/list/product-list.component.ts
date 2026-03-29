@@ -60,6 +60,12 @@ export class ProductListComponent implements AfterViewInit {
     });
   }
 
+  get activeFilterCount() {
+    return [this.filter.status, this.filter.minPrice, this.filter.maxPrice]
+      .filter((value) => value !== 'all')
+      .length;
+  }
+
   totalProducts = 0;
   searchTerm = '';
 

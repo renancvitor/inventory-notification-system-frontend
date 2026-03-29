@@ -19,7 +19,8 @@
       (search)="onSearch($event)">
     </app-search-field>
 
-    <button class="person-list__filter-button" [matMenuTriggerFor]="filterMenu">
+    <button class="person-list__filter-button" [matMenuTriggerFor]="filterMenu" type="button">
+      <span class="person-list__filter-badge" *ngIf="activeFilterCount > 0">{{ activeFilterCount }}</span>
       <mat-icon>filter_alt</mat-icon>
       Filtrar
     </button>
@@ -93,7 +94,7 @@
 
 </div>
 
-<mat-menu #filterMenu="matMenu">
+<mat-menu #filterMenu="matMenu" class="filter-menu" xPosition="after" yPosition="below">
 
   <app-filter-panel
     (filtersApplied)="applyFilters()"

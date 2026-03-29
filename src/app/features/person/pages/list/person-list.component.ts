@@ -49,6 +49,10 @@ export class PersonComponent {
     status: 'all'
   };
 
+  get activeFilterCount() {
+    return [this.filters.status].filter((value) => value !== 'all').length;
+  }
+
   applyFilters() {
     this.paginator.pageIndex = 0;
     this.loadPersons();
