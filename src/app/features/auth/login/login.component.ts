@@ -40,8 +40,11 @@ export class LoginComponent {
 
     this.authService.login({email: email!, password: password!})
     .subscribe({
-      next: () => {
-        this.router.navigate(['/']);
+      next: (user) => {
+        this.router.navigate([user.firstAccess ? '/update-password' : '/']);
+      },
+      error: () => {
+        this.loading = false;
       }
     });
   }

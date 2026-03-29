@@ -6,3 +6,9 @@ export interface UserDetail {
   nameUserType: string;
   active: boolean;
 }
+
+export interface UpdatePasswordRequest {
+  currentPassword: string;
+  newPassword: string;
+  confirmNewPassword: string;
+}

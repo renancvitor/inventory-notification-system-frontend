@@ -3,18 +3,26 @@ import { AuthService } from './auth.service';
 import { inject } from '@angular/core';
 import { map } from 'rxjs';
 
-export const authGuard: CanActivateFn = () => {
+export const authGuard: CanActivateFn = (_, state) => {
 
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  if (authService.isAuthenticated()) {
+  const redirectForFirstAccess = () => {
+    if (authService.mustUpdatePassword() && state.url !== '/update-password') {
+      return router.createUrlTree(['/update-password']);
+    }
+
     return true;
+  };
+
+  if (authService.isAuthenticated()) {
+    return redirectForFirstAccess();
   }
 
   return authService.checkSession().pipe(
     map((isAuthenticated) =>
-      isAuthenticated ? true : router.createUrlTree(['/login'])
+      isAuthenticated ? redirectForFirstAccess() : router.createUrlTree(['/login'])
     )
   );
 };

@@ -1,5 +1,7 @@
 .site-footer {
-    position: sticky;
+    position: fixed;
+    left: 0;
+    right: 0;
     bottom: 0;
     z-index: 1000;
     width: 100%;
@@ -11,7 +13,7 @@
     border-top: 1px solid rgba(144, 202, 249, 0.16);
     box-shadow: 0 -12px 32px rgba(0, 0, 0, 0.16);
     backdrop-filter: blur(12px);
-    min-height: 56px;
+    min-height: var(--app-footer-height);
     padding: 0 1.5rem;
 }
 
