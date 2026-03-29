@@ -207,6 +207,10 @@ mat-radio-group {
   opacity: 0.7;
 }
 
+.product-list__filter-group app-search-field {
+  width: 80%;
+}
+
 ::ng-deep .filter-menu .mat-mdc-menu-content {
   padding: 0 !important;
 }
