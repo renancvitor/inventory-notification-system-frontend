@@ -77,6 +77,35 @@ body {
   border-color: rgba(255, 255, 255, 0.1) !important;
 }
 
+.site-header__mobile-menu-panel.mat-mdc-menu-panel {
+  min-width: 220px;
+  max-width: min(92vw, 320px);
+  overflow: hidden;
+  border: 1px solid rgba(144, 202, 249, 0.18);
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at top left, rgba(33, 150, 243, 0.16), transparent 42%),
+    rgba(10, 16, 30, 0.98);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(14px);
+}
+
+.site-header__mobile-menu-panel .mat-mdc-menu-content {
+  padding: 8px 0;
+  background: transparent;
+}
+
+.site-header__mobile-menu-panel .mat-mdc-menu-item {
+  min-height: 44px;
+  color: #f4f8fb;
+}
+
+.site-header__mobile-menu-panel .mat-mdc-menu-item:hover,
+.site-header__mobile-menu-panel .mat-mdc-menu-item.cdk-program-focused,
+.site-header__mobile-menu-panel .mat-mdc-menu-item.cdk-focused {
+  background: rgba(144, 202, 249, 0.12);
+}
+
 @media (max-width: 900px) {
   .app-toast {
     margin-top: 72px;

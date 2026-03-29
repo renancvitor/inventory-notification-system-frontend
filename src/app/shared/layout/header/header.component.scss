@@ -99,14 +99,6 @@
   max-width: min(92vw, 320px);
 }
 
-::ng-deep .site-header__mobile-menu-panel .mat-mdc-menu-content {
-  padding: 8px 0;
-}
-
-::ng-deep .site-header__mobile-menu-panel .mat-mdc-menu-item {
-  min-height: 44px;
-}
-
 @media (max-width: 960px) {
   .site-header {
     padding: 0 16px;
