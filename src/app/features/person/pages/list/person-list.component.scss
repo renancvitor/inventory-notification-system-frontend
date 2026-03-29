@@ -62,7 +62,8 @@
 }
 
 .person-list__toolbar app-search-field {
-  flex: 1;
+  flex: 0 1 440px;
+  min-width: 280px;
 }
 
 /* SEARCH */
@@ -255,5 +256,10 @@ mat-radio-group {
 
   .person-list__filter-button {
     align-self: flex-end;
+  }
+
+  .person-list__toolbar app-search-field {
+    flex: 1 1 auto;
+    min-width: 0;
   }
 }

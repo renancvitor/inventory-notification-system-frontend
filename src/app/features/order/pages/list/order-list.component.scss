@@ -53,7 +53,8 @@
 }
 
 .order-list__toolbar app-search-field {
-    flex: 1;
+    flex: 0 1 440px;
+    min-width: 280px;
 }
 
 .order-list__filter-button {
@@ -217,6 +218,11 @@ mat-radio-group {
 
     .order-list__filter-button {
         align-self: flex-end;
+    }
+
+    .order-list__toolbar app-search-field {
+        flex: 1 1 auto;
+        min-width: 0;
     }
 
     .mat-column-actions {
