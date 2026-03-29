@@ -58,6 +58,12 @@ export class UserListComponent {
     userType: 'all'
   };
 
+  get activeFilterCount() {
+    return [this.filters.status, this.filters.userType]
+      .filter((value) => value !== 'all')
+      .length;
+  }
+
   applyFilters() {
     this.paginator.pageIndex = 0;
     this.loadUsers();

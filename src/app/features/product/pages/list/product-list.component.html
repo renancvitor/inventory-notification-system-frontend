@@ -20,7 +20,8 @@
             (search)="onSearch($event)">
         </app-search-field>
 
-        <button class="product-list__filter-button" [matMenuTriggerFor]="filterMenu">
+        <button class="product-list__filter-button" [matMenuTriggerFor]="filterMenu" type="button">
+            <span class="product-list__filter-badge" *ngIf="activeFilterCount > 0">{{ activeFilterCount }}</span>
             <mat-icon>filter_alt</mat-icon>
             Filtrar
         </button>
@@ -110,7 +111,7 @@
         [pageSizeOptions]="[5, 10, 20]">
     </mat-paginator>
 
-    <mat-menu #filterMenu="matMenu" xPosition="after" yPosition="below">
+    <mat-menu #filterMenu="matMenu" class="filter-menu" xPosition="after" yPosition="below">
         <app-filter-panel
             (filtersApplied)="applyFilter()"
             (filtersCleared)="clearFilter()"
