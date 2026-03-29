@@ -1,17 +1,44 @@
 <form [formGroup]="orderForm" (ngSubmit)="onSubmit()" class="order-form">
 
   <section class="order-form__panel order-form__panel--top">
-    <div class="order-form__panel-title">
-      <h2>{{ title }}</h2>
+    <div class="order-form__panel-header">
+      <div class="order-form__panel-title">
+        <h2>{{ title }}</h2>
+      </div>
+
+      <div class="order-form__meta" *ngIf="headerMeta">
+        <div class="order-form__meta-item">
+          <span>Pedido</span>
+          <strong>#{{ headerMeta.orderId ?? '-' }}</strong>
+        </div>
+
+        <div class="order-form__meta-item">
+          <span>Status</span>
+          <strong>{{ headerMeta.status || '-' }}</strong>
+        </div>
+
+        <div class="order-form__meta-item">
+          <span>Solicitado por</span>
+          <strong>{{ headerMeta.requestedBy || '-' }}</strong>
+        </div>
+
+        <div class="order-form__meta-item">
+          <span>Analisado por</span>
+          <strong>{{ headerMeta.analyzedBy || '-' }}</strong>
+        </div>
+
+        <div class="order-form__meta-item">
+          <span>Data de cadastro</span>
+          <strong>{{ formattedCreatedAt }}</strong>
+        </div>
+      </div>
     </div>
 
     <div class="order-form__top-layout">
       <label class="order-form__field order-form__field--select">
         <span>Tipo de pedido</span>
         <select
-          [formControl]="orderForm.controls.movementTypeId"
-          [value]="orderForm.controls.movementTypeId.value ?? ''"
-          (change)="setMovementType($any($event.target).value)"
+          formControlName="movementTypeId"
           [class.order-form__control--placeholder]="!orderForm.controls.movementTypeId.value"
         >
           <option value="" disabled>
@@ -30,15 +57,46 @@
           type="button"
           (click)="cancel.emit()"
         >
-          Cancelar
+          {{ isViewMode ? 'Voltar' : 'Cancelar' }}
         </app-button>
 
         <app-button
+          *ngIf="showDecisionActions"
+          class="order-form__action order-form__action--danger"
+          type="button"
+          [disabled]="loading"
+          (click)="rejectRequested.emit()"
+        >
+          {{ loading ? 'Processando...' : 'Reprovar' }}
+        </app-button>
+
+        <app-button
+          *ngIf="showDecisionActions"
+          class="order-form__action order-form__action--success"
+          type="button"
+          [disabled]="loading"
+          (click)="approveRequested.emit()"
+        >
+          {{ loading ? 'Processando...' : 'Aprovar' }}
+        </app-button>
+
+        <app-button
+          *ngIf="isViewMode && showEditAction"
+          class="order-form__action order-form__action--primary"
+          type="button"
+          [disabled]="loading"
+          (click)="editRequested.emit()"
+        >
+          Editar pedido
+        </app-button>
+
+        <app-button
+          *ngIf="!isViewMode"
           class="order-form__action order-form__action--primary"
           type="submit"
           [disabled]="!canSubmit"
         >
-          {{ loading ? 'Finalizando...' : 'Finalizar pedido' }}
+          {{ loading ? 'Salvando...' : submitLabel }}
         </app-button>
       </div>
     </div>
@@ -47,9 +105,9 @@
   <section class="order-form__panel order-form__panel--items">
     <div class="order-form__items-toolbar">
       <label class="order-form__field order-form__field--search">
-        <span>Adicionar produtos</span>
+        <span>{{ isViewMode ? 'Produtos do pedido' : 'Adicionar produtos' }}</span>
 
-        <div class="order-form__search-shell">
+        <div class="order-form__search-shell" *ngIf="!isViewMode; else viewOnlySearch">
           <input
             type="text"
             [value]="productSearchTerm"
@@ -62,7 +120,13 @@
           <mat-icon>search</mat-icon>
         </div>
 
-        <div class="order-form__search-results" *ngIf="productSearchTerm.trim() && filteredProducts.length > 0">
+        <ng-template #viewOnlySearch>
+          <div class="order-form__readonly-hint">
+            Revise os itens abaixo e clique em editar se precisar alterar algo.
+          </div>
+        </ng-template>
+
+        <div class="order-form__search-results" *ngIf="!isViewMode && productSearchTerm.trim() && filteredProducts.length > 0">
           <button
             class="order-form__search-result"
             *ngFor="let product of filteredProducts"
@@ -90,7 +154,7 @@
             <th>Quantidade</th>
             <th>Valor unitário</th>
             <th>Valor total</th>
-            <th>Ações</th>
+            <th *ngIf="!isViewMode">Ações</th>
           </tr>
         </thead>
 
@@ -111,6 +175,7 @@
                 min="1"
                 step="1"
                 [value]="item.quantity"
+                [readonly]="isViewMode"
                 (focus)="selectQuantityInput($event)"
                 (input)="updateQuantity(item.productId, $any($event.target).value)"
               >
@@ -131,7 +196,7 @@
                 readonly
               >
             </td>
-            <td>
+            <td *ngIf="!isViewMode">
               <button class="order-form__delete" type="button" (click)="removeItem(item.productId)">
                 Excluir
               </button>
@@ -142,7 +207,7 @@
 
       <ng-template #emptyState>
         <div class="order-form__empty">
-          {{ isMovementTypeSelected ? 'Pesquise um produto e pressione Enter para adiciona-lo ao pedido.' : 'Selecione o tipo de pedido para habilitar a busca de produtos.' }}
+          {{ isViewMode ? 'Este pedido nao possui itens cadastrados.' : (isMovementTypeSelected ? 'Pesquise um produto e pressione Enter para adiciona-lo ao pedido.' : 'Selecione o tipo de pedido para habilitar a busca de produtos.') }}
         </div>
       </ng-template>
     </div>

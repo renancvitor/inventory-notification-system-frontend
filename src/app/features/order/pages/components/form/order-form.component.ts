@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { ButtonComponent } from '../../../../../shared/components/button/button.component';
 import { MovementTypeOption } from '../../../services/order.service';
@@ -18,6 +19,20 @@ export interface OrderFormItemValue {
   productName: string;
   quantity: number;
   unitPrice: number;
+}
+
+export interface OrderFormInitialValue {
+  description: string;
+  movementTypeId: number | null;
+  items: OrderFormItemValue[];
+}
+
+export interface OrderFormHeaderMeta {
+  orderId?: number | string | null;
+  status?: string | null;
+  requestedBy?: string | null;
+  analyzedBy?: string | null;
+  createdAt?: string | null;
 }
 
 export interface OrderFormValue {
@@ -39,20 +54,36 @@ export class OrderFormComponent {
 
   @Output() submitForm = new EventEmitter<OrderFormValue>(true);
   @Output() cancel = new EventEmitter<void>();
+  @Output() editRequested = new EventEmitter<void>();
+  @Output() approveRequested = new EventEmitter<void>();
+  @Output() rejectRequested = new EventEmitter<void>();
+
   @Input() loading = false;
   @Input() productsLoading = false;
   @Input() products: OrderSelectableProduct[] = [];
   @Input() movementTypes: MovementTypeOption[] = [];
   @Input() title = 'Novo pedido';
+  @Input() submitLabel = 'Finalizar pedido';
+  @Input() headerMeta: OrderFormHeaderMeta | null = null;
+  @Input() showDecisionActions = false;
+  @Input() showEditAction = true;
 
+  private _mode: 'create' | 'view' | 'edit' = 'create';
   private _movementTypesLoading = false;
+  private _initialValue: OrderFormInitialValue | null = null;
 
+  private readonly destroyRef = inject(DestroyRef);
   private readonly formBuilder = inject(FormBuilder);
   private readonly brlFormatter = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
     currency: 'BRL',
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
+  });
+  private readonly dateFormatter = new Intl.DateTimeFormat('pt-BR', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
   });
 
   productSearchTerm = '';
@@ -64,16 +95,39 @@ export class OrderFormComponent {
     description: ['', Validators.required],
   });
 
+  constructor() {
+    this.orderForm.controls.movementTypeId.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        this.productSearchTerm = '';
+        this.highlightedProductIndex = 0;
+      });
+  }
+
+  @Input()
+  set initialValue(value: OrderFormInitialValue | null) {
+    this._initialValue = value;
+    this.patchForm(value);
+  }
+
+  get initialValue() {
+    return this._initialValue;
+  }
+
+  @Input()
+  set mode(value: 'create' | 'view' | 'edit') {
+    this._mode = value;
+    this.syncFormAvailability();
+  }
+
+  get mode() {
+    return this._mode;
+  }
+
   @Input()
   set movementTypesLoading(value: boolean) {
     this._movementTypesLoading = value;
-
-    if (value) {
-      this.orderForm.controls.movementTypeId.disable({ emitEvent: false });
-      return;
-    }
-
-    this.orderForm.controls.movementTypeId.enable({ emitEvent: false });
+    this.syncFormAvailability();
   }
 
   get movementTypesLoading() {
@@ -104,6 +158,10 @@ export class OrderFormComponent {
   }
 
   get canSubmit() {
+    if (this.isViewMode) {
+      return false;
+    }
+
     return this.orderForm.valid
       && this.orderItems.length > 0
       && this.orderItems.every((item) => item.quantity > 0)
@@ -112,12 +170,38 @@ export class OrderFormComponent {
       && !this.movementTypesLoading;
   }
 
+  get isViewMode() {
+    return this.mode === 'view';
+  }
+
+  get formattedCreatedAt() {
+    if (!this.headerMeta?.createdAt) {
+      return '-';
+    }
+
+    const date = new Date(this.headerMeta.createdAt);
+
+    if (Number.isNaN(date.getTime())) {
+      return '-';
+    }
+
+    return this.dateFormatter.format(date);
+  }
+
   onProductSearch(value: string) {
+    if (this.isViewMode) {
+      return;
+    }
+
     this.productSearchTerm = value;
     this.highlightedProductIndex = 0;
   }
 
   onProductSearchKeydown(event: KeyboardEvent) {
+    if (this.isViewMode) {
+      return;
+    }
+
     if (event.key === 'ArrowDown') {
       event.preventDefault();
       this.moveHighlightedProduct(1);
@@ -150,6 +234,10 @@ export class OrderFormComponent {
   }
 
   addProduct(product: OrderSelectableProduct) {
+    if (this.isViewMode) {
+      return;
+    }
+
     const existingItem = this.orderItems.find((item) => item.productId === product.id);
 
     if (existingItem) {
@@ -174,10 +262,18 @@ export class OrderFormComponent {
   }
 
   removeItem(productId: number) {
+    if (this.isViewMode) {
+      return;
+    }
+
     this.orderItems = this.orderItems.filter((item) => item.productId !== productId);
   }
 
   updateQuantity(productId: number, value: string) {
+    if (this.isViewMode) {
+      return;
+    }
+
     const targetItem = this.orderItems.find((item) => item.productId === productId);
 
     if (!targetItem) {
@@ -194,14 +290,12 @@ export class OrderFormComponent {
   }
 
   selectQuantityInput(event: FocusEvent) {
+    if (this.isViewMode) {
+      return;
+    }
+
     const input = event.target as HTMLInputElement | null;
     input?.select();
-  }
-
-  setMovementType(value: string) {
-    this.orderForm.controls.movementTypeId.setValue(value ? Number(value) : null);
-    this.productSearchTerm = '';
-    this.highlightedProductIndex = 0;
   }
 
   getMovementTypeName() {
@@ -255,12 +349,41 @@ export class OrderFormComponent {
   }
 
   resetForm() {
-    this.orderForm.reset({
+    this.patchForm({
       movementTypeId: null,
       description: '',
+      items: [],
     });
-    this.orderItems = [];
+  }
+
+  private patchForm(value: OrderFormInitialValue | null) {
+    this.orderForm.reset({
+      movementTypeId: value?.movementTypeId ?? null,
+      description: value?.description ?? '',
+    }, { emitEvent: false });
+
+    this.orderItems = (value?.items ?? []).map((item) => ({
+      productId: item.productId,
+      productName: item.productName,
+      quantity: Number(item.quantity ?? 0),
+      unitPrice: Number(item.unitPrice ?? 0),
+    }));
     this.productSearchTerm = '';
+    this.highlightedProductIndex = 0;
+    this.syncFormAvailability();
+  }
+
+  private syncFormAvailability() {
+    if (this.isViewMode) {
+      this.orderForm.disable({ emitEvent: false });
+      return;
+    }
+
+    this.orderForm.enable({ emitEvent: false });
+
+    if (this._movementTypesLoading) {
+      this.orderForm.controls.movementTypeId.disable({ emitEvent: false });
+    }
   }
 
   private normalizeText(value: string) {

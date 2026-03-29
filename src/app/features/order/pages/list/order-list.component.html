@@ -65,7 +65,12 @@
             <ng-container matColumnDef="actions">
                 <th mat-header-cell *matHeaderCellDef> Ações </th>
                 <td mat-cell *matCellDef="let order">
-                    <button mat-button class="order-list__view-action" type="button" [attr.aria-label]="'Visualizar detalhes do pedido ' + order.id">
+                    <button
+                        mat-button
+                        class="order-list__view-action"
+                        type="button"
+                        [routerLink]="['/orders', order.id]"
+                        [attr.aria-label]="'Visualizar detalhes do pedido ' + order.id">
                         <span>Visualizar</span>
                         <mat-icon>visibility</mat-icon>
                     </button>

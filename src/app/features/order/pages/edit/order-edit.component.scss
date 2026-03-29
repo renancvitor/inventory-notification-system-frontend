@@ -1,0 +1,17 @@
+.order-edit {
+  display: flex;
+  justify-content: center;
+}
+
+.order-edit__loading {
+  width: min(100%, 1280px);
+  min-height: calc(100vh - 168px);
+  padding: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #a6b1c7;
+  background: #1b2130;
+  border: 1px solid rgba(76, 141, 255, 0.08);
+  border-radius: 10px;
+}
