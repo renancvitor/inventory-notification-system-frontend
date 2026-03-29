@@ -4,6 +4,7 @@ import { authGuard } from './core/auth/auth.guard';
 import { catchError, of } from 'rxjs';
 
 import { LoginComponent } from './features/auth/login/login.component';
+import { UpdatePasswordPageComponent } from './features/auth/update-password/update-password-page.component';
 
 import { HomeComponent } from './features/home/home.component';
 
@@ -35,6 +36,12 @@ export const routes: Routes = [
         path: '',
         canActivate: [authGuard],
         component: HomeComponent
+    },
+
+    {
+        path: 'update-password',
+        canActivate: [authGuard],
+        component: UpdatePasswordPageComponent
     },
 
     {

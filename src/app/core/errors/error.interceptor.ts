@@ -32,7 +32,13 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 
             const apiError = error.error as ApiError;
 
-            const message = 
+            const validationMessage =
+                apiError?.message === 'Erro de validação nos campos.' && apiError.errors?.length
+                    ? apiError.errors[0].message
+                    : null;
+
+            const message =
+                validationMessage ??
                 apiError?.message ??
                 'Ocorreu um erro desconhecido. Por favor, tente novamente mais tarde.';
 

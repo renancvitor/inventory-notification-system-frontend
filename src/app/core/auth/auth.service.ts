@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { LoginRequest, LoginResponse } from './auth.model';
+import { AuthenticatedUser, LoginRequest, LoginResponse } from './auth.model';
 import { catchError, map, Observable, tap, of } from 'rxjs';
 
 @Injectable({
@@ -11,6 +11,7 @@ export class AuthService {
 
   private readonly apiUrl = environment.apiUrl;
   private loggedIn = false;
+  private currentUser: AuthenticatedUser | null = null;
 
   constructor(private http: HttpClient) {}
 
@@ -20,7 +21,10 @@ export class AuthService {
       data,
       { withCredentials: true }
     ).pipe(
-      tap(() => this.loggedIn = true)
+      tap((user) => {
+        this.loggedIn = true;
+        this.currentUser = user;
+      })
     );
   }
 
@@ -30,7 +34,10 @@ export class AuthService {
       {},
       { withCredentials: true }
     ).pipe(
-      tap(() => this.loggedIn = false)
+      tap(() => {
+        this.loggedIn = false;
+        this.currentUser = null;
+      })
     );
   }
 
@@ -39,16 +46,43 @@ export class AuthService {
   }
 
   checkSession(): Observable<boolean> {
-    return this.http.get<LoginResponse>(`${this.apiUrl}/auth/me`, {
+    return this.http.get<AuthenticatedUser>(`${this.apiUrl}/auth/me`, {
       withCredentials: true
     }).pipe(
-      tap(() => this.loggedIn = true),
+      tap((user) => {
+        this.loggedIn = true;
+        this.currentUser = user;
+      }),
       map(() => true),
       catchError(() => {
         this.loggedIn = false;
+        this.currentUser = null;
         return of(false);
       })
     )
+  }
+
+  getCurrentUser(): AuthenticatedUser | null {
+    return this.currentUser;
+  }
+
+  getCurrentUserId(): number | null {
+    return this.currentUser?.id ?? null;
+  }
+
+  mustUpdatePassword(): boolean {
+    return this.currentUser?.firstAccess ?? false;
+  }
+
+  clearFirstAccess() {
+    if (!this.currentUser) {
+      return;
+    }
+
+    this.currentUser = {
+      ...this.currentUser,
+      firstAccess: false,
+    };
   }
 
 }

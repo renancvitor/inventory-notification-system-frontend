@@ -3,13 +3,12 @@ export interface LoginRequest {
   password: string;
 }
 
-export interface LoginResponse {
-  token: string;
-  user: {
-    id: number;
-    nameUserType: string;
-    personName: string;
-    personEmail: string;
-  };
+export interface AuthenticatedUser {
+  id: number;
+  nameUserType: string;
+  personName: string;
+  personEmail: string;
   firstAccess: boolean;
 }
+
+export type LoginResponse = AuthenticatedUser;
