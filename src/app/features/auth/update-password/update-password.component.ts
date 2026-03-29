@@ -1,11 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import {
-  AbstractControl,
   FormBuilder,
   ReactiveFormsModule,
-  ValidationErrors,
-  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -16,19 +13,6 @@ import { MatInputModule } from '@angular/material/input';
 
 import { UpdatePasswordFormValue } from '../services/update-password.model';
 import { ButtonComponent } from '../../../shared/components/button/button.component';
-
-const STRONG_PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%#?&])[A-Za-z\d@$!%#?&]{8,}$/;
-
-const passwordMatchValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
-  const newPassword = control.get('newPassword')?.value;
-  const confirmNewPassword = control.get('confirmNewPassword')?.value;
-
-  if (!newPassword || !confirmNewPassword) {
-    return null;
-  }
-
-  return newPassword === confirmNewPassword ? null : { passwordMismatch: true };
-};
 
 @Component({
   selector: 'app-update-password',
@@ -71,14 +55,11 @@ export class UpdatePasswordComponent {
     'Pelo menos 1 caractere especial entre @$!%#?&.',
   ];
 
-  readonly form = this.formBuilder.group(
-    {
-      currentPassword: ['', [Validators.required]],
-      newPassword: ['', [Validators.required, Validators.pattern(STRONG_PASSWORD_REGEX)]],
-      confirmNewPassword: ['', [Validators.required]],
-    },
-    { validators: passwordMatchValidator }
-  );
+  readonly form = this.formBuilder.group({
+    currentPassword: ['', [Validators.required]],
+    newPassword: ['', [Validators.required]],
+    confirmNewPassword: ['', [Validators.required]],
+  });
 
   onSubmit() {
     if (this.form.invalid) {
@@ -109,11 +90,5 @@ export class UpdatePasswordComponent {
 
   toggleConfirmNewPasswordVisibility() {
     this.hideConfirmNewPassword = !this.hideConfirmNewPassword;
-  }
-
-  isPasswordMismatch() {
-    const control = this.form.controls.confirmNewPassword;
-
-    return this.form.hasError('passwordMismatch') && (control.touched || control.dirty);
   }
 }

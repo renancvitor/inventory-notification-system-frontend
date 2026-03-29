@@ -8,6 +8,14 @@ Este documento descreve o comportamento atual de autenticação, sessão e contr
 
 O frontend utiliza autenticação baseada em sessão com credenciais HTTP enviadas em todas as chamadas relevantes.
 
+O backend é a fonte de verdade para:
+
+- autenticação do usuário
+- emissão e invalidação do cookie de sessão
+- identificação do usuário autenticado em `/auth/me`
+- validação da troca de senha
+- persistência do estado `firstAccess`
+
 Os elementos centrais do fluxo são:
 
 - `AuthService`
@@ -30,6 +38,8 @@ Fluxo:
    - para `/update-password` se `firstAccess` for `true`
    - para `/` nos demais casos
 
+O backend já devolve `firstAccess` na resposta de login. O frontend apenas usa esse sinal para definir a navegação inicial.
+
 ---
 
 ## Sessão autenticada
@@ -40,6 +50,8 @@ O `AuthService` mantém em memória:
 - usuário autenticado
 
 Quando a aplicação ainda não tem o estado em memória, o `authGuard` consulta `checkSession()` via `GET /auth/me`.
+
+O backend decide se existe sessão válida. O frontend apenas reage ao retorno:
 
 Se a sessão for válida:
 
@@ -54,15 +66,25 @@ Se a sessão não for válida:
 
 ## Primeiro acesso
 
-O projeto possui uma regra de negócio importante:
+O estado `firstAccess` é mantido pelo backend e exposto ao frontend em:
 
-- se `currentUser.firstAccess` for `true`, o usuário deve atualizar a senha antes de continuar usando a aplicação
+- `POST /login`
+- `GET /auth/me`
 
-Essa regra é aplicada no `authGuard`.
+No frontend, o `authGuard` usa esse campo somente para aplicar a experiência de navegação:
+
+- redirecionar para `/update-password` enquanto `firstAccess` for `true`
+
+Importante:
+
+- a validação real da troca de senha continua no backend
+- o frontend nao define política de senha
+- o frontend nao decide quando `firstAccess` deve virar `false`
 
 Após atualização bem-sucedida:
 
-- o frontend limpa a flag local com `clearFirstAccess()`
+- o backend persiste `firstAccess = false`
+- o frontend apenas atualiza o estado em memória com `clearFirstAccess()`
 - o usuário recebe feedback visual
 - a navegação pode seguir para a tela inicial
 
@@ -103,7 +125,7 @@ Trata falhas ligadas a autenticação e sessão:
 
 - o estado de autenticação principal fica em memória; após reload, a sessão é reidratada por `checkSession()`
 - a proteção atual depende do backend responder corretamente aos endpoints de sessão
-- a experiência de primeiro acesso já está embutida no fluxo principal da aplicação
+- o redirecionamento de primeiro acesso no frontend é uma camada de UX; a persistência e validação continuam no backend
 
 ---
 

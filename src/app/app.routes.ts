@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
-import { ActivatedRouteSnapshot, Routes } from '@angular/router';
+import { ActivatedRouteSnapshot, RedirectCommand, ResolveFn, Router, Routes } from '@angular/router';
 import { authGuard } from './core/auth/auth.guard';
-import { catchError, of } from 'rxjs';
+import { catchError, Observable, of } from 'rxjs';
 
 import { LoginComponent } from './features/auth/login/login.component';
 import { UpdatePasswordPageComponent } from './features/auth/update-password/update-password-page.component';
@@ -24,6 +24,48 @@ import { OrderListComponent } from './features/order/pages/list/order-list.compo
 import { OrderCreateComponent } from './features/order/pages/create/order-create.component';
 import { OrderEditComponent } from './features/order/pages/edit/order-edit.component';
 import { OrderService } from './features/order/services/order.service';
+
+const redirectOnResolverError = <T>(
+    resolver: (route: ActivatedRouteSnapshot) => Observable<T>,
+    redirectTo: string,
+): ResolveFn<T | RedirectCommand> => {
+    return (route) => {
+        const router = inject(Router);
+
+        return resolver(route).pipe(
+            catchError(() => of(new RedirectCommand(router.parseUrl(redirectTo))))
+        );
+    };
+};
+
+export const productCategoriesResolver = redirectOnResolverError(
+    () => inject(ProductService).listCategories(),
+    '/products',
+);
+
+export const productResolver = redirectOnResolverError(
+    (route: ActivatedRouteSnapshot) => inject(ProductService).getById(Number(route.paramMap.get('id'))),
+    '/products',
+);
+
+export const orderResolver = redirectOnResolverError(
+    (route: ActivatedRouteSnapshot) => inject(OrderService).getById(Number(route.paramMap.get('id'))),
+    '/orders',
+);
+
+export const orderMovementTypesResolver = redirectOnResolverError(
+    () => inject(OrderService).listMovementTypes(),
+    '/orders',
+);
+
+export const activeProductsResolver = redirectOnResolverError(
+    () => inject(ProductService).list({
+        active: true,
+        page: 0,
+        size: 100,
+    }),
+    '/orders',
+);
 
 export const routes: Routes = [
 
@@ -84,9 +126,7 @@ export const routes: Routes = [
         path: 'products/create',
         canActivate: [authGuard],
         resolve: {
-            categories: () => inject(ProductService).listCategories().pipe(
-                catchError(() => of([]))
-            )
+            categories: productCategoriesResolver,
         },
         component: ProductCreateComponent
     },
@@ -95,12 +135,8 @@ export const routes: Routes = [
         path: 'products/edit/:id',
         canActivate: [authGuard],
         resolve: {
-            product: (route: ActivatedRouteSnapshot) => inject(ProductService).getById(Number(route.paramMap.get('id'))).pipe(
-                catchError(() => of(null))
-            ),
-            categories: () => inject(ProductService).listCategories().pipe(
-                catchError(() => of([]))
-            )
+            product: productResolver,
+            categories: productCategoriesResolver,
         },
         component: ProductEditComponent
     },
@@ -121,19 +157,9 @@ export const routes: Routes = [
         path: 'orders/:id',
         canActivate: [authGuard],
         resolve: {
-            order: (route: ActivatedRouteSnapshot) => inject(OrderService).getById(Number(route.paramMap.get('id'))).pipe(
-                catchError(() => of(null))
-            ),
-            movementTypes: () => inject(OrderService).listMovementTypes().pipe(
-                catchError(() => of([]))
-            ),
-            products: () => inject(ProductService).list({
-                active: true,
-                page: 0,
-                size: 100,
-            }).pipe(
-                catchError(() => of({ content: [], totalElements: 0 }))
-            )
+            order: orderResolver,
+            movementTypes: orderMovementTypesResolver,
+            products: activeProductsResolver,
         },
         component: OrderEditComponent
     },
