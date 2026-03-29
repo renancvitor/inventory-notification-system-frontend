@@ -3,18 +3,8 @@ import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
+import { ProductFormValue } from '../../services/product-form.model';
 import { ProductCategory } from '../../services/product.service';
-
-export interface ProductFormValue {
-  productName: string;
-  categoryId: number;
-  price: number;
-  validity: string;
-  description: string;
-  stock: number;
-  minimumStock: number;
-  brand: string;
-}
 
 @Component({
   selector: 'app-product-form',

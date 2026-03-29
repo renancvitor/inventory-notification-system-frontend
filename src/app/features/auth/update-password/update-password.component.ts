@@ -14,13 +14,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 
+import { UpdatePasswordFormValue } from '../services/update-password.model';
 import { ButtonComponent } from '../../../shared/components/button/button.component';
-
-export interface UpdatePasswordFormValue {
-  currentPassword: string;
-  newPassword: string;
-  confirmNewPassword: string;
-}
 
 const STRONG_PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%#?&])[A-Za-z\d@$!%#?&]{8,}$/;
 

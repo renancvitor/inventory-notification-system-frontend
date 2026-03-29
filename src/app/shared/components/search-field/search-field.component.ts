@@ -13,7 +13,7 @@ export class SearchFieldComponent {
 
   searchTerm = '';
  
-  private timeout: any;
+  private timeout?: ReturnType<typeof setTimeout>;
 
   @Input() label = 'Pesquisar';
   @Input() placeholder = 'Buscar...';

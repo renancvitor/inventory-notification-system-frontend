@@ -111,9 +111,10 @@
 
         <div class="order-form__search-shell" *ngIf="!isViewMode; else viewOnlySearch">
           <input
+            #productSearchInput
             type="text"
             [value]="productSearchTerm"
-            (input)="onProductSearch($any($event.target).value)"
+            (input)="onProductSearch(productSearchInput.value)"
             (keydown)="onProductSearchKeydown($event)"
             placeholder="Buscar por código ou nome"
             [disabled]="productsLoading || !isMovementTypeSelected"
@@ -172,6 +173,7 @@
             </td>
             <td>
               <input
+                #desktopQuantityInput
                 class="order-form__table-input order-form__table-input--qty"
                 type="number"
                 min="1"
@@ -179,7 +181,7 @@
                 [value]="item.quantity"
                 [readonly]="isViewMode"
                 (focus)="selectQuantityInput($event)"
-                (input)="updateQuantity(item.productId, $any($event.target).value)"
+                (input)="updateQuantity(item.productId, desktopQuantityInput.value)"
               >
             </td>
             <td>
@@ -230,6 +232,7 @@
           <label class="order-form__mobile-field">
             <span>Quantidade</span>
             <input
+              #mobileQuantityInput
               class="order-form__table-input order-form__table-input--qty"
               type="number"
               min="1"
@@ -237,7 +240,7 @@
               [value]="item.quantity"
               [readonly]="isViewMode"
               (focus)="selectQuantityInput($event)"
-              (input)="updateQuantity(item.productId, $any($event.target).value)"
+              (input)="updateQuantity(item.productId, mobileQuantityInput.value)"
             >
           </label>
 

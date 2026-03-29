@@ -4,8 +4,10 @@ import { PersonService } from '../../services/person.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { PersonFormComponent } from '../../components/form/person-form.component';
+import { PersonCreatePayload, PersonFormValue } from '../../services/person.model';
 import { ToastComponent } from '../../../../shared/components/toast/toast.component';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
+import { ToastData } from '../../../../shared/services/toast.model';
 
 @Component({
   selector: 'app-person-create.component',
@@ -22,11 +24,11 @@ export class PersonCreateComponent {
 
   loading = false;
 
-  createPerson(personData: any) {
+  createPerson(personData: PersonFormValue) {
 
     this.loading = true;
 
-    const payload = {
+    const payload: PersonCreatePayload = {
       person: personData,
       user: null
     };
@@ -52,7 +54,7 @@ export class PersonCreateComponent {
     this.router.navigate(['/person']);
   }
 
-  showSuccessToast(data: any) {
+  showSuccessToast(data: Pick<ToastData, 'title' | 'name' | 'info'>) {
 
     this.snackBar.openFromComponent(ToastComponent, {
       panelClass: 'app-toast',

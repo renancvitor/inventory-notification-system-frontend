@@ -2,8 +2,9 @@ import { Component, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { ProductCategory, ProductService } from '../../services/product.service';
-import { ProductFormComponent, ProductFormValue } from '../../components/form/product-form.component';
+import { ProductCategory, ProductDetail, ProductService } from '../../services/product.service';
+import { ProductFormComponent } from '../../components/form/product-form.component';
+import { ProductFormValue } from '../../services/product-form.model';
 import { ToastComponent } from '../../../../shared/components/toast/toast.component';
 
 @Component({
@@ -61,7 +62,7 @@ export class ProductCreateComponent {
     this.router.navigate(['/products']);
   }
 
-  showSuccessToast(product: any) {
+  showSuccessToast(product: ProductDetail) {
     this.snackBar.openFromComponent(ToastComponent, {
       panelClass: 'app-toast',
       horizontalPosition: 'center',

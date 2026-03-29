@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 
 import {
   UpdatePasswordComponent,
-  UpdatePasswordFormValue,
 } from './update-password.component';
+import { UpdatePasswordFormValue } from '../services/update-password.model';
 import { AuthService } from '../../../core/auth/auth.service';
 import { ToastComponent } from '../../../shared/components/toast/toast.component';
 import { UserService } from '../../user/services/user.service';

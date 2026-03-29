@@ -8,8 +8,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { forkJoin, Observable } from 'rxjs';
 
 import { UserService } from '../../services/user.service';
+import { UserDetail, UserType } from '../../services/user.model';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
 import { ToastComponent } from '../../../../shared/components/toast/toast.component';
+import { ToastData } from '../../../../shared/services/toast.model';
 
 @Component({
   selector: 'app-user-edit.component',
@@ -32,8 +34,8 @@ export class UserEditComponent {
   name = '';
   isActivateValue = false;
   originalActive = false;
-  userTypes: any[] = [];
-  user: any;
+  userTypes: UserType[] = [];
+  user: UserDetail | null = null;
 
   form = this.formBuilder.group({
     userType: [null as number | null],
@@ -43,7 +45,7 @@ export class UserEditComponent {
   ngOnInit() {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
 
-    this.userService.getUserTypes().subscribe((types: any[]) => {
+    this.userService.getUserTypes().subscribe((types: UserType[]) => {
       this.userTypes = types;
       this.cdr.markForCheck();
     });
@@ -73,7 +75,7 @@ export class UserEditComponent {
 
     const { userType: userTypeId, activate } = this.form.value;
 
-    let requests: Observable<any>[] = [];
+    let requests: Observable<UserDetail | void>[] = [];
     
     if (activate !== null && activate !== this.originalActive) {
       requests.push(
@@ -106,7 +108,7 @@ export class UserEditComponent {
           this.isActivateValue = activate;
         }
 
-        const selectedType = this.userTypes.find(t => t.id === userTypeId);
+        const selectedType = this.userTypes.find((t) => t.id === userTypeId);
 
         this.showUpdateToast({
           title: 'Cadastro atualizado com sucesso!',
@@ -131,7 +133,7 @@ export class UserEditComponent {
     this.router.navigate(['/users']);
   }
 
-  showUpdateToast(data: any) {
+  showUpdateToast(data: Pick<ToastData, 'title' | 'name' | 'info'>) {
     this.snackBar.openFromComponent(ToastComponent, {
       panelClass: 'app-toast',
       horizontalPosition: 'center',

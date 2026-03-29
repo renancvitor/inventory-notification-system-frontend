@@ -3,8 +3,9 @@ import { Component, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { ProductCategory, ProductService } from '../../services/product.service';
-import { ProductFormComponent, ProductFormValue } from '../../components/form/product-form.component';
+import { ProductCategory, ProductDetail, ProductService } from '../../services/product.service';
+import { ProductFormComponent } from '../../components/form/product-form.component';
+import { ProductFormValue } from '../../services/product-form.model';
 import { ToastComponent } from '../../../../shared/components/toast/toast.component';
 
 @Component({
@@ -34,7 +35,7 @@ export class ProductEditComponent {
   loadingCategories = false;
   categories: ProductCategory[] = [];
   currentStock = 0;
-  productData: any = null;
+  productData: ProductDetail | null = null;
 
   ngOnInit() {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
@@ -72,7 +73,7 @@ export class ProductEditComponent {
     };
 
     this.productService.update(this.id, payload).subscribe({
-      next: (product: any) => {
+      next: (product: ProductDetail) => {
         this.loading = false;
         this.currentStock = Number(product.stock ?? this.currentStock);
         this.productData = product;
@@ -126,7 +127,7 @@ export class ProductEditComponent {
     return match.id;
   }
 
-  private patchForm(product: any) {
+  private patchForm(product: ProductDetail | null) {
     if (!product || !this.productFormComponent) {
       return;
     }
@@ -149,7 +150,7 @@ export class ProductEditComponent {
     return value ? String(value).split('T')[0] : '';
   }
 
-  private showSuccessToast(product: any) {
+  private showSuccessToast(product: ProductDetail) {
     this.snackBar.openFromComponent(ToastComponent, {
       panelClass: 'app-toast',
       horizontalPosition: 'center',

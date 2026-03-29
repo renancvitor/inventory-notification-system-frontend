@@ -4,8 +4,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import {
   OrderFormComponent,
-  OrderFormValue,
 } from '../components/form/order-form.component';
+import { OrderFormValue } from '../../services/order-form.model';
 import { MovementTypeOption, OrderService, OrderSummary } from '../../services/order.service';
 import { ProductListItem, ProductService } from '../../../product/services/product.service';
 import { ToastComponent } from '../../../../shared/components/toast/toast.component';

@@ -7,8 +7,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { PersonService } from '../../services/person.service';
+import { PersonDetail } from '../../services/person.model';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
 import { ToastComponent } from '../../../../shared/components/toast/toast.component';
+import { ToastData } from '../../../../shared/services/toast.model';
 
 @Component({
   selector: 'app-person-edit',
@@ -47,7 +49,7 @@ export class PersonEditComponent {
   }
 
   loadPerson() {
-    this.personService.getById(this.id).subscribe((person: any) => {
+    this.personService.getById(this.id).subscribe((person: PersonDetail) => {
 
       this.personName = person.personName;
 
@@ -94,7 +96,7 @@ export class PersonEditComponent {
     this.router.navigate(['/person']);
   }
 
-  showUpdateToast(data: any) {
+  showUpdateToast(data: Pick<ToastData, 'title' | 'name' | 'info'>) {
 
     this.snackBar.openFromComponent(ToastComponent, {
       panelClass: 'app-toast',
