@@ -62,7 +62,8 @@
 }
 
 .product-list__toolbar app-search-field {
-    flex: 1;
+    flex: 0 1 440px;
+    min-width: 280px;
 }
 
 /* FILTRO */
@@ -231,5 +232,10 @@ mat-radio-group {
 
   .product-list__filter-button {
     align-self: flex-end;
+  }
+
+  .product-list__toolbar app-search-field {
+    flex: 1 1 auto;
+    min-width: 0;
   }
 }

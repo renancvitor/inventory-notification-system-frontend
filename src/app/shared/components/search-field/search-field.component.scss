@@ -1,11 +1,23 @@
+:host {
+  display: block;
+}
+
+.search-field {
+  width: fit-content;
+  max-width: 100%;
+}
+
 .search-field__label {
   font-size: 12px;
   opacity: 0.6;
+  display: block;
 }
 
 .search-field__input {
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  width: fit-content;
+  max-width: 100%;
 
   margin-top: 6px;
   padding: 6px 12px;
@@ -14,10 +26,12 @@
   border: 1px solid rgba(76, 141, 255, 0.2);
 
   input {
+    flex: 0 1 300px;
     background: transparent;
     border: none;
     outline: none;
     width: 300px;
+    min-width: 0;
     color: white;
   }
 
