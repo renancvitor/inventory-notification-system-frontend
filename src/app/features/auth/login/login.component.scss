@@ -76,3 +76,25 @@
     font-size: 16px;
   }
 }
+
+.login-page__submit {
+  width: 100%;
+  min-height: 48px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: linear-gradient(
+    90deg,
+    #5A98FF 8%,
+    #2E5599 100%,
+  );
+
+  color: #FFFFFF;
+  font-weight: 500;
+  font-size: 18px;
+
+  border-radius: 6px;
+  border-color: #6EA3FF;
+}
