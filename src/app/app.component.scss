@@ -1,15 +1,16 @@
 :host {
   display: block;
-  height: 100dvh;
+  min-height: 100dvh;
 }
 
 .app-shell {
-  height: 100dvh;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
 }
 
 .app-shell--authenticated {
-  height: 100dvh;
+  min-height: 100dvh;
 }
 
 .app-shell__header,
@@ -19,12 +20,9 @@
 }
 
 .app-shell__content {
-  height: 100%;
+  flex: 1;
   min-height: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
   box-sizing: border-box;
-  padding-bottom: var(--app-footer-height);
   background:
     radial-gradient(circle at top, rgba(90, 152, 255, 0.18), transparent 34%),
     linear-gradient(180deg, #0b0f1a 0%, #10182b 100%);

@@ -1,11 +1,16 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
 .product-edit {
-  min-height: 100vh;
-  padding: 32px 24px;
+  min-height: 100%;
+  padding: 12px 24px 20px;
   box-sizing: border-box;
 
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .product-edit__loading {
@@ -18,4 +23,10 @@
 
   color: #eef3ff;
   text-align: center;
+}
+
+@media (max-width: 640px) {
+  .product-edit {
+    padding: 8px 16px 16px;
+  }
 }

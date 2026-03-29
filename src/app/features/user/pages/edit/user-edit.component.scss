@@ -1,10 +1,17 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
 .user-edit-page {
-  min-height: 100vh;
+  min-height: 100%;
+  padding: 12px 24px 20px;
+  box-sizing: border-box;
 
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 20px;
 }
 
@@ -39,42 +46,36 @@
   display: flex;
 }
 
-.user-edit-page__save-button {
+.user-edit-page__action {
   padding: 10px 18px;
+  border-radius: 6px;
+  font-weight: 500;
+}
 
+.user-edit-page__action--primary {
   background: linear-gradient(
     90deg,
     #5A98FF 0%,
     #2E5599 100%
   );
-
   border: 1px solid;
-  border-radius: 6px;
   border-color: #455A80;
-
   color: #FFFFFF;
-  font-weight: 500;
 }
 
-.user-edit-page__save-button:hover {
+.user-edit-page__action--primary:hover {
   background: #4C8DFF;
   filter: brightness(1.1);
 }
 
-.user-edit-page__cancel-button {
-  padding: 10px 18px;
-
+.user-edit-page__action--secondary {
   background: transparent;
-  
   border: 1px solid;
-  border-radius: 6px;
   border-color: #455A80;
-
   color: #9AA6BF;
-  font-weight: 500;
 }
 
-.user-edit-page__cancel-button:hover {
+.user-edit-page__action--secondary:hover {
   background: rgba(69, 90, 128, 0.1);
   filter: brightness(1.1);
 }
@@ -83,71 +84,63 @@
   width: 100%;
 }
 
-/* ====== MAT SELECT DARK THEME ====== */
-
-.mat-mdc-form-field {
+.user-edit-page .mat-mdc-form-field {
   width: 100%;
 }
 
-.mat-mdc-text-field-wrapper {
+.user-edit-page .mat-mdc-text-field-wrapper {
   background: #1B2130 !important;
   border-radius: 8px !important;
 }
 
-/* altura menor */
-.mat-mdc-form-field-infix {
+.user-edit-page .mat-mdc-form-field-infix {
   min-height: 40px !important;
   padding: 12px 0 !important;
 }
 
-/* borda */
-.mdc-notched-outline__leading,
-.mdc-notched-outline__notch,
-.mdc-notched-outline__trailing {
+.user-edit-page .mdc-notched-outline__leading,
+.user-edit-page .mdc-notched-outline__notch,
+.user-edit-page .mdc-notched-outline__trailing {
   border-color: rgba(76, 141, 255, 0.2) !important;
 }
 
-/* foco */
-.mat-mdc-form-field.mat-focused .mdc-notched-outline__leading,
-.mat-mdc-form-field.mat-focused .mdc-notched-outline__notch,
-.mat-mdc-form-field.mat-focused .mdc-notched-outline__trailing {
+.user-edit-page .mat-mdc-form-field.mat-focused .mdc-notched-outline__leading,
+.user-edit-page .mat-mdc-form-field.mat-focused .mdc-notched-outline__notch,
+.user-edit-page .mat-mdc-form-field.mat-focused .mdc-notched-outline__trailing {
   border-color: #4C8DFF !important;
 }
 
-/* texto */
-.mat-mdc-select-value {
+.user-edit-page .mat-mdc-select-value {
   color: #E6EDF7 !important;
   padding-left: 4px;
+  display: flex;
+  align-items: center;
 }
 
-/* label */
-.mat-mdc-floating-label {
+.user-edit-page .mat-mdc-floating-label {
   color: #9AA4B2 !important;
   padding-left: 4px;
 }
 
-/* arrow */
-.mat-mdc-form-field-icon-suffix {
-  padding-right: 12px !important;
+.user-edit-page .mat-mdc-form-field-icon-suffix {
+  padding-right: 12px !important; // 👈 espaço da direita
 }
 
-.mat-mdc-form-field-flex {
+.user-edit-page .mat-mdc-form-field-flex {
   padding: 0 4px;
 }
 
-/* dropdown */
-.mat-mdc-select-panel {
+.user-edit-page .mat-mdc-select-panel {
   background: #1B2130 !important;
   color: #E6EDF7 !important;
 }
 
-.mat-mdc-option {
+.user-edit-page .mat-mdc-option {
   background: #1B2130 !important;
   color: #E6EDF7 !important;
 }
 
-/* hover */
-.mat-mdc-option:hover {
+.user-edit-page .mat-mdc-option:hover {
   background: #242C3F !important;
 }
 
@@ -155,7 +148,7 @@
   text-align: center;
 }
 
-.user-edit-page__header h2 {
+.user-edit-page__title {
   margin: 0;
   font-size: 20px;
   font-weight: 600;
@@ -175,29 +168,20 @@
   color: #9AA4B2; // cinza (igual sistema)
 }
 
-/* ====== STATUS AJUSTE (span funcionando corretamente) ====== */
-
 .user-edit-page__status-value {
   margin-left: 4px;
 }
-
-/* ====== MULTIPLOS FIELDS (userType + status) ====== */
 
 .user-edit-page__card mat-form-field {
   width: 100%;
 }
 
-/* ====== SELECT COM ESPAÇAMENTO CONSISTENTE ====== */
-
-.mat-mdc-select-value {
-  display: flex;
-  align-items: center;
-}
-
-/* ====== FIX VISUAL PARA DOIS SELECTS ====== */
-
 .user-edit-page__card {
-  gap: 16px; // mantém consistência com mais campos
+  gap: 20px;
 }
 
-/* ====== SELECT DISABLED (CORRETO) ====== */
+@media (max-width: 640px) {
+  .user-edit-page {
+    padding: 8px 16px 16px;
+  }
+}
