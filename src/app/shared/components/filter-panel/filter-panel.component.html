@@ -7,13 +7,15 @@
   </div>
 
   <div class="filter-panel__actions">
+    
+    <app-button class="filter-panel__apply-action" (click)="filtersApplied.emit()">
+      Aplicar
+    </app-button>
+
     <app-button class="filter-panel__clear-action" (click)="filtersCleared.emit()">
       Limpar
     </app-button>
 
-    <app-button class="filter-panel__apply-action" (click)="filtersApplied.emit()">
-      Aplicar
-    </app-button>
   </div>
 
 </div>

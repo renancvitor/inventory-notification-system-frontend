@@ -63,16 +63,16 @@
 
     <div class="user-edit-page__actions-container">
 
-      <app-button class="user-edit-page__cancel-button" (click)="cancel()">
-        Cancelar
-      </app-button>
-
       <app-button
         class="user-edit-page__save-button"
         [disabled]="loading"
         (click)="save()"
       >
         {{ loading ? 'Salvando...' : 'Salvar alterações' }}
+      </app-button>
+
+      <app-button class="user-edit-page__cancel-button" (click)="cancel()">
+        Cancelar
       </app-button>
 
     </div>

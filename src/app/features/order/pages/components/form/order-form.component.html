@@ -52,6 +52,46 @@
       </label>
 
       <div class="order-form__footer">
+        
+        <app-button
+          *ngIf="showDecisionActions"
+          class="order-form__action order-form__action--success"
+          type="button"
+          [disabled]="loading"
+          (click)="approveRequested.emit()"
+          >
+          {{ loading ? 'Processando...' : 'Aprovar' }}
+        </app-button>
+        
+        <app-button
+          *ngIf="showDecisionActions"
+          class="order-form__action order-form__action--danger"
+          type="button"
+          [disabled]="loading"
+          (click)="rejectRequested.emit()"
+          >
+          {{ loading ? 'Processando...' : 'Reprovar' }}
+        </app-button>      
+        
+        <app-button
+          *ngIf="isViewMode && showEditAction"
+          class="order-form__action order-form__action--primary"
+          type="button"
+          [disabled]="loading"
+          (click)="editRequested.emit()"
+          >
+          Editar pedido
+        </app-button>
+  
+        <app-button
+          *ngIf="!isViewMode"
+          class="order-form__action order-form__action--primary"
+          type="submit"
+          [disabled]="!canSubmit"
+          >
+          {{ loading ? 'Salvando...' : submitLabel }}
+        </app-button>
+
         <app-button
           class="order-form__action order-form__action--secondary"
           type="button"
@@ -60,44 +100,6 @@
           {{ isViewMode ? 'Voltar' : 'Cancelar' }}
         </app-button>
 
-        <app-button
-          *ngIf="showDecisionActions"
-          class="order-form__action order-form__action--danger"
-          type="button"
-          [disabled]="loading"
-          (click)="rejectRequested.emit()"
-        >
-          {{ loading ? 'Processando...' : 'Reprovar' }}
-        </app-button>
-
-        <app-button
-          *ngIf="showDecisionActions"
-          class="order-form__action order-form__action--success"
-          type="button"
-          [disabled]="loading"
-          (click)="approveRequested.emit()"
-        >
-          {{ loading ? 'Processando...' : 'Aprovar' }}
-        </app-button>
-
-        <app-button
-          *ngIf="isViewMode && showEditAction"
-          class="order-form__action order-form__action--primary"
-          type="button"
-          [disabled]="loading"
-          (click)="editRequested.emit()"
-        >
-          Editar pedido
-        </app-button>
-
-        <app-button
-          *ngIf="!isViewMode"
-          class="order-form__action order-form__action--primary"
-          type="submit"
-          [disabled]="!canSubmit"
-        >
-          {{ loading ? 'Salvando...' : submitLabel }}
-        </app-button>
       </div>
     </div>
   </section>
