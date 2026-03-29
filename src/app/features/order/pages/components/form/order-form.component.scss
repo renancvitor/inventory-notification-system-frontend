@@ -343,6 +343,10 @@
   background: #202637;
 }
 
+.order-form__mobile-items {
+  display: none;
+}
+
 .order-form__table-wrapper::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -434,6 +438,11 @@
   cursor: pointer;
 }
 
+.order-form__delete--mobile {
+  min-height: 40px;
+  padding: 8px 12px;
+}
+
 .order-form__empty {
   display: flex;
   align-items: center;
@@ -486,10 +495,6 @@
     position: static;
     margin-top: 8px;
   }
-
-  .order-form__table {
-    min-width: 900px;
-  }
 }
 
 @media (max-width: 640px) {
@@ -498,26 +503,12 @@
     border-radius: 14px;
   }
 
+  .order-form__meta {
+    grid-template-columns: 1fr;
+  }
+
   .order-form__panel--items {
     padding-top: 10px;
     padding-bottom: 10px;
-  }
-
-  .order-form__table {
-    min-width: 840px;
-  }
-
-  .order-form__table-input {
-    min-width: 88px;
-    max-width: 120px;
-  }
-
-  .order-form__table-input--product {
-    min-width: 180px;
-  }
-
-  .order-form__delete {
-    min-height: 40px;
-    padding: 6px 10px;
   }
 }

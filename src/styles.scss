@@ -76,3 +76,93 @@ body {
 .mdc-text-field--disabled .mdc-notched-outline__trailing {
   border-color: rgba(255, 255, 255, 0.1) !important;
 }
+
+@media (max-width: 640px) {
+  .app-toast {
+    margin-top: 72px;
+    margin-left: 12px;
+    margin-right: 12px;
+  }
+
+  .order-form__total {
+    width: 100%;
+    padding: 14px 16px;
+    background: #202637;
+    border: 1px solid #2c3650;
+    border-radius: 12px;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.15rem;
+  }
+
+  .order-form__table-wrapper {
+    display: none;
+  }
+
+  .order-form__mobile-items {
+    display: grid !important;
+    gap: 12px;
+  }
+
+  .order-form__mobile-card {
+    padding: 14px;
+    border: 1px solid #2c3650;
+    border-radius: 12px;
+    background: #202637;
+    display: grid;
+    gap: 14px;
+  }
+
+  .order-form__mobile-card-header,
+  .order-form__mobile-card-title,
+  .order-form__mobile-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .order-form__mobile-card-title span,
+  .order-form__mobile-field span {
+    color: #8f9ab1;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .order-form__mobile-card-title strong,
+  .order-form__mobile-field strong {
+    color: #eef3ff;
+    font-size: 0.98rem;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+  }
+
+  .order-form__mobile-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .order-form__mobile-field--total {
+    grid-column: 1 / -1;
+    padding: 12px;
+    border-radius: 10px;
+    background: rgba(11, 15, 26, 0.26);
+    border: 1px solid rgba(76, 141, 255, 0.12);
+  }
+
+  .order-form__mobile-field .order-form__table-input {
+    min-width: 0;
+    max-width: none;
+    width: 100%;
+    min-height: 42px !important;
+    text-align: left;
+  }
+}
+
+@media (max-width: 420px) {
+  .order-form__mobile-grid {
+    grid-template-columns: 1fr;
+  }
+}

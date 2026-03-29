@@ -148,8 +148,8 @@
       </div>
     </div>
 
-    <div class="order-form__table-wrapper">
-      <table class="order-form__table" *ngIf="orderItems.length > 0; else emptyState">
+    <div class="order-form__table-wrapper" *ngIf="orderItems.length > 0; else emptyState">
+      <table class="order-form__table">
         <thead>
           <tr>
             <th>Produto</th>
@@ -206,13 +206,59 @@
           </tr>
         </tbody>
       </table>
-
-      <ng-template #emptyState>
-        <div class="order-form__empty">
-          {{ isViewMode ? 'Este pedido nao possui itens cadastrados.' : (isMovementTypeSelected ? 'Pesquise um produto e pressione Enter para adiciona-lo ao pedido.' : 'Selecione o tipo de pedido para habilitar a busca de produtos.') }}
-        </div>
-      </ng-template>
     </div>
+
+    <div class="order-form__mobile-items" *ngIf="orderItems.length > 0">
+      <article class="order-form__mobile-card" *ngFor="let item of orderItems; trackBy: trackByProductId">
+        <div class="order-form__mobile-card-header">
+          <div class="order-form__mobile-card-title">
+            <span>Produto</span>
+            <strong>{{ item.productName }}</strong>
+          </div>
+
+          <button
+            *ngIf="!isViewMode"
+            class="order-form__delete order-form__delete--mobile"
+            type="button"
+            (click)="removeItem(item.productId)"
+          >
+            Excluir
+          </button>
+        </div>
+
+        <div class="order-form__mobile-grid">
+          <label class="order-form__mobile-field">
+            <span>Quantidade</span>
+            <input
+              class="order-form__table-input order-form__table-input--qty"
+              type="number"
+              min="1"
+              step="1"
+              [value]="item.quantity"
+              [readonly]="isViewMode"
+              (focus)="selectQuantityInput($event)"
+              (input)="updateQuantity(item.productId, $any($event.target).value)"
+            >
+          </label>
+
+          <div class="order-form__mobile-field">
+            <span>Valor unitário</span>
+            <strong>{{ formatCurrency(item.unitPrice) }}</strong>
+          </div>
+
+          <div class="order-form__mobile-field order-form__mobile-field--total">
+            <span>Valor total</span>
+            <strong>{{ formatCurrency(getItemTotal(item)) }}</strong>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <ng-template #emptyState>
+      <div class="order-form__empty">
+        {{ isViewMode ? 'Este pedido nao possui itens cadastrados.' : (isMovementTypeSelected ? 'Pesquise um produto e pressione Enter para adiciona-lo ao pedido.' : 'Selecione o tipo de pedido para habilitar a busca de produtos.') }}
+      </div>
+    </ng-template>
   </section>
 
   <section class="order-form__panel order-form__panel--description">
