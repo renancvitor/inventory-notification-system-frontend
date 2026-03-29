@@ -1,5 +1,5 @@
 .order-form {
-  width: min(100%, 1280px);
+  width: min(100%, 1300px);
   min-height: calc(100vh - 168px);
 
   display: flex;
@@ -30,16 +30,16 @@
 }
 
 .order-form__panel--items {
-  flex: 1 1 auto;
+  flex: 0 0 auto;
   display: flex;
   flex-direction: column;
-  padding-top: 14px;
-  padding-bottom: 14px;
+  padding-top: 12px;
+  padding-bottom: 12px;
 }
 
 .order-form__panel--description {
-  padding-top: 14px;
-  padding-bottom: 14px;
+  padding-top: 12px;
+  padding-bottom: 12px;
 }
 
 .order-form__panel-title h2 {
@@ -317,9 +317,9 @@
 }
 
 .order-form__table-wrapper {
-  flex: 1 1 auto;
-  min-height: 240px;
-  max-height: 100%;
+  height: clamp(180px, 24vh, 220px);
+  min-height: 0;
+  max-height: clamp(180px, 24vh, 220px);
   overflow-x: auto;
   overflow-y: auto;
   border: 1px solid #2c3650;
@@ -339,6 +339,7 @@
 
 .order-form__table {
   width: 100%;
+  min-width: 1080px;
   border-collapse: collapse;
 }
 
