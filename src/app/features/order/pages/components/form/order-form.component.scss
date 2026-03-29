@@ -4,7 +4,7 @@
 
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 8px;
 
   color: #f4f7fb;
 }
@@ -33,6 +33,13 @@
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+.order-form__panel--description {
+  padding-top: 14px;
+  padding-bottom: 14px;
 }
 
 .order-form__panel-title h2 {
@@ -118,7 +125,7 @@
   }
 
   textarea {
-    min-height: 62px;
+    min-height: 52px;
     resize: none;
   }
 }
@@ -311,7 +318,7 @@
 
 .order-form__table-wrapper {
   flex: 1 1 auto;
-  min-height: 320px;
+  min-height: 240px;
   max-height: 100%;
   overflow-x: auto;
   overflow-y: auto;
