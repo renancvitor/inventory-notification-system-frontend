@@ -1,6 +1,7 @@
 .person-list {
-  max-width: 1120px;
+  width: min(100%, 1120px);
   margin: 40px auto;
+  box-sizing: border-box;
 }
 
 /* HEADER */
@@ -8,18 +9,25 @@
 .person-list__header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
+  gap: 16px 24px;
   margin-bottom: 25px;
+}
+
+.person-list__header-content {
+  min-width: 0;
 }
 
 .person-list__title {
   font-size: 28px;
   margin: 0;
+  line-height: 1.2;
 }
 
 .person-list__subtitle {
   opacity: 0.6;
   margin-top: 4px;
+  overflow-wrap: anywhere;
 }
 
 /* BOTÃO NOVA PESSOA */
@@ -28,6 +36,11 @@
   padding: 10px 18px;
   border-radius: 6px;
   font-weight: 500;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
 }
 
 .person-list__action--create {
@@ -48,7 +61,8 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  gap: 20px;
+  gap: 16px;
+  flex-wrap: wrap;
 
   padding: 20px;
 
@@ -62,8 +76,23 @@
 }
 
 .person-list__toolbar app-search-field {
-  flex: 0 1 440px;
-  min-width: 280px;
+  flex: 1 1 440px;
+  min-width: 0;
+  display: block;
+}
+
+::ng-deep .person-list__toolbar app-search-field .search-field {
+  width: 100%;
+}
+
+::ng-deep .person-list__toolbar app-search-field .search-field__input {
+  width: 100%;
+}
+
+::ng-deep .person-list__toolbar app-search-field .search-field__input input {
+  width: 100%;
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 /* SEARCH */
@@ -143,11 +172,15 @@
   border: 1px solid rgba(76, 141, 255, 0.15);
 
   padding: 0 0 10px;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-gutter: stable both-edges;
 }
 
 table {
   width: 100%;
+  min-width: 760px;
 }
 
 .mat-column-actions {
@@ -199,11 +232,19 @@ mat-paginator {
   margin-top: 8px;
   background: transparent;
   padding-right: 16px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 ::ng-deep .mat-mdc-paginator .mat-mdc-text-field-wrapper {
   padding-left: 12px;
   padding-right: 12px;
+}
+
+::ng-deep .mat-mdc-paginator .mat-mdc-paginator-container {
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  justify-content: space-between;
 }
 
 /* FILTER */
@@ -243,6 +284,11 @@ mat-radio-group {
   max-width: none !important;
 }
 
+::ng-deep .filter-menu .filter-panel {
+  width: min(92vw, 360px);
+  box-sizing: border-box;
+}
+
 @media (max-width: 900px) {
   .person-list {
     margin: 24px 16px;
@@ -254,12 +300,66 @@ mat-radio-group {
     align-items: stretch;
   }
 
+  .person-list__header,
+  .person-list__toolbar {
+    gap: 12px;
+  }
+
+  .person-list__action,
   .person-list__filter-button {
-    align-self: flex-end;
+    width: 100%;
+  }
+
+  .person-list__filter-button {
+    align-self: stretch;
   }
 
   .person-list__toolbar app-search-field {
     flex: 1 1 auto;
     min-width: 0;
+    width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .person-list {
+    margin: 16px 12px;
+  }
+
+  .person-list__title {
+    font-size: 24px;
+  }
+
+  .person-list__subtitle {
+    font-size: 14px;
+  }
+
+  .person-list__toolbar,
+  .person-list__header {
+    margin-bottom: 18px;
+  }
+
+  .person-list__toolbar {
+    padding: 16px;
+  }
+
+  .person-list__table-container {
+    min-height: 360px;
+  }
+
+  .mat-column-email {
+    display: none;
+  }
+
+  table {
+    min-width: 720px;
+  }
+
+  mat-paginator {
+    padding-right: 0;
+  }
+
+  ::ng-deep .mat-mdc-paginator .mat-mdc-paginator-container {
+    justify-content: center;
   }
 }

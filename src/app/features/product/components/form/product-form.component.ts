@@ -28,7 +28,6 @@ export class ProductFormComponent {
   @Output() submitForm = new EventEmitter<ProductFormValue>();
   @Output() cancel = new EventEmitter<void>();
   @Input() loading = false;
-  @Input() loadingCategories = false;
   @Input() categories: ProductCategory[] = [];
   @Input() title = '';
   @Input() showSummary = false;
@@ -37,6 +36,8 @@ export class ProductFormComponent {
   @Input() showStockField = true;
   @Input() showMinimumStockField = false;
   @Input() submitLabel = 'Salvar Alterações';
+
+  private _loadingCategories = false;
 
   private formBuilder = inject(FormBuilder);
 
@@ -52,6 +53,24 @@ export class ProductFormComponent {
     minimumStock: [null as number | null, [Validators.min(0)]],
     brand: ['', Validators.required],
   });
+
+  @Input()
+  set loadingCategories(value: boolean) {
+    this._loadingCategories = value;
+
+    const categoryControl = this.productForm.controls.categoryId;
+
+    if (value) {
+      categoryControl.disable({ emitEvent: false });
+      return;
+    }
+
+    categoryControl.enable({ emitEvent: false });
+  }
+
+  get loadingCategories() {
+    return this._loadingCategories;
+  }
 
   onSubmit() {
     if (this.productForm.invalid) return;

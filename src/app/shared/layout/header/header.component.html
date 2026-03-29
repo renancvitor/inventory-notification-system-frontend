@@ -1,10 +1,10 @@
 <mat-toolbar class="site-header">
 
-  <div class="site-header__logo">
+  <a class="site-header__logo" routerLink="/">
     Sistema de Notificação de Estoque
-  </div>
+  </a>
 
-  <nav class="site-header__nav">
+  <nav class="site-header__nav site-header__nav--desktop" aria-label="Navegação principal">
 
     <a mat-button class="site-header__nav-link" routerLink="/" routerLinkActive="site-header__nav-link--active">Início</a>
     <a mat-button class="site-header__nav-link" routerLink="/person" routerLinkActive="site-header__nav-link--active">Pessoas</a>
@@ -15,11 +15,31 @@
 
   </nav>
 
-  <div class="site-header__logout">
-      <button mat-button class="site-header__logout-button" (click)="logout()">
-        <mat-icon>logout</mat-icon>
-        Sair
-      </button>
+  <div class="site-header__logout site-header__logout--desktop">
+    <button mat-button class="site-header__logout-button" (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      Sair
+    </button>
   </div>
 
+  <button
+    mat-icon-button
+    class="site-header__mobile-toggle"
+    [matMenuTriggerFor]="mobileMenu"
+    aria-label="Abrir menu de navegação"
+    type="button"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
+
 </mat-toolbar>
+
+<mat-menu #mobileMenu="matMenu" panelClass="site-header__mobile-menu-panel">
+  <a mat-menu-item routerLink="/">Início</a>
+  <a mat-menu-item routerLink="/person">Pessoas</a>
+  <a mat-menu-item routerLink="/users">Usuários</a>
+  <a mat-menu-item routerLink="/products">Produtos</a>
+  <a mat-menu-item routerLink="/orders">Pedidos</a>
+  <a mat-menu-item routerLink="/update-password">Alterar senha</a>
+  <button mat-menu-item type="button" (click)="logout()">Sair</button>
+</mat-menu>

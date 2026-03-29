@@ -1,7 +1,12 @@
 .site-footer {
-    height: var(--app-footer-height);
+    min-height: var(--app-footer-height);
+    height: auto;
     width: 100%;
     box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
     background:
         radial-gradient(circle at bottom right, rgba(33, 150, 243, 0.12), transparent 35%),
         rgba(10, 16, 30, 0.9);
@@ -12,6 +17,7 @@
     min-height: var(--app-footer-height);
     flex-shrink: 0;
     padding: 0 1.5rem;
+    justify-content: space-between;
 }
 
 .site-footer__spacer {
@@ -21,4 +27,21 @@
 .site-footer__copyright,
 .site-footer__brand {
     font-size: 0.95rem;
+}
+
+@media (max-width: 640px) {
+    .site-footer {
+        padding: 0.85rem 1rem;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .site-footer__spacer {
+        display: none;
+    }
+
+    .site-footer__copyright,
+    .site-footer__brand {
+        width: 100%;
+    }
 }

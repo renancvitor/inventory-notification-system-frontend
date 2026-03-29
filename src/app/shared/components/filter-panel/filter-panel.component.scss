@@ -1,5 +1,6 @@
 .filter-panel {
-  width: 300px;
+  width: min(100%, 320px);
+  max-width: calc(100vw - 24px);
 
   background: #1B2130;
 
@@ -29,6 +30,7 @@
 .filter-panel__actions {
   display: flex;
   justify-content: space-between;
+  gap: 12px;
   margin-top: 20px;
 }
 
@@ -74,4 +76,21 @@
 .filter-panel__clear-action:hover {
   background: rgba(69, 90, 128, 0.1);
   filter: brightness(1.1);
+}
+
+@media (max-width: 640px) {
+  .filter-panel {
+    width: min(100%, calc(100vw - 24px));
+    padding: 16px;
+  }
+
+  .filter-panel__actions {
+    flex-direction: column;
+  }
+
+  .filter-panel__apply-action,
+  .filter-panel__clear-action {
+    width: 100%;
+    flex: none;
+  }
 }

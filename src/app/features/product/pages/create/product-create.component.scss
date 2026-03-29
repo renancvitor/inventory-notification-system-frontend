@@ -5,7 +5,8 @@
 
 .product-create {
   min-height: 100%;
-  padding: 12px 24px 20px;
+  width: 100%;
+  padding: clamp(8px, 3vw, 20px) clamp(16px, 4vw, 24px) 20px;
   box-sizing: border-box;
 
   display: flex;
@@ -13,8 +14,17 @@
   align-items: flex-start;
 }
 
+.product-create > * {
+  width: min(100%, 1280px);
+  max-width: 100%;
+}
+
 @media (max-width: 640px) {
   .product-create {
     padding: 8px 16px 16px;
+  }
+
+  .product-create > * {
+    width: 100%;
   }
 }
