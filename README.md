@@ -36,7 +36,11 @@ Planejamento, tarefas e histórico de evolução disponíveis no GitHub Projects
 - [Visão Geral do Projeto](#visao-geral-do-projeto)
 - [Tecnologias Utilizadas](#tecnologias-utilizadas)
 - [Ferramentas Utilizadas](#ferramentas-utilizadas)
+- [Integração com o Backend](#integração-com-o-backend)
+- [Autenticação e Sessão](#autenticação-e-sessão)
 - [Funcionalidades](#funcionalidades)
+- [Testes Automatizados](#testes-automatizados)
+- [Documentação Técnica](#documentação-técnica)
 - [Estrutura do Projeto](#estrutura-do-projeto)
 - [Como Executar o Projeto](#como-executar-o-projeto)
 - [Contribuições](#contribuições)
@@ -69,7 +73,7 @@ O objetivo do projeto é consolidar uma experiência fullstack próxima de siste
 - 🟦 [TypeScript](https://www.typescriptlang.org/)
 - 🅰️ [Angular](https://angular.dev/)
 - 🎨 [SCSS](https://sass-lang.com/documentation/)
-- 🌐 Consumo de [API REST](https://github.com/renancvitor/inventory-notification-system-backend) com autenticação via JWT
+- 🌐 Consumo de [API REST](https://github.com/renancvitor/inventory-notification-system-backend) com autenticação via sessão/cookies
 
 <p align="right"><a href="#inicio">⬆️ Voltar ao início</a></p>
 
@@ -78,6 +82,47 @@ O objetivo do projeto é consolidar uma experiência fullstack próxima de siste
 <h2 id="ferramentas-utilizadas" align="center">Ferramentas utilizadas</h2>
 
 - 💻 [Visual Studio Code](https://code.visualstudio.com/): Ambiente de desenvolvimento integrado (IDE) leve e extensível.
+- 🧪 [Vitest](https://vitest.dev/): Execução dos testes automatizados do projeto.
+
+<p align="right"><a href="#inicio">⬆️ Voltar ao início</a></p>
+
+---
+
+<h2 id="integração-com-o-backend" align="center">Integração com o Backend</h2>
+
+O frontend consome a API do projeto backend por meio de serviços HTTP organizados por feature.
+
+Hoje a integração contempla:
+
+- autenticação de sessão com credenciais
+- listagens paginadas
+- criação e edição de registros
+- ativação e desativação lógica de entidades
+- carregamento prévio de dados em rotas críticas
+
+Documentação complementar:
+
+- [Integração com a API](./docs/api-integration/api-integration.md)
+
+<p align="right"><a href="#inicio">⬆️ Voltar ao início</a></p>
+
+---
+
+<h2 id="autenticação-e-sessão" align="center">Autenticação e Sessão</h2>
+
+O acesso à aplicação é protegido por `authGuard`, com verificação de sessão e redirecionamento condicional para troca de senha no primeiro acesso.
+
+O fluxo atual cobre:
+
+- login com persistência de sessão via credenciais
+- checagem de sessão em rotas protegidas
+- logout
+- obrigatoriedade de atualização de senha no primeiro acesso
+- tratamento centralizado de erro para sessão expirada
+
+Documentação complementar:
+
+- [Fluxo de Autenticação e Sessão](./docs/authentication/authentication-flow.md)
 
 <p align="right"><a href="#inicio">⬆️ Voltar ao início</a></p>
 
@@ -110,7 +155,43 @@ Interface para operação do sistema de estoque baseada em permissões e estados
 - Indicação de eventos relevantes do sistema
 - Feedback visual de ações concluídas ou bloqueadas
 
-  <p align="right"><a href="#inicio">⬆️ Voltar ao início</a></p>
+<p align="right"><a href="#inicio">⬆️ Voltar ao início</a></p>
+
+---
+
+<h2 id="testes-automatizados" align="center">Testes Automatizados</h2>
+
+O projeto já possui cobertura automatizada distribuída entre componentes, serviços e infraestrutura Angular.
+
+Atualmente há testes para:
+
+- autenticação e guard de rotas
+- serviços HTTP por domínio funcional
+- componentes de formulário e listagem
+- componentes reutilizáveis de interface
+- bootstrap básico da aplicação
+
+Documentação complementar:
+
+- [Estratégia de Testes](./docs/testing/testing-strategy.md)
+
+<p align="right"><a href="#inicio">⬆️ Voltar ao início</a></p>
+
+---
+
+<h2 id="documentação-técnica" align="center">Documentação Técnica</h2>
+
+Seguindo o mesmo padrão documental adotado no backend, este repositório mantém documentos complementares na pasta `docs/` para aprofundar temas específicos da interface.
+
+- [Arquitetura do Frontend](./docs/frontend-architecture/frontend-architecture.md)
+- [Integração com a API](./docs/api-integration/api-integration.md)
+- [Fluxo de Autenticação e Sessão](./docs/authentication/authentication-flow.md)
+- [Estratégia de Testes](./docs/testing/testing-strategy.md)
+- [Guia de Deploy](./docs/deployment/DEPLOYMENT.md)
+- [Organização completa do Projeto](./docs/project-structure.md)
+- [Convenção de Commits](./docs/COMMIT_CONVENTION.md)
+
+<p align="right"><a href="#inicio">⬆️ Voltar ao início</a></p>
 
 ---
 
@@ -121,20 +202,18 @@ Organização baseada em responsabilidades e módulos funcionais:
 ```plaintext
 src/
  ├── core/               # serviços globais, autenticação, interceptors
- │    ├── api/
- │    └── auth/
  ├── features/           # módulos funcionais do sistema
- │    ├── auth/login
- │    └── home/
  ├── shared/components   # componentes reutilizáveis
- │    ├── button
- │    └── footer
- ├── layout/             # estrutura visual da aplicação
+ ├── shared/layout       # estrutura visual compartilhada
  └── environments/       # configurações por ambiente
 
-LICENSE                  # Licença do projeto
-README.md                # Documentação principal do repositório
+docs/                    # documentação técnica complementar
+README.md                # documentação principal do repositório
 ```
+
+Para a árvore técnica completa e sugestões de evolução arquitetural:
+
+- [Organização completa do Projeto](./docs/project-structure.md)
 
 <p align="right"><a href="#inicio">⬆️ Voltar ao início</a></p>
 
@@ -156,10 +235,15 @@ git clone git@github.com:renancvitor/inventory-notification-system-frontend.git
 ```bash
 cd inventory-notification-system-frontend
 ```
-3. Inicie o [Angular](https://angular.dev/)
+3. Instale as dependências:
 ```bash
-ng serve
+npm install
 ```
+4. Inicie a aplicação:
+```bash
+npm start
+```
+
 ⚠️ **O backend deve estar em execução antes de iniciar a aplicação.**
 
 <p align="right"><a href="#inicio">⬆️ Voltar ao início</a></p>
@@ -186,7 +270,6 @@ Obrigado pelo interesse em contribuir!
 Se tiver dúvidas ou sugestões, sinta-se à vontade para entrar em contato:
 
 - 📧 **E-mail**: [renan.vitor.cm@gmail.com](mailto:renan.vitor.cm@gmail.com)
-
 - 🟦 **LinkedIn**: [Renan Vitor](https://www.linkedin.com/in/renan-vitor-developer/)
 
 <p align="right"><a href="#inicio">⬆️ Voltar ao início</a></p>
