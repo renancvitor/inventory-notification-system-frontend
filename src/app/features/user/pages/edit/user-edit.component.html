@@ -2,7 +2,7 @@
 
   <div class="user-edit-page__header">
 
-    <h2>{{ user?.personName }}</h2>
+    <h2 class="user-edit-page__title">{{ user?.personName }}</h2>
     
     <div class="user-edit-page__status">
       Status:
@@ -64,14 +64,14 @@
     <div class="user-edit-page__actions-container">
 
       <app-button
-        class="user-edit-page__save-button"
+        class="user-edit-page__action user-edit-page__action--primary"
         [disabled]="loading"
         (click)="save()"
       >
         {{ loading ? 'Salvando...' : 'Salvar alterações' }}
       </app-button>
 
-      <app-button class="user-edit-page__cancel-button" (click)="cancel()">
+      <app-button class="user-edit-page__action user-edit-page__action--secondary" (click)="cancel()">
         Cancelar
       </app-button>
 
