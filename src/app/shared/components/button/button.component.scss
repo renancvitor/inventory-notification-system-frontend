@@ -1,6 +1,7 @@
 :host {
-  display: block;
-  width: 100%;
+  display: inline-block;
+  width: auto;
+  max-width: 100%;
 }
 
 .app-button__control {
@@ -9,7 +10,6 @@
   justify-content: center;
 
   width: 100%;
-  min-height: 44px;
   height: auto;
   box-sizing: border-box;
 

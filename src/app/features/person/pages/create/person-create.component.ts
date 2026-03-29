@@ -5,11 +5,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { PersonFormComponent } from '../../components/form/person-form.component';
 import { ToastComponent } from '../../../../shared/components/toast/toast.component';
+import { ButtonComponent } from '../../../../shared/components/button/button.component';
 
 @Component({
   selector: 'app-person-create.component',
   standalone: true,
-  imports: [PersonFormComponent],
+  imports: [PersonFormComponent, ButtonComponent],
   templateUrl: './person-create.component.html',
   styleUrls: ['./person-create.component.scss'],
 })

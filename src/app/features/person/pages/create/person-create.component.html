@@ -1,10 +1,30 @@
 <div class="person-create">
 
   <app-person-form
+    #personForm
     [loading]="loading"
+    [showActions]="false"
     (submitForm)="createPerson($event)"
-    (cancel)="cancel()"
   >
   </app-person-form>
+
+  <div class="person-create__actions">
+    <app-button
+      class="person-create__action person-create__action--primary"
+      type="button"
+      [disabled]="loading || personForm.personForm.invalid"
+      (click)="personForm.onSubmit()"
+    >
+      {{ loading ? 'Salvando...' : 'Cadastrar' }}
+    </app-button>
+
+    <app-button
+      class="person-create__action person-create__action--secondary"
+      type="button"
+      (click)="cancel()"
+    >
+      Cancelar
+    </app-button>
+  </div>
 
 </div>

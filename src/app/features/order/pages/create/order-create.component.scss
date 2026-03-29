@@ -7,8 +7,13 @@
 }
 
 .order-create > * {
-  width: min(100%, 1300px);
+  width: min(100%, 1024px);
   max-width: 100%;
+}
+
+.order-create ::ng-deep .order-form__table-wrapper {
+  height: clamp(288px, 36vh, 320px);
+  max-height: clamp(288px, 36vh, 320px);
 }
 
 @media (max-width: 900px) {

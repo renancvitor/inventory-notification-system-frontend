@@ -77,7 +77,7 @@ body {
   border-color: rgba(255, 255, 255, 0.1) !important;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 900px) {
   .app-toast {
     margin-top: 72px;
     margin-left: 12px;
@@ -158,6 +158,12 @@ body {
     width: 100%;
     min-height: 42px !important;
     text-align: left;
+  }
+}
+
+@media (max-width: 640px) {
+  .order-form__total {
+    font-size: 1.15rem;
   }
 }
 

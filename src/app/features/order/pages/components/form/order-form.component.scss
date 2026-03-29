@@ -1,5 +1,5 @@
 .order-form {
-  width: min(100%, 1300px);
+  width: min(100%, 1024px);
   max-width: 100%;
   min-height: calc(100dvh - var(--app-header-height) - var(--app-footer-height) - 32px);
   box-sizing: border-box;
@@ -35,13 +35,13 @@
   flex: 0 0 auto;
   display: flex;
   flex-direction: column;
-  padding-top: 12px;
-  padding-bottom: 12px;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 
 .order-form__panel--description {
-  padding-top: 12px;
-  padding-bottom: 12px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .order-form__panel-title h2 {
@@ -185,8 +185,8 @@
 }
 
 .order-form__action {
-  min-width: 180px;
-  flex: 1 1 180px;
+  min-width: 220px;
+  flex: 1 1 220px;
   padding: 10px 18px;
   border-radius: 6px;
   font-weight: 500;
@@ -455,7 +455,7 @@
 }
 
 .order-form__field--textarea textarea {
-  min-height: 84px;
+  min-height: 64px;
 }
 
 @media (max-width: 900px) {

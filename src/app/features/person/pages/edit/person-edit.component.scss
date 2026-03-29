@@ -34,26 +34,28 @@
 }
 
 .person-edit__actions {
+  width: min(100%, 420px);
+  max-width: 100%;
   margin-top: 10px;
 }
 
 .person-edit__actions-container {
   display: flex;
   gap: 12px;
-  justify-content: flex-end;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .person-edit__actions-container app-button {
-  min-width: 150px;
-  flex: 1 1 150px;
-  display: flex;
+  width: auto;
+  min-width: 0;
 }
 
 .person-edit__action {
   padding: 10px 18px;
   border-radius: 6px;
   font-weight: 500;
+  white-space: nowrap;
 }
 
 .person-edit__action--primary {
@@ -201,6 +203,5 @@
   .person-edit__actions-container app-button {
     width: 100%;
     min-width: 0;
-    flex: none;
   }
 }

@@ -8,8 +8,18 @@
 }
 
 .order-edit > * {
-  width: min(100%, 1300px);
+  width: min(100%, 1024px);
   max-width: 100%;
+}
+
+.order-edit ::ng-deep .order-form__panel--items {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.order-edit ::ng-deep .order-form__table-wrapper {
+  height: clamp(216px, 27vh, 234px);
+  max-height: clamp(216px, 27vh, 234px);
 }
 
 .order-edit__loading {
