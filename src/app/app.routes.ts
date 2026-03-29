@@ -21,6 +21,8 @@ import { ProductService } from './features/product/services/product.service';
 
 import { OrderListComponent } from './features/order/pages/list/order-list.component';
 import { OrderCreateComponent } from './features/order/pages/create/order-create.component';
+import { OrderEditComponent } from './features/order/pages/edit/order-edit.component';
+import { OrderService } from './features/order/services/order.service';
 
 export const routes: Routes = [
 
@@ -106,6 +108,27 @@ export const routes: Routes = [
         path: 'orders/create',
         canActivate: [authGuard],
         component: OrderCreateComponent
+    },
+
+    {
+        path: 'orders/:id',
+        canActivate: [authGuard],
+        resolve: {
+            order: (route: ActivatedRouteSnapshot) => inject(OrderService).getById(Number(route.paramMap.get('id'))).pipe(
+                catchError(() => of(null))
+            ),
+            movementTypes: () => inject(OrderService).listMovementTypes().pipe(
+                catchError(() => of([]))
+            ),
+            products: () => inject(ProductService).list({
+                active: true,
+                page: 0,
+                size: 100,
+            }).pipe(
+                catchError(() => of({ content: [], totalElements: 0 }))
+            )
+        },
+        component: OrderEditComponent
     },
 
     {

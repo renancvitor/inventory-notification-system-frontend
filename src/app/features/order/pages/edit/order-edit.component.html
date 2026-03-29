@@ -1,0 +1,27 @@
+<div class="order-edit">
+  <div class="order-edit__loading" *ngIf="!formValue">
+    Pedido nao encontrado.
+  </div>
+
+  <app-order-form
+    *ngIf="formValue"
+    [title]="pageTitle"
+    [mode]="mode"
+    [submitLabel]="submitLabel"
+    [loading]="loading"
+    [productsLoading]="productsLoading"
+    [movementTypesLoading]="movementTypesLoading"
+    [products]="products"
+    [movementTypes]="movementTypes"
+    [initialValue]="formValue"
+    [headerMeta]="headerMeta"
+    [showDecisionActions]="showDecisionActions"
+    [showEditAction]="canEditOrder"
+    (submitForm)="saveOrder($event)"
+    (cancel)="cancel()"
+    (editRequested)="enableEditMode()"
+    (approveRequested)="approveOrder()"
+    (rejectRequested)="rejectOrder()"
+  >
+  </app-order-form>
+</div>

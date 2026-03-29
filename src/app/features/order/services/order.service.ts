@@ -4,7 +4,24 @@ import { Observable, shareReplay } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 
 export interface OrderMovementSummary {
+  id?: number;
+  productId?: number;
+  productName?: string;
   movementType?: string;
+  quantity?: number;
+  unitPrice?: number;
+  movementationDate?: string;
+  personName?: string;
+}
+
+export interface OrderItemSummary {
+  productId?: number;
+  productName?: string;
+  movementTypeId?: number;
+  movementType?: string;
+  quantity?: number;
+  unitPrice?: number;
+  totalValue?: number;
 }
 
 export interface MovementTypeOption {
@@ -33,6 +50,12 @@ export interface OrderSummary {
   requestedBy?: string;
   approvedBy?: string | null;
   rejectedBy?: string | null;
+  movements?: OrderMovementSummary[];
+}
+
+export interface OrderDetail extends OrderSummary {
+  description?: string;
+  items?: OrderItemSummary[];
   movements?: OrderMovementSummary[];
 }
 
@@ -97,6 +120,12 @@ export class OrderService {
 
   create(data: OrderCreatePayload): Observable<OrderSummary> {
     return this.http.post<OrderSummary>(this.apiUrl, data, {
+      withCredentials: true
+    });
+  }
+
+  getById(id: number): Observable<OrderDetail> {
+    return this.http.get<OrderDetail>(`${this.apiUrl}/${id}`, {
       withCredentials: true
     });
   }
