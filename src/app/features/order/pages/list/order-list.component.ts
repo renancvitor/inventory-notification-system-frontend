@@ -59,7 +59,6 @@ export class OrderListComponent implements AfterViewInit {
 
   filter = {
     status: 'all',
-    type: 'all',
   };
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -75,24 +74,34 @@ export class OrderListComponent implements AfterViewInit {
   }
 
   get activeFilterCount() {
-    return [this.filter.status, this.filter.type].filter((value) => value !== 'all').length;
+    return [this.filter.status].filter((value) => value !== 'all').length;
   }
 
   loadOrders() {
+    if (this.filter.status !== 'all') {
+      this.orderService.listAll({
+        search: this.searchTerm || undefined,
+      })
+      .subscribe((orders) => {
+        const filteredOrders = orders
+          .map((order) => this.normalizeOrder(order))
+          .filter((order) => this.matchesStatusFilter(order));
+
+        this.totalOrders = filteredOrders.length;
+        this.dataSource.data = this.paginateOrders(filteredOrders);
+      });
+
+      return;
+    }
+
     this.orderService.list({
       search: this.searchTerm || undefined,
-      orderStatusId: this.mapStatusToId(this.filter.status),
       page: this.paginator?.pageIndex ?? 0,
       size: this.paginator?.pageSize ?? 10,
     })
     .subscribe((response) => {
-      const normalizedOrders = (response.content ?? []).map((order) => this.normalizeOrder(order));
-      const filteredOrders = this.filter.type === 'all'
-        ? normalizedOrders
-        : normalizedOrders.filter((order) => order.orderType === this.mapTypeLabel(this.filter.type));
-
-      this.dataSource.data = filteredOrders;
-      this.totalOrders = response.totalElements ?? filteredOrders.length;
+      this.dataSource.data = (response.content ?? []).map((order) => this.normalizeOrder(order));
+      this.totalOrders = response.totalElements ?? 0;
     });
   }
 
@@ -110,7 +119,6 @@ export class OrderListComponent implements AfterViewInit {
   clearFilter() {
     this.filter = {
       status: 'all',
-      type: 'all',
     };
 
     this.paginator.pageIndex = 0;
@@ -181,28 +189,27 @@ export class OrderListComponent implements AfterViewInit {
     return order.movements?.[0]?.movementType || '-';
   }
 
-  private mapStatusToId(status: string) {
-    switch (status) {
+  private matchesStatusFilter(order: OrderSummary) {
+    const normalizedStatus = (order.status || '').trim().toLowerCase();
+
+    switch (this.filter.status) {
       case 'pending':
-        return 1;
+        return normalizedStatus === 'pendente';
       case 'approved':
-        return 2;
+        return normalizedStatus === 'aprovado';
       case 'rejected':
-        return 3;
+        return normalizedStatus === 'reprovado' || normalizedStatus === 'rejeitado';
       default:
-        return undefined;
+        return true;
     }
   }
 
-  private mapTypeLabel(type: string) {
-    switch (type) {
-      case 'input':
-        return 'Entrada';
-      case 'output':
-        return 'Saída';
-      default:
-        return 'all';
-    }
+  private paginateOrders(orders: OrderSummary[]) {
+    const pageIndex = this.paginator?.pageIndex ?? 0;
+    const pageSize = this.paginator?.pageSize ?? 10;
+    const start = pageIndex * pageSize;
+
+    return orders.slice(start, start + pageSize);
   }
 
 }

@@ -116,22 +116,6 @@
                     </mat-radio-button>
                 </mat-radio-group>
             </div>
-
-            <div class="order-list__filter-group">
-                <span>Tipo de pedido</span>
-
-                <mat-radio-group [(ngModel)]="filter.type" (click)="$event.stopPropagation()">
-                    <mat-radio-button value="all">
-                        Todos
-                    </mat-radio-button>
-                    <mat-radio-button value="input">
-                        Entrada
-                    </mat-radio-button>
-                    <mat-radio-button value="output">
-                        Saída
-                    </mat-radio-button>
-                </mat-radio-group>
-            </div>
         </app-filter-panel>
     </mat-menu>
 </div>
