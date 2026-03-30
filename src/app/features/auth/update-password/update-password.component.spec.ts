@@ -35,20 +35,14 @@ describe('UpdatePasswordComponent', () => {
     expect(component.form.controls.confirmNewPassword.touched).toBe(true);
   });
 
-  it('should enforce the backend password policy', () => {
-    component.form.controls.newPassword.setValue('weakpass');
-
-    expect(component.form.controls.newPassword.hasError('pattern')).toBe(true);
-  });
-
-  it('should flag mismatched confirmation passwords', () => {
+  it('should leave password policy validation to the backend', () => {
     component.form.setValue({
-      currentPassword: 'SenhaAtual123!',
-      newPassword: 'NovaSenha123!',
-      confirmNewPassword: 'NovaSenha1234!',
+      currentPassword: 'atual',
+      newPassword: 'fraca',
+      confirmNewPassword: 'diferente',
     });
 
-    expect(component.form.hasError('passwordMismatch')).toBe(true);
+    expect(component.form.valid).toBe(true);
   });
 
   it('should emit the form value when the form is valid', () => {

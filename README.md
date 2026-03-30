@@ -1,5 +1,5 @@
 <h1 id="inicio" align="center">Sistema de Notificação de Estoque — Frontend <br>
-<img src="https://img.shields.io/badge/Status-In%20Progress-yellow" width="150" height="30">
+<img src="https://img.shields.io/badge/Status-Completed-brightgreen" width="150" height="30">
 </h1>
 <p align="center">Interface operacional para gerenciamento de estoque baseada em estados e eventos de negócio.</p>
 

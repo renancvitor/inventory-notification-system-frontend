@@ -350,3 +350,58 @@ Isso ajuda a acomodar crescimento sem espalhar responsabilidades.
 A estrutura atual já é suficiente para o porte do projeto e demonstra boa base para evolução. As melhorias sugeridas aqui não são correções urgentes, mas sim passos naturais para manter consistência conforme o frontend ganhar mais fluxos, regras de autorização e variações de interface.
 
 <p align="right"><a href="../README.md">🔄 Voltar para a documentação completa</a></p>
+Isso evita que erros, autenticação e infraestrutura de rede fiquem espalhados entre diretórios semânticos distintos.
+
+### 5. Formalizar o papel de `shared`
+
+Separar melhor o que é:
+
+- componente visual reutilizável
+- layout global
+- tipo utilitário
+- helper técnico
+
+Um caminho possível:
+
+```plaintext
+shared/
+ ├── components/
+ ├── layout/
+ ├── models/
+ └── utils/
+```
+
+### 6. Preparar espaço para estado e utilidades de tela
+
+O projeto ainda opera com estado local por componente e serviços HTTP, o que é adequado neste momento. Mesmo assim, já vale prever diretórios opcionais para evitar crescimento caótico:
+
+- `store/` ou `state/` por feature, caso fluxos fiquem mais complexos
+- `mappers/` para adaptação entre backend e UI
+- `validators/` para regras reutilizáveis de formulário
+
+### 7. Documentar convenções de naming
+
+Padronizar em documentação:
+
+- `*.model.ts` para contratos simples
+- `*.form.model.ts` para estruturas exclusivas de formulário
+- `*.service.ts` para acesso/orquestração
+- `*.component.ts` para UI
+- `*.guard.ts` e `*.interceptor.ts` para infraestrutura Angular
+
+Isso reduz divergência nas próximas adições.
+
+---
+
+## Próximos Documentos Relacionados
+
+Para complementar este mapa estrutural, consulte também:
+
+- [Frontend Architecture](./frontend-architecture/frontend-architecture.md)
+- [Authentication Flow](./authentication/authentication-flow.md)
+- [API Integration](./api-integration/api-integration.md)
+- [Testing Strategy](./testing/testing-strategy.md)
+
+---
+
+<p align="right"><a href="../README.md">⬅️ Voltar para o README</a></p>

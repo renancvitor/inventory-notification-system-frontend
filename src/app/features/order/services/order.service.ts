@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, shareReplay } from 'rxjs';
+import { EMPTY, Observable, expand, reduce, shareReplay } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import {
   MovementTypeOption,
@@ -31,6 +31,7 @@ export class OrderService {
 
   private readonly apiUrl = `${environment.apiUrl}/orders`;
   private readonly movementTypesUrl = `${environment.apiUrl}/movement-types`;
+  private readonly fullListPageSize = 100;
   private movementTypesRequest$?: Observable<MovementTypeOption[]>;
 
   constructor(private http: HttpClient) {}
@@ -51,6 +52,35 @@ export class OrderService {
       },
       withCredentials: true
     });
+  }
+
+  listAll(params?: Omit<OrderListParams, 'page' | 'size' | 'orderStatusId'>): Observable<OrderSummary[]> {
+    const requestParams = {
+      ...params,
+      page: 0,
+      size: this.fullListPageSize,
+    };
+
+    return this.list(requestParams).pipe(
+      expand((response, index) => {
+        const totalPages = Math.ceil((response.totalElements ?? 0) / this.fullListPageSize);
+        const nextPage = index + 1;
+
+        if (nextPage >= totalPages) {
+          return EMPTY;
+        }
+
+        return this.list({
+          ...requestParams,
+          page: nextPage,
+          size: this.fullListPageSize,
+        });
+      }),
+      reduce((orders, response) => {
+        orders.push(...(response.content ?? []));
+        return orders;
+      }, [] as OrderSummary[])
+    );
   }
 
   listMovementTypes(forceRefresh = false): Observable<MovementTypeOption[]> {
