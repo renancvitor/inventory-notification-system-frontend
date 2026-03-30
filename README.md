@@ -201,10 +201,12 @@ Organização baseada em responsabilidades e módulos funcionais:
 
 ```plaintext
 src/
- ├── core/               # serviços globais, autenticação, interceptors
- ├── features/           # módulos funcionais do sistema
- ├── shared/components   # componentes reutilizáveis
- ├── shared/layout       # estrutura visual compartilhada
+ ├── app/
+ │    ├── core/          # autenticação, guardas, interceptors e erros globais
+ │    ├── features/      # módulos funcionais por domínio
+ │    ├── shared/        # componentes, layout e contratos reutilizáveis
+ │    ├── app.config.ts  # providers globais da aplicação
+ │    └── app.routes.ts  # rotas e resolvers da interface
  └── environments/       # configurações por ambiente
 
 docs/                    # documentação técnica complementar

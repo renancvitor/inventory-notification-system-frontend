@@ -124,6 +124,8 @@ O projeto já usa resolvers em rotas que dependem de dados prévios, como:
 - categorias antes de criar/editar produto
 - pedido, produtos e tipos de movimentação antes de editar pedido
 
+Nas rotas de edição, esses resolvers também evitam abrir a tela quando o preload obrigatório falha, redirecionando o usuário para a listagem correspondente.
+
 ---
 
 ## Estratégia de estado

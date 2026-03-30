@@ -387,10 +387,10 @@ Isso reduz divergência nas próximas adições.
 
 Para complementar este mapa estrutural, consulte também:
 
-- [Frontend Architecture](../docs/frontend-architecture/frontend-architecture.md)
-- [Authentication Flow](../docs/authentication/authentication-flow.md)
-- [API Integration](../docs/api-integration/api-integration.md)
-- [Testing Strategy](../docs/testing/testing-strategy.md)
+- [Frontend Architecture](./frontend-architecture/frontend-architecture.md)
+- [Authentication Flow](./authentication/authentication-flow.md)
+- [API Integration](./api-integration/api-integration.md)
+- [Testing Strategy](./testing/testing-strategy.md)
 
 ---
 

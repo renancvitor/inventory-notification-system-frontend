@@ -122,6 +122,8 @@ Regras importantes:
 
 O componente visual de erro é exibido via `ErrorService`.
 
+Além disso, algumas rotas críticas usam resolvers que redirecionam a navegação quando o preload obrigatório falha. Isso evita abrir telas de edição com estado inconsistente.
+
 ---
 
 ## Oportunidades de evolução

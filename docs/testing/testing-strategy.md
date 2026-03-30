@@ -18,6 +18,8 @@ Atualmente há cobertura distribuída por:
 
 Essa base cobre bem a infraestrutura principal e boa parte dos fluxos funcionais já implementados.
 
+No estado atual do repositório, existem **33 arquivos `*.spec.ts`** em `src/app`.
+
 ---
 
 ## Execução
@@ -41,6 +43,7 @@ ng test
 - testes próximos do código correspondente
 - cobertura de infraestrutura importante, como guard e interceptors
 - cobertura nas features centrais do domínio
+- cobertura focada em fluxos recentes de autenticação, edição de pedidos e resolvers críticos
 - consistência de nomenclatura com sufixo `.spec.ts`
 
 ---
