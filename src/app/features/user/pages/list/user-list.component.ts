@@ -16,6 +16,7 @@ import { UserService } from '../../services/user.service';
 import { UserListItem, UserListResponse, UserType } from '../../services/user.model';
 import { SearchFieldComponent } from '../../../../shared/components/search-field/search-field.component';
 import { FilterPanelComponent } from '../../../../shared/components/filter-panel/filter-panel.component';
+import { AuthService } from '../../../../core/auth/auth.service';
 
 @Component({
   selector: 'app-user-list.component',
@@ -28,13 +29,25 @@ import { FilterPanelComponent } from '../../../../shared/components/filter-panel
 })
 export class UserListComponent {
 
-  displayedColumns: string[] = ['name', 'email', 'userType', 'active', 'actions'];
-
   dataSource: MatTableDataSource<UserListItem> = new MatTableDataSource<UserListItem>([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private userService: UserService, private changeDetectorRef: ChangeDetectorRef) {}
+  constructor(
+    private userService: UserService,
+    private changeDetectorRef: ChangeDetectorRef,
+    private authService: AuthService,
+  ) {}
+
+  get displayedColumns(): string[] {
+    return this.canAccessUsers
+      ? ['name', 'email', 'userType', 'active', 'actions']
+      : ['name', 'email', 'userType', 'active'];
+  }
+
+  get canAccessUsers() {
+    return this.authService.canAccessUsers();
+  }
 
   userTypes: UserType[] = [];
 

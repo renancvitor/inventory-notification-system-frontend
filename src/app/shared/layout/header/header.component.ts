@@ -19,6 +19,14 @@ export class HeaderComponent {
 
   constructor(private authService: AuthService, private router: Router) {}
 
+  get canAccessPeople() {
+    return this.authService.canAccessPeople();
+  }
+
+  get canAccessUsers() {
+    return this.authService.canAccessUsers();
+  }
+
   logout() {
     this.authService.logout().subscribe(() => {
       this.router.navigate(['/login']);

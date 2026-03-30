@@ -62,6 +62,8 @@ Se a sessão não for válida:
 
 - o usuário é redirecionado para `/login`
 
+Além do estado de sessão, o frontend também mantém em memória o tipo de usuário autenticado e o normaliza para as regras internas de autorização.
+
 ---
 
 ## Primeiro acesso
@@ -103,6 +105,33 @@ Hoje ele é aplicado nas rotas de:
 - products
 - orders
 
+Em parte dessas rotas, o guard também considera `allowedUserTypes`, impedindo navegação para áreas incompatíveis com o perfil autenticado.
+
+Exemplos atuais:
+
+- `person` e `users`: apenas `ADMIN`
+- `products/create` e `products/edit/:id`: `ADMIN` e `PRODUCT_MANAGER`
+
+As demais restrições continuam validadas pelo backend, e o frontend atua como camada complementar de experiência e prevenção.
+
+---
+
+## Controle de acesso na interface
+
+Além das rotas, a interface oculta elementos que o usuário autenticado não pode usar, como:
+
+- links administrativos no header
+- botões de criação e edição em listagens
+- ações de aprovação e reprovação de pedido
+
+Matriz atual baseada no backend:
+
+- `ADMIN`: acesso completo
+- `PRODUCT_MANAGER`: gestão de produtos e revisão de pedidos
+- `COMMON`: fluxo operacional sem áreas administrativas
+
+Há também regras contextuais que dependem do próprio recurso. Em pedidos, por exemplo, a ação de editar só aparece ao solicitante do pedido quando o status ainda está pendente.
+
 ---
 
 ## Interceptors envolvidos
@@ -126,6 +155,7 @@ Trata falhas ligadas a autenticação e sessão:
 - o estado de autenticação principal fica em memória; após reload, a sessão é reidratada por `checkSession()`
 - a proteção atual depende do backend responder corretamente aos endpoints de sessão
 - o redirecionamento de primeiro acesso no frontend é uma camada de UX; a persistência e validação continuam no backend
+- ocultar ações no frontend melhora a experiência, mas não substitui a autorização real do backend
 
 ---
 

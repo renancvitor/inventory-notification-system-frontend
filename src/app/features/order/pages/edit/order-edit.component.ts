@@ -15,6 +15,7 @@ import {
 import { OrderFormInitialValue, OrderFormValue } from '../../services/order-form.model';
 import { ProductListItem, ProductService } from '../../../product/services/product.service';
 import { ToastComponent } from '../../../../shared/components/toast/toast.component';
+import { AuthService } from '../../../../core/auth/auth.service';
 
   @Component({
   selector: 'app-order-edit.component',
@@ -31,6 +32,7 @@ export class OrderEditComponent implements OnInit {
   private readonly changeDetectorRef = inject(ChangeDetectorRef);
   private readonly orderService = inject(OrderService);
   private readonly productService = inject(ProductService);
+  private readonly authService = inject(AuthService);
 
   id = 0;
   loading = false;
@@ -82,7 +84,10 @@ export class OrderEditComponent implements OnInit {
   }
 
   get showDecisionActions() {
-    return this.mode === 'view' && this.isPendingStatus(this.order?.status) && !this.orderLoading;
+    return this.mode === 'view'
+      && this.authService.canReviewOrders()
+      && this.isPendingStatus(this.order?.status)
+      && !this.orderLoading;
   }
 
   saveOrder(orderData: OrderFormValue) {
@@ -122,7 +127,7 @@ export class OrderEditComponent implements OnInit {
   }
 
   get canEditOrder() {
-    return this.hasRenderableItems;
+    return this.hasRenderableItems && this.authService.canEditOrder(this.order);
   }
 
   get hasRenderableItems() {

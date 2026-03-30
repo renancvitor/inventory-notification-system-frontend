@@ -7,8 +7,8 @@
   <nav class="site-header__nav site-header__nav--desktop" aria-label="Navegação principal">
 
     <a mat-button class="site-header__nav-link" routerLink="/" routerLinkActive="site-header__nav-link--active">Início</a>
-    <a mat-button class="site-header__nav-link" routerLink="/person" routerLinkActive="site-header__nav-link--active">Pessoas</a>
-    <a mat-button class="site-header__nav-link" routerLink="/users" routerLinkActive="site-header__nav-link--active">Usuários</a>
+    <a *ngIf="canAccessPeople" mat-button class="site-header__nav-link" routerLink="/person" routerLinkActive="site-header__nav-link--active">Pessoas</a>
+    <a *ngIf="canAccessUsers" mat-button class="site-header__nav-link" routerLink="/users" routerLinkActive="site-header__nav-link--active">Usuários</a>
     <a mat-button class="site-header__nav-link" routerLink="/products" routerLinkActive="site-header__nav-link--active">Produtos</a>
     <a mat-button class="site-header__nav-link" routerLink="/orders" routerLinkActive="site-header__nav-link--active">Pedidos</a>
     <a mat-button class="site-header__nav-link" routerLink="/update-password" routerLinkActive="site-header__nav-link--active">Alterar senha</a>
@@ -36,8 +36,8 @@
 
 <mat-menu #mobileMenu="matMenu" class="site-header__mobile-menu-panel">
   <a mat-menu-item routerLink="/">Início</a>
-  <a mat-menu-item routerLink="/person">Pessoas</a>
-  <a mat-menu-item routerLink="/users">Usuários</a>
+  <a *ngIf="canAccessPeople" mat-menu-item routerLink="/person">Pessoas</a>
+  <a *ngIf="canAccessUsers" mat-menu-item routerLink="/users">Usuários</a>
   <a mat-menu-item routerLink="/products">Produtos</a>
   <a mat-menu-item routerLink="/orders">Pedidos</a>
   <a mat-menu-item routerLink="/update-password">Alterar senha</a>
