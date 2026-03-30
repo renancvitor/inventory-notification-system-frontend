@@ -17,6 +17,7 @@ import { PersonListItem, PersonListResponse } from '../../services/person.model'
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
 import { FilterPanelComponent } from '../../../../shared/components/filter-panel/filter-panel.component';
 import { SearchFieldComponent } from '../../../../shared/components/search-field/search-field.component'; 
+import { AuthService } from '../../../../core/auth/auth.service';
 
 @Component({
   selector: 'app-person.component',
@@ -28,13 +29,21 @@ import { SearchFieldComponent } from '../../../../shared/components/search-field
 })
 export class PersonComponent {
 
-  displayedColumns: string[] = ['personName', 'cpf', 'email', 'active', 'actions'];
-
   dataSource: MatTableDataSource<PersonListItem> = new MatTableDataSource<PersonListItem>([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private personService: PersonService) {}
+  constructor(private personService: PersonService, private authService: AuthService) {}
+
+  get displayedColumns(): string[] {
+    return this.canAccessPeople
+      ? ['personName', 'cpf', 'email', 'active', 'actions']
+      : ['personName', 'cpf', 'email', 'active'];
+  }
+
+  get canAccessPeople() {
+    return this.authService.canAccessPeople();
+  }
 
   ngAfterViewInit() {
     this.loadPersons();

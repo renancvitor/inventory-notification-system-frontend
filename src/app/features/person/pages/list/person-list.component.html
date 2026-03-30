@@ -6,7 +6,7 @@
       <p class="person-list__subtitle">Gerencie os cadastros do sistema • {{ totalPerson }} pessoas cadastradas</p>
     </div>
 
-    <app-button class="person-list__action person-list__action--create" routerLink="/person/create">
+    <app-button *ngIf="canAccessPeople" class="person-list__action person-list__action--create" routerLink="/person/create">
       Nova pessoa
     </app-button>
   </div>
@@ -68,7 +68,7 @@
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="actions">
+      <ng-container *ngIf="canAccessPeople" matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>Ações</th>
         <td mat-cell *matCellDef="let person">
 

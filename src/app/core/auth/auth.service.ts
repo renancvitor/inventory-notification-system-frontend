@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { AuthenticatedUser, LoginRequest, LoginResponse } from './auth.model';
+import { AuthenticatedUser, LoginRequest, LoginResponse, UserTypeName } from './auth.model';
 import { catchError, map, Observable, tap, of } from 'rxjs';
 
 @Injectable({
@@ -23,7 +23,7 @@ export class AuthService {
     ).pipe(
       tap((user) => {
         this.loggedIn = true;
-        this.currentUser = user;
+        this.currentUser = this.normalizeAuthenticatedUser(user);
       })
     );
   }
@@ -51,7 +51,7 @@ export class AuthService {
     }).pipe(
       tap((user) => {
         this.loggedIn = true;
-        this.currentUser = user;
+        this.currentUser = this.normalizeAuthenticatedUser(user);
       }),
       map(() => true),
       catchError(() => {
@@ -66,8 +66,49 @@ export class AuthService {
     return this.currentUser;
   }
 
+  getCurrentUserType(): UserTypeName | null {
+    return this.currentUser ? this.normalizeUserType(this.currentUser.nameUserType) : null;
+  }
+
   getCurrentUserId(): number | null {
     return this.currentUser?.id ?? null;
+  }
+
+  hasAnyUserType(userTypes: readonly UserTypeName[]): boolean {
+    const currentUserType = this.getCurrentUserType();
+
+    return currentUserType !== null && userTypes.includes(currentUserType);
+  }
+
+  isAdmin(): boolean {
+    return this.hasAnyUserType(['ADMIN']);
+  }
+
+  canAccessPeople(): boolean {
+    return this.isAdmin();
+  }
+
+  canAccessUsers(): boolean {
+    return this.isAdmin();
+  }
+
+  canManageProducts(): boolean {
+    return this.hasAnyUserType(['ADMIN', 'PRODUCT_MANAGER']);
+  }
+
+  canReviewOrders(): boolean {
+    return this.hasAnyUserType(['ADMIN', 'PRODUCT_MANAGER']);
+  }
+
+  canEditOrder(order: { requestedBy?: string | null; status?: string | null } | null | undefined): boolean {
+    if (!order) {
+      return false;
+    }
+
+    const isOwner = order.requestedBy === this.currentUser?.personEmail;
+    const isPending = (order.status || '').trim().toLowerCase() === 'pendente';
+
+    return isOwner && isPending;
   }
 
   mustUpdatePassword(): boolean {
@@ -83,6 +124,36 @@ export class AuthService {
       ...this.currentUser,
       firstAccess: false,
     };
+  }
+
+  private normalizeAuthenticatedUser(user: AuthenticatedUser): AuthenticatedUser {
+    return {
+      ...user,
+      nameUserType: this.normalizeUserType(user.nameUserType) ?? user.nameUserType,
+    };
+  }
+
+  private normalizeUserType(userType: string | null | undefined): UserTypeName | null {
+    if (!userType) {
+      return null;
+    }
+
+    const normalized = userType.trim().toLowerCase();
+
+    switch (normalized) {
+      case 'admin':
+      case 'administrador':
+        return 'ADMIN';
+      case 'product_manager':
+      case 'product manager':
+      case 'gerenciador de produtos':
+        return 'PRODUCT_MANAGER';
+      case 'common':
+      case 'comum':
+        return 'COMMON';
+      default:
+        return null;
+    }
   }
 
 }

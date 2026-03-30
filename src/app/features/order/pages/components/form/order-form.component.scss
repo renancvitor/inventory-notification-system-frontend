@@ -180,13 +180,14 @@
 .order-form__footer {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 12px;
   flex-wrap: wrap;
 }
 
 .order-form__action {
   min-width: 220px;
-  flex: 1 1 220px;
+  flex: 0 0 220px;
   padding: 10px 18px;
   border-radius: 6px;
   font-weight: 500;
