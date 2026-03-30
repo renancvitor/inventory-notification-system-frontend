@@ -1,17 +1,14 @@
 # ☁️ Deployment Guide
 
-## Estado atual
+## Objetivo
 
-Este repositório ainda não possui pipeline de deploy automatizado para a aplicação frontend.
-
-Os workflows existentes em `.github/workflows` estão voltados para automações de fluxo de trabalho
-do repositório e não para build ou publicação da interface.
+Este documento foca no deploy do frontend em ambiente AWS, considerando a aplicação como um artefato estático gerado por Angular.
 
 ---
 
-## Deploy manual
+## Build de produção
 
-### Build de produção
+Antes da publicação:
 
 ```bash
 npm install
@@ -22,27 +19,52 @@ O artefato gerado ficará em `dist/inventory-notification-system-frontend`.
 
 ---
 
-## Pré-requisitos para publicação
+## Deploy na AWS
 
-Antes de publicar a aplicação em qualquer ambiente, valide:
+### Opção recomendada: S3 + CloudFront
+
+Para este projeto, a estratégia mais aderente é publicar o build estático em um bucket S3 e entregar a aplicação via CloudFront.
+
+Fluxo recomendado:
+
+1. gerar o build de produção
+2. publicar o conteúdo de `dist/inventory-notification-system-frontend` em um bucket S3
+3. configurar distribuição CloudFront apontando para esse bucket
+4. garantir fallback para SPA, servindo `index.html` nas rotas da aplicação
+
+---
+
+## Pré-requisitos para publicação na AWS
+
+Antes de publicar, valide:
 
 - URL correta da API em `environment.prod.ts`
 - política de CORS compatível no backend
 - envio de cookies e sessão habilitado entre frontend e backend
-- estratégia de hospedagem para SPA com fallback de rotas
+- distribuição com fallback para `index.html`
+- domínio e certificado configurados, se houver ambiente público
 
 ---
 
-## Opções recomendadas de hospedagem
+## Configurações importantes
 
-### Opção 1: Static hosting
+### 1. `environment.prod.ts`
 
-Serviços como S3 + CloudFront, Netlify, Vercel ou Nginx servem bem este projeto,
-desde que exista fallback para `index.html`.
+A URL da API de produção deve apontar para o backend publicado.
 
-### Opção 2: Servir build por Nginx
+### 2. CORS e cookies
 
-Adequado para ambientes simples ou quando frontend e backend compartilham infraestrutura.
+Como a autenticação depende de sessão/cookies, backend e frontend precisam estar configurados de forma compatível para:
+
+- `withCredentials`
+- origem permitida
+- cookies seguros em produção
+
+### 3. Fallback de rotas
+
+Por se tratar de uma SPA, acessos diretos como `/orders` ou `/products/edit/1` precisam retornar `index.html`.
+
+No contexto AWS, isso normalmente é tratado na distribuição do CloudFront.
 
 ---
 
@@ -50,21 +72,18 @@ Adequado para ambientes simples ou quando frontend e backend compartilham infrae
 
 1. Ajustar `environment.prod.ts`
 2. Rodar `npm run build`
-3. Publicar o conteúdo de `dist/inventory-notification-system-frontend`
-4. Configurar fallback de rotas para SPA
-5. Validar login, navegação protegida e chamadas autenticadas
+3. Publicar o conteúdo de `dist/inventory-notification-system-frontend` no S3
+4. Configurar distribuição CloudFront com fallback para SPA
+5. Validar login, navegação protegida, cookies e chamadas autenticadas
+6. Confirmar navegação direta em rotas internas como `/products`, `/orders` e `/users`
 
 ---
 
-## Evolução recomendada
+## Alternativa de infraestrutura
 
-O próximo passo natural é adicionar uma pipeline de CI/CD para:
+Caso o projeto não seja publicado com S3 + CloudFront, outra alternativa aceitável é servir o build por Nginx em EC2 ou outra infraestrutura equivalente, desde que:
 
-- instalar dependências
-- rodar testes
-- gerar build de produção
-- publicar artefato em ambiente estático
-
-Isso aproxima o frontend do padrão operacional mais completo já documentado no backend.
+- o fallback de SPA esteja configurado
+- a integração com o backend preserve cookies e CORS corretamente
 
 <p align="right"><a href="../../README.md">🔄 Voltar para a documentação completa</a></p>

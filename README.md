@@ -1,5 +1,5 @@
 <h1 id="inicio" align="center">Sistema de Notificação de Estoque — Frontend <br>
-<img src="https://img.shields.io/badge/Status-In%20Progress-yellow" width="150" height="30">
+<img src="https://img.shields.io/badge/Status-Completed-brightgreen" width="150" height="30">
 </h1>
 <p align="center">Interface operacional para gerenciamento de estoque baseada em estados e eventos de negócio.</p>
 
@@ -187,6 +187,7 @@ Seguindo o mesmo padrão documental adotado no backend, este repositório manté
 - [Integração com a API](./docs/api-integration/api-integration.md)
 - [Fluxo de Autenticação e Sessão](./docs/authentication/authentication-flow.md)
 - [Estratégia de Testes](./docs/testing/testing-strategy.md)
+- [Automação do Projeto](./docs/project-automation/project-automation.md)
 - [Guia de Deploy](./docs/deployment/DEPLOYMENT.md)
 - [Organização completa do Projeto](./docs/project-structure.md)
 - [Convenção de Commits](./docs/COMMIT_CONVENTION.md)
