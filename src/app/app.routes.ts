@@ -89,30 +89,45 @@ export const routes: Routes = [
     {
         path: 'person',
         canActivate: [authGuard],
+        data: {
+            allowedUserTypes: ['ADMIN'],
+        },
         component: PersonComponent
     },
 
     {
         path: 'person/create',
         canActivate: [authGuard],
+        data: {
+            allowedUserTypes: ['ADMIN'],
+        },
         component: PersonCreateComponent
     },
 
     {
         path: 'person/edit/:id',
         canActivate: [authGuard],
+        data: {
+            allowedUserTypes: ['ADMIN'],
+        },
         component: PersonEditComponent
     },
 
     {
         path: 'users',
         canActivate: [authGuard],
+        data: {
+            allowedUserTypes: ['ADMIN'],
+        },
         component: UserListComponent
     },
 
     {
         path: 'users/:id',
         canActivate: [authGuard],
+        data: {
+            allowedUserTypes: ['ADMIN'],
+        },
         component: UserEditComponent
     },
 
@@ -125,6 +140,9 @@ export const routes: Routes = [
     {
         path: 'products/create',
         canActivate: [authGuard],
+        data: {
+            allowedUserTypes: ['ADMIN', 'PRODUCT_MANAGER'],
+        },
         resolve: {
             categories: productCategoriesResolver,
         },
@@ -134,6 +152,9 @@ export const routes: Routes = [
     {
         path: 'products/edit/:id',
         canActivate: [authGuard],
+        data: {
+            allowedUserTypes: ['ADMIN', 'PRODUCT_MANAGER'],
+        },
         resolve: {
             product: productResolver,
             categories: productCategoriesResolver,

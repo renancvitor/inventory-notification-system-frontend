@@ -7,7 +7,7 @@
             <p class="product-list__subtitle">Gerencie os produtos aqui • {{ totalProducts }} produtos cadastrados</p>
         </div>
 
-        <app-button class="product-list__action product-list__action--create" routerLink="/products/create">
+        <app-button *ngIf="canManageProducts" class="product-list__action product-list__action--create" routerLink="/products/create">
             Novo Produto
         </app-button>
     </div>
@@ -81,7 +81,7 @@
                 </td>
             </ng-container>
     
-            <ng-container matColumnDef="actions">
+            <ng-container *ngIf="canManageProducts" matColumnDef="actions">
                 <th mat-header-cell *matHeaderCellDef> Ações </th>
                 <td mat-cell *matCellDef="let product">
     
@@ -96,7 +96,7 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
             <tr class="mat-row" *matNoDataRow>
-            <td class="mat-cell product-list__no-data" colspan="8">
+            <td class="mat-cell product-list__no-data" [attr.colspan]="displayedColumns.length">
                 Nenhum produto encontrado
             </td>
             </tr>

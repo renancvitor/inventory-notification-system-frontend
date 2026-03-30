@@ -14,6 +14,7 @@ import { ProductListItem, ProductListResponse, ProductService } from '../../serv
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
 import { SearchFieldComponent } from '../../../../shared/components/search-field/search-field.component';
 import { FilterPanelComponent } from '../../../../shared/components/filter-panel/filter-panel.component';
+import { AuthService } from '../../../../core/auth/auth.service';
 
 @Component({
   selector: 'app-product-list.component',
@@ -38,8 +39,6 @@ export class ProductListComponent implements AfterViewInit {
     year: 'numeric',
   });
 
-  displayedColumns: string[] = ['name', 'brand', 'category', 'price', 'validity', 'stock', 'active', 'actions'];
-
   dataSource: MatTableDataSource<ProductListItem> = new MatTableDataSource<ProductListItem>([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -48,7 +47,17 @@ export class ProductListComponent implements AfterViewInit {
   @ViewChild('minPriceField', { read: ElementRef }) minPriceFieldElement?: ElementRef<HTMLElement>;
   @ViewChild('maxPriceField', { read: ElementRef }) maxPriceFieldElement?: ElementRef<HTMLElement>;
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService, private authService: AuthService) {}
+
+  get displayedColumns(): string[] {
+    return this.canManageProducts
+      ? ['name', 'brand', 'category', 'price', 'validity', 'stock', 'active', 'actions']
+      : ['name', 'brand', 'category', 'price', 'validity', 'stock', 'active'];
+  }
+
+  get canManageProducts() {
+    return this.authService.canManageProducts();
+  }
 
   ngAfterViewInit() {
     this.configureNumericInput(this.minPriceFieldElement);

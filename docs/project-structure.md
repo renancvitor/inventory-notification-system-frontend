@@ -177,7 +177,7 @@ src/
  │    │              ├── user.model.ts
  │    │              ├── user.service.spec.ts
  │    │              ├── user.service.ts
- │    │              └── usertype.model.ts
+ │    │              └── user-type.model.ts
  │    ├── shared/
  │    │    ├── components/
  │    │    │    ├── button/
@@ -221,6 +221,7 @@ Camada transversal da aplicação. Hoje ela concentra:
 
 - autenticação e sessão
 - guardas de rota
+- autorização de acesso por tipo de usuário
 - interceptors HTTP
 - tratamento global de erro
 
@@ -340,6 +341,15 @@ Centralizar conceitos HTTP em uma convenção mais explícita:
 - `core/http/models/`
 - `core/http/utils/`
 
+Isso ajuda a acomodar crescimento sem espalhar responsabilidades.
+
+---
+
+## Consideração Final
+
+A estrutura atual já é suficiente para o porte do projeto e demonstra boa base para evolução. As melhorias sugeridas aqui não são correções urgentes, mas sim passos naturais para manter consistência conforme o frontend ganhar mais fluxos, regras de autorização e variações de interface.
+
+<p align="right"><a href="../README.md">🔄 Voltar para a documentação completa</a></p>
 Isso evita que erros, autenticação e infraestrutura de rede fiquem espalhados entre diretórios semânticos distintos.
 
 ### 5. Formalizar o papel de `shared`

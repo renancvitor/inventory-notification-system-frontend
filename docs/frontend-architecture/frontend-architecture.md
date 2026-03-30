@@ -12,9 +12,11 @@ O objetivo da aplicação é fornecer uma interface operacional para o domínio 
 
 - autenticação de sessão
 - navegação protegida
+- autorização por perfil de usuário
 - listagens com filtros e paginação
 - formulários de criação e edição
 - feedback visual para sucesso e erro
+- comportamento responsivo para desktop e mobile
 
 ---
 
@@ -69,6 +71,8 @@ Pontos relevantes da implementação atual:
 - verificação de sessão com `/auth/me`
 - redirecionamento para `/login` quando a sessão não é válida
 - redirecionamento obrigatório para `/update-password` no primeiro acesso
+- normalização do tipo de usuário retornado pelo backend para regras de autorização no frontend
+- helpers de permissão reutilizáveis no `AuthService`
 
 Esse fluxo está detalhado em [Fluxo de Autenticação](../authentication/authentication-flow.md).
 
@@ -125,6 +129,33 @@ O projeto já usa resolvers em rotas que dependem de dados prévios, como:
 - pedido, produtos e tipos de movimentação antes de editar pedido
 
 Nas rotas de edição, esses resolvers também evitam abrir a tela quando o preload obrigatório falha, redirecionando o usuário para a listagem correspondente.
+
+Além da autenticação, parte das rotas protegidas declara `allowedUserTypes`, permitindo bloquear navegação para áreas administrativas ou operacionais incompatíveis com o perfil autenticado.
+
+Na camada visual, o header e as páginas de listagem também ocultam links, botões e ações que o usuário não pode executar.
+
+### Matriz de acesso atual
+
+- `ADMIN`: acesso completo, incluindo pessoas, usuários, produtos e pedidos
+- `PRODUCT_MANAGER`: acesso operacional a produtos e revisão de pedidos
+- `COMMON`: acesso focado em pedidos e movimentações sem áreas administrativas
+
+No caso dos pedidos, a interface ainda respeita regras contextuais do backend, como permitir edição apenas ao solicitante do pedido enquanto o status estiver pendente.
+
+---
+
+## Responsividade
+
+O projeto adota responsividade como requisito funcional da interface, não apenas como acabamento visual.
+
+Hoje isso aparece principalmente em:
+
+- header com navegação desktop e menu mobile
+- formulários com reorganização vertical em breakpoints menores
+- componentes de pedido com versões adaptadas para tabela e cards mobile
+- controles de ação com empilhamento em telas menores
+
+Como o sistema tem caráter operacional, vale ressaltar essa característica na documentação principal, mas de forma objetiva. Ela ajuda a contextualizar a experiência real de uso sem transformar a responsividade no foco central do projeto.
 
 ---
 

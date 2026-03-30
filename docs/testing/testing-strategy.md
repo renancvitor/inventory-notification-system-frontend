@@ -68,6 +68,7 @@ Vale ampliar cenários como:
 - paginação
 - estados vazios
 - mensagens de erro
+- variação de ações visíveis conforme o perfil autenticado
 
 ### 3. Garantir contratos de integração nos serviços
 
@@ -86,6 +87,7 @@ Os componentes de formulário e telas operacionais ganham muito com testes cobri
 - loading durante submissão
 - desabilitação de ações
 - exibição de mensagens de sucesso e erro
+- comportamento responsivo em trechos críticos da interface quando houver regressão relevante de layout
 
 ---
 
@@ -107,6 +109,6 @@ Este documento passa a registrar esse ponto e serve como base para amadurecer a 
 
 - testes unitários para serviços, utilitários e regras locais
 - testes de componente para interação, renderização e formulários
-- testes de fluxo para jornadas críticas, especialmente autenticação e edição
+- testes de fluxo para jornadas críticas, especialmente autenticação, autorização por perfil e edição
 
 <p align="right"><a href="../../README.md">🔄 Voltar para a documentação completa</a></p>

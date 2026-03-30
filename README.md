@@ -61,6 +61,9 @@ Mais do que formulários de cadastro, a aplicação representa fluxos de trabalh
 - validação antes do impacto no estoque
 - alertas visuais de estoque crítico
 - rastreabilidade das ações do usuário
+- adaptação da interface conforme o perfil autenticado
+
+Além disso, a experiência foi ajustada para uso responsivo, preservando navegação, formulários e listagens operacionais em desktop e mobile.
 
 O objetivo do projeto é consolidar uma experiência fullstack próxima de sistemas corporativos, priorizando clareza de operação, previsibilidade de estado e ergonomia de uso.
 
@@ -116,6 +119,8 @@ O fluxo atual cobre:
 
 - login com persistência de sessão via credenciais
 - checagem de sessão em rotas protegidas
+- autorização de rotas por tipo de usuário
+- ocultação de telas e ações sem permissão na interface
 - logout
 - obrigatoriedade de atualização de senha no primeiro acesso
 - tratamento centralizado de erro para sessão expirada
@@ -135,6 +140,7 @@ Interface para operação do sistema de estoque baseada em permissões e estados
 ### 🔐 Acesso
 - Autenticação de usuários
 - Interface adaptada conforme perfil de acesso
+- Navegação protegida por tipo de usuário (`ADMIN`, `PRODUCT_MANAGER` e `COMMON`)
 
 ### 📦 Operação de Estoque
 - Visualização de produtos e níveis de estoque
@@ -154,6 +160,10 @@ Interface para operação do sistema de estoque baseada em permissões e estados
 ### 🔔 Monitoramento
 - Indicação de eventos relevantes do sistema
 - Feedback visual de ações concluídas ou bloqueadas
+
+### 📱 Experiência de uso
+- Layout responsivo para navegação principal, formulários e listagens
+- Ajustes de ações e tabelas para melhor uso em telas menores
 
 <p align="right"><a href="#inicio">⬆️ Voltar ao início</a></p>
 
