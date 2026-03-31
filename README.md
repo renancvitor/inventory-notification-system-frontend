@@ -77,6 +77,7 @@ O objetivo do projeto é consolidar uma experiência fullstack próxima de siste
 - 🅰️ [Angular](https://angular.dev/)
 - 🎨 [SCSS](https://sass-lang.com/documentation/)
 - 🌐 Consumo de [API REST](https://github.com/renancvitor/inventory-notification-system-backend) com autenticação via sessão/cookies
+- ☁️ Deploy do frontend via AWS Amplify
 
 <p align="right"><a href="#inicio">⬆️ Voltar ao início</a></p>
 
