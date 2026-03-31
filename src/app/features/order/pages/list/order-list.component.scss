@@ -65,7 +65,8 @@
 }
 
 .order-list__toolbar app-search-field {
-    flex: 1 1 440px;
+    flex: 0 1 360px;
+    width: min(100%, 360px);
     min-width: 0;
     display: block;
 }
