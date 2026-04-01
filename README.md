@@ -40,6 +40,7 @@ Planejamento, tarefas e histórico de evolução disponíveis no GitHub Projects
 - [Autenticação e Sessão](#autenticação-e-sessão)
 - [Funcionalidades](#funcionalidades)
 - [Testes Automatizados](#testes-automatizados)
+- [Documentação Visual](#documentação-visual)
 - [Documentação Técnica](#documentação-técnica)
 - [Estrutura do Projeto](#estrutura-do-projeto)
 - [Como Executar o Projeto](#como-executar-o-projeto)
@@ -185,6 +186,19 @@ Atualmente há testes para:
 Documentação complementar:
 
 - [Estratégia de Testes](./docs/testing/testing-strategy.md)
+
+<p align="right"><a href="#inicio">⬆️ Voltar ao início</a></p>
+
+---
+
+<h2 id="documentação-visual" align="center">Documentação Visual</h2>
+
+ <h3 id="-demonstração-da-aplicação">🎬 <strong>Demonstração da Aplicação</strong></h3>
+
+Para visualizar os principais fluxos da interface em funcionamento, acesse a documentação visual com GIFs organizados por domínio e por cenário de navegação.
+
+👉 Veja a documentação visual da aplicação aqui:  
+[📘 Demonstração Visual das Telas](./docs/screen-demonstration/screen-demonstration.md)
 
 <p align="right"><a href="#inicio">⬆️ Voltar ao início</a></p>
 
