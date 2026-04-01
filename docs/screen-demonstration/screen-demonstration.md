@@ -24,6 +24,23 @@ Fluxos de listagem, cadastro e edição de pessoas e usuários.
 
 ---
 
+## 🛡️ Permission Security
+Fluxo de controle de permissões, demonstrando a segurança de acesso por perfis e regras da aplicação.
+![](./gifs/permission-security.gif)
+
+---
+
+## 🔐 Update Password
+Fluxos de atualização de senha no primeiro acesso e em atualização posterior.
+
+### 🔑 Atualizar senha no primeiro acesso
+![](./gifs/update-password-first-access.gif)
+
+### 🔑 Atualizar senha
+![](./gifs/update-password.gif)
+
+---
+
 ## 📦 Product Flow
 Fluxos de listagem, cadastro e edição de produtos.
 
@@ -49,16 +66,5 @@ Fluxos de listagem, criação e edição de pedidos.
 
 ### ✏️ Editar pedido
 ![](./gifs/order-edit.gif)
-
----
-
-## 🔐 Update Password
-Fluxos de atualização de senha no primeiro acesso e em atualização posterior.
-
-### 🔑 Atualizar senha no primeiro acesso
-![](./gifs/update-password-first-access.gif)
-
-### 🔑 Atualizar senha
-![](./gifs/update-password.gif)
 
  <p align="right"><a href="../../README.md">🔄 Voltar para a documentação completa</a></p>
