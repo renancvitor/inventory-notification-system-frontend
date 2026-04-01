@@ -10,12 +10,6 @@ Navegação geral pela aplicação, apresentando a experiência principal de uso
 
 ---
 
-## 🔐 Controle de Permissões
-Exemplo visual de navegação com restrições de acesso e adaptação da interface conforme o perfil autenticado.
-![](./gifs/person-user-list.gif)
-
----
-
 ## 👤 Person & User Flow
 Fluxos de listagem, cadastro e edição de pessoas e usuários.
 
